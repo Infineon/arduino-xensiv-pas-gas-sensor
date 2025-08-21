@@ -28,8 +28,8 @@ Return Error Codes
 .. doxygendefine:: XENSIV_PASCO2_ORTMP
 .. doxygendefine:: XENSIV_PASCO2_READ_NRDY
 
-Dignosis 
-^^^^^^^^
+Diagnosis 
+^^^^^^^^^
 
 .. doxygentypedef:: Diag_t
 

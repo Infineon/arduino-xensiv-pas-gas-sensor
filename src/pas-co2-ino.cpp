@@ -216,7 +216,7 @@ Error_t PASCO2Ino::end()
  *              }
  *              @endcode
  *
- *              Synching readouts with the hardware interrupt
+ *              Syncing readouts with the hardware interrupt
  *              ---------------------------------------------------------------
  *              In order not to saturate the sensor with constant serial 
  *              requests, especially in continuous mode, it is recommended 
@@ -258,9 +258,9 @@ Error_t PASCO2Ino::end()
  *              If the alarm threshold argument is non-zero, the alarm mode 
  *              is activated, and the sensor internal flag will be enabled 
  *              if the concentration of CO2 goes above the specified value.
- *              This option is better combined with the interupt mode. Thus,
+ *              This option is better combined with the interrupt mode. Thus,
  *              if the interrupt mode is available and a callback function
- *              is passed, the interrupt will occurr only when the co2 
+ *              is passed, the interrupt will occur only when the co2 
  *              concentration goes above the threshold. 
  *              This makes mostly sense for continuous measurement configuration. 
  *              But it can be used as well for a single shot configuration
@@ -286,11 +286,11 @@ Error_t PASCO2Ino::end()
  *                                  The default value is 0, meaning no alarm mode. 
  *                                  For any non-zero value, the sensor will internally set 
  *                                  the alarm flag. If an interrupt callback function is 
- *                                  provided, then the interrupt will occurr only when the 
- *                                  defined threshold has been tresspassed
+ *                                  provided, then the interrupt will occur only when the 
+ *                                  defined threshold has been trespassed
  * @param[in]   cback               Pointer to the callback function to be called upon
  *                                  interrupt
- * @param[in]   earlyNotification   Enables early notifification interrupt. Disabled (false) by default 
+ * @param[in]   earlyNotification   Enables early notification interrupt. Disabled (false) by default 
  * @return      XENSIV™ PAS CO2 error code
  * @retval      XENSIV_PASCO2_OK if success
  * @pre         begin()
@@ -366,7 +366,7 @@ Error_t PASCO2Ino::startMeasure(int16_t periodInSec, int16_t alarmTh, void (*cba
             int_event = CHANGE;
         }
 
-        /* Enable mcu interupt */
+        /* Enable mcu interrupt */
         attachInterrupt(digitalPinToInterrupt(intPin), (void (*)())cback, int_event);
     }
     else
@@ -426,7 +426,7 @@ Error_t PASCO2Ino::stopMeasure()
  *               
  * 
  * @details     The value read is zero when no measurement is 
- *              yet available or an error has ocurrred.
+ *              yet available or an error has occurred.
  * 
  * @param[out]  co2ppm  CO2 concentration read (in ppm)
  * @return      XENSIV™ PAS CO2 error code
@@ -460,7 +460,7 @@ Error_t PASCO2Ino::getCO2(int16_t & CO2PPM)
  *              - Temperature out of range error
  *              - IR emitter voltage out of range error
  *              - Communication error 
- *              which will be stored in the Diag_t struct varible passed by argument.
+ *              which will be stored in the Diag_t struct variable passed by argument.
  *              After reading the flags, these are cleared in the device writing in 
  *              the corresponding clear flag bitfields.
  * 

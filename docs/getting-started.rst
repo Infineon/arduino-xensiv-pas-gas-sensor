@@ -81,13 +81,13 @@ Kit is used. Connect the shield and the eval kit as in the following wiring diag
 Be sure that the corresponding solder jumper are set for I2C mode, and PSEL is pulled
 to GND. 
 For this example it is not required, but consider connecting the interrupt signal to the pin 2(P1.4)
-or 3(P0.0) of the XMC1100 Boot Kit for appliations that require interrupts.
+or 3(P0.0) of the XMC1100 Boot Kit for applications that require interrupts.
 Check the `Shield2Go Manual <https://www.infineon.com/assets/row/public/documents/24/44/infineon-quickstart-guide-pas-co2-shield2go-usermanual-en.pdf>`_ for complete details.
 
 Then, simply connect the eval kit to the computer with the USB cable. 
 
 .. warning:: 
-    Alternatively, the XMC 2Go can be used by stackin the sensor shield on top. But the XMC 2Go V1 does not support 5V signal, as required by the XENSIV™ PAS CO2 Sensor Shield2Go.
+    Alternatively, the XMC 2Go can be used by stacking the sensor shield on top. But the XMC 2Go V1 does not support 5V signal, as required by the XENSIV™ PAS CO2 Sensor Shield2Go.
     Thus, if XMC 2Go is used, keep in mind that an additional 5V signal needs to be provided to the 5V pin of the XENSIV™ PAS CO2 Sensor Shield2Go.
 2. UART
 """""""
