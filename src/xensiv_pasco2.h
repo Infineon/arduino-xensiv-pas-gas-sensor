@@ -43,7 +43,7 @@
  * \ref xensiv_pasco2_plat_uart_read, \ref xensiv_pasco2_plat_uart_write must be overridden when using the UART interface.
  * \ref xensiv_pasco2_plat_delay must be overridden with an appropriate implementation for the target platform that delays the processing for a certain number of milliseconds.
  * \ref xensiv_pasco2_plat_htons implements byte reversing in C and can be overridden optionally to optimize the performance if the target platform provides a specific instruction to byte reversing.
- * \ref xensiv_pasco2_plat_assert is implemented using the standard assert.h, and can be optionally overriden for the target platform.
+ * \ref xensiv_pasco2_plat_assert is implemented using the standard assert.h, and can be optionally overridden for the target platform.
  *
  * See the implementation example of these functions in xensiv_pasco2_mtb.c
  *
@@ -147,83 +147,83 @@ typedef enum
 /** Structure of the sensor's product and revision ID register (PROD_ID) */
 typedef union
 {
-  struct
-  {
-    uint32_t rev:5;                                     /*!< Product and firmware revision */
-    uint32_t prod:3;                                    /*!< Product type */
-  } b;                                                  /*!< Structure used for bit  access */
-  uint8_t u;                                            /*!< Type used for byte access */
+    struct
+    {
+        uint32_t rev : 5;                               /*!< Product and firmware revision */
+        uint32_t prod : 3;                              /*!< Product type */
+    } b;                                                /*!< Structure used for bit  access */
+    uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pasco2_id_t;
 
 /** Structure of the sensor's status register (SENS_STS) */
 typedef union
 {
-  struct
-  {
-    uint32_t :3;
-    uint32_t iccerr:1;                                  /*!< Communication error notification bit.
+    struct
+    {
+        uint32_t : 3;
+        uint32_t iccerr : 1;                            /*!< Communication error notification bit.
                                                              Indicates whether an invalid command has been received by the serial communication interface*/
-    uint32_t orvs:1;                                    /*!< Out-of-range VDD12V error bit */
-    uint32_t ortmp:1;                                   /*!< Out-of-range temperature error bit */
-    uint32_t pwm_dis_st:1;                              /*!< PWM_DIS pin status */
-    uint32_t sen_rdy:1;                                 /*!< Sensor ready bit */
-  } b;                                                  /*!< Structure used for bit  access */
-  uint8_t u;                                            /*!< Type used for byte access */
+        uint32_t orvs : 1;                              /*!< Out-of-range VDD12V error bit */
+        uint32_t ortmp : 1;                             /*!< Out-of-range temperature error bit */
+        uint32_t pwm_dis_st : 1;                        /*!< PWM_DIS pin status */
+        uint32_t sen_rdy : 1;                           /*!< Sensor ready bit */
+    } b;                                                /*!< Structure used for bit  access */
+    uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pasco2_status_t;
 
 /** Structure of the sensor's measurement configuration register (MEAS_CFG) */
 typedef union
 {
-  struct
-  {
-    uint32_t op_mode:2;                                 /*!< @ref xensiv_pasco2_op_mode_t */
-    uint32_t boc_cfg:2;                                 /*!< @ref xensiv_pasco2_boc_cfg_t */
-    uint32_t pwm_mode:1;                                /*!< @ref xensiv_pasco2_pwm_mode_t */
-    uint32_t pwm_outen:1;                               /*!< PWM output software enable bit */
-    uint32_t :2;
-  } b;                                                  /*!< Structure used for bit  access */
-  uint8_t u;                                            /*!< Type used for byte access */
+    struct
+    {
+        uint32_t op_mode : 2;                           /*!< @ref xensiv_pasco2_op_mode_t */
+        uint32_t boc_cfg : 2;                           /*!< @ref xensiv_pasco2_boc_cfg_t */
+        uint32_t pwm_mode : 1;                          /*!< @ref xensiv_pasco2_pwm_mode_t */
+        uint32_t pwm_outen : 1;                         /*!< PWM output software enable bit */
+        uint32_t : 2;
+    } b;                                                /*!< Structure used for bit  access */
+    uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pasco2_measurement_config_t;
 
 /** Structure of the sensor's interrupt configuration register (INT_CFG) */
 typedef union
 {
-  struct
-  {
-    uint32_t alarm_typ:1;                               /*!< @ref xensiv_pasco2_alarm_type_t */
-    uint32_t int_func:3;                                /*!< @ref xensiv_pasco2_interrupt_function_t */
-    uint32_t int_typ:1;                                 /*!< @ref xensiv_pasco2_interrupt_type_t */
-    uint32_t :3;
-  } b;                                                  /*!< Structure used for bit access */
-  uint8_t u;                                            /*!< Type used for byte access */
+    struct
+    {
+        uint32_t alarm_typ : 1;                         /*!< @ref xensiv_pasco2_alarm_type_t */
+        uint32_t int_func : 3;                          /*!< @ref xensiv_pasco2_interrupt_function_t */
+        uint32_t int_typ : 1;                           /*!< @ref xensiv_pasco2_interrupt_type_t */
+        uint32_t : 3;
+    } b;                                                /*!< Structure used for bit access */
+    uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pasco2_interrupt_config_t;
 
 /** Structure of the sensor's measurement status register (MEAS_STS) */
 typedef union
 {
-  struct
-  {
-    uint32_t :2;
-    uint32_t alarm:1;                                   /*!< Set at the end of every measurement sequence if a threshold violation occurs */
-    uint32_t int_sts:1;                                 /*!< Indicates whether the INT pin has been latched to active state (if alarm or data is ready) */
-    uint32_t drdy:1;                                    /*!< Indicates whether new data is available */
-    uint32_t :3;
-  } b;                                                  /*!< Structure used for bit  access */
-  uint8_t u;                                            /*!< Type used for byte access */
+    struct
+    {
+        uint32_t : 2;
+        uint32_t alarm : 1;                             /*!< Set at the end of every measurement sequence if a threshold violation occurs */
+        uint32_t int_sts : 1;                           /*!< Indicates whether the INT pin has been latched to active state (if alarm or data is ready) */
+        uint32_t drdy : 1;                              /*!< Indicates whether new data is available */
+        uint32_t : 3;
+    } b;                                                /*!< Structure used for bit  access */
+    uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pasco2_meas_status_t;
 
 struct xensiv_pasco2;                                   /* Forward declaration */
 
 /* Function pointer to the platform-specific function for reading the sensor registers via I2C/UART */
-typedef int32_t (*xensiv_pasco2_read_fptr_t)(const struct xensiv_pasco2 * dev, uint8_t reg_addr, uint8_t * data, uint8_t len);
+typedef int32_t (*xensiv_pasco2_read_fptr_t)(const struct xensiv_pasco2 *dev, uint8_t reg_addr, uint8_t *data, uint8_t len);
 
 /* Function pointer to the platform-specific function for writing  the sensor registers via I2C/UART */
-typedef int32_t (*xensiv_pasco2_write_fptr_t)(const struct xensiv_pasco2 * dev, uint8_t reg_addr, const uint8_t * data, uint8_t len);
+typedef int32_t (*xensiv_pasco2_write_fptr_t)(const struct xensiv_pasco2 *dev, uint8_t reg_addr, const uint8_t *data, uint8_t len);
 
 /** Structure of the XENSIV™ PAS CO2 sensor device. Initialized using \ref xensiv_pasco2_init_i2c or \ref xensiv_pasco2_init_uart */
 typedef struct xensiv_pasco2
 {
-    void * ctx;                         /*!< Context for I2C/UART platform-specific read and write functions */
+    void *ctx;                          /*!< Context for I2C/UART platform-specific read and write functions */
     xensiv_pasco2_read_fptr_t read;     /*!< Pointer to the register read function which depends on the communication interface used */
     xensiv_pasco2_write_fptr_t write;   /*!< Pointer to the register write function which depends on the communication interface used */
 } xensiv_pasco2_t;
@@ -238,23 +238,23 @@ extern "C" {
  * @brief Initializes the XENSIV™ PAS CO2 device using the I2C interface.
  * It initializes the dev structure, verifies the integrity of the communication layer of the serial communication interface, and checks whether the sensor is ready
  *
- * @param[inout] dev Pointer to a XENSIV™ PAS CO2 sensor device structure allocated by the user,
+ * @param[in,out] dev Pointer to a XENSIV™ PAS CO2 sensor device structure allocated by the user,
  * but the init function will initialize its contents
  * @param[in] ctx Pointer to the platform-specific I2C communication handler
  * @return XENSIV_PASCO2_OK if the initialization was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_init_i2c(xensiv_pasco2_t * dev, void *ctx);
+int32_t xensiv_pasco2_init_i2c(xensiv_pasco2_t *dev, void *ctx);
 
 /**
  * @brief Initializes the XENSIV™ PAS CO2 device using the UART interface.
  * It initializes the dev structure, verifies the integrity of the communication layer of the serial communication interface, and checks whether the sensor is ready
  *
- * @param[inout] dev Pointer to a XENSIV™ PAS CO2 sensor device structure allocated by user,
+ * @param[in,out] dev Pointer to a XENSIV™ PAS CO2 sensor device structure allocated by user,
  * but the init function will initialize its contents
  * @param[in] ctx Pointer to the platform-specific I2C communication handler
  * @return XENSIV_PASCO2_OK if the initialization was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_init_uart(xensiv_pasco2_t * dev, void *ctx);
+int32_t xensiv_pasco2_init_uart(xensiv_pasco2_t *dev, void *ctx);
 
 /**
  * @brief Writes the given data buffer into the sensor device.
@@ -266,7 +266,7 @@ int32_t xensiv_pasco2_init_uart(xensiv_pasco2_t * dev, void *ctx);
  * @param[in] len Number of bytes of data to be written
  * @return XENSIV_PASCO2_OK if writing to the register was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_reg(const xensiv_pasco2_t * dev, uint8_t reg_addr, const uint8_t * data, uint8_t len);
+int32_t xensiv_pasco2_set_reg(const xensiv_pasco2_t *dev, uint8_t reg_addr, const uint8_t *data, uint8_t len);
 
 /**
  * @brief Reads from the sensor device into the given data buffer.
@@ -278,7 +278,7 @@ int32_t xensiv_pasco2_set_reg(const xensiv_pasco2_t * dev, uint8_t reg_addr, con
  * @param[in] len Number of bytes of data to be read
  * @return XENSIV_PASCO2_OK if reading from the register was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_reg(const xensiv_pasco2_t * dev, uint8_t reg_addr, uint8_t * data, uint8_t len);
+int32_t xensiv_pasco2_get_reg(const xensiv_pasco2_t *dev, uint8_t reg_addr, uint8_t *data, uint8_t len);
 
 /**
  * @brief Gets the sensor device product and version ID
@@ -288,7 +288,7 @@ int32_t xensiv_pasco2_get_reg(const xensiv_pasco2_t * dev, uint8_t reg_addr, uin
  * @note : Refer to the register map description of the XENSIV™ PAS CO2 device for detailed information on the ID format
  * @return XENSIV_PASCO2_OK if reading the product id was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_id(const xensiv_pasco2_t * dev, xensiv_pasco2_id_t * id);
+int32_t xensiv_pasco2_get_id(const xensiv_pasco2_t *dev, xensiv_pasco2_id_t *id);
 
 /**
  * @brief Gets the sensor device status
@@ -297,7 +297,7 @@ int32_t xensiv_pasco2_get_id(const xensiv_pasco2_t * dev, xensiv_pasco2_id_t * i
  * @param[out] status Pointer to populate with the sensor device status
  * @return XENSIV_PASCO2_OK if reading the device status was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_status(const xensiv_pasco2_t * dev, xensiv_pasco2_status_t * status);
+int32_t xensiv_pasco2_get_status(const xensiv_pasco2_t *dev, xensiv_pasco2_status_t *status);
 
 /**
  * @brief Clears the sensor device status bits
@@ -309,7 +309,7 @@ int32_t xensiv_pasco2_get_status(const xensiv_pasco2_t * dev, xensiv_pasco2_stat
  *                 @arg @ref XENSIV_PASCO2_REG_SENS_STS_ORTMP_CLR_MSK Clears the ORTMP status sticky bit
  * @return XENSIV_PASCO2_OK if the status bits clearing was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_clear_status(const xensiv_pasco2_t * dev, uint8_t mask);
+int32_t xensiv_pasco2_clear_status(const xensiv_pasco2_t *dev, uint8_t mask);
 
 /**
  * @brief Gets the sensor device interrupt configuration
@@ -318,7 +318,7 @@ int32_t xensiv_pasco2_clear_status(const xensiv_pasco2_t * dev, uint8_t mask);
  * @param[out] int_config Pointer to populate with the sensor device interrupt configuration
  * @return XENSIV_PASCO2_OK if getting the interrupt configuration was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_interrupt_config(const xensiv_pasco2_t * dev, xensiv_pasco2_interrupt_config_t * int_config);
+int32_t xensiv_pasco2_get_interrupt_config(const xensiv_pasco2_t *dev, xensiv_pasco2_interrupt_config_t *int_config);
 
 /**
  * @brief Sets the sensor device interrupt configuration
@@ -327,7 +327,7 @@ int32_t xensiv_pasco2_get_interrupt_config(const xensiv_pasco2_t * dev, xensiv_p
  * @param[in] int_config New sensor device interrupt configuration to apply
  * @return XENSIV_PASCO2_OK if setting the interrupt configuration was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_interrupt_config(const xensiv_pasco2_t * dev, xensiv_pasco2_interrupt_config_t int_config);
+int32_t xensiv_pasco2_set_interrupt_config(const xensiv_pasco2_t *dev, xensiv_pasco2_interrupt_config_t int_config);
 
 /**
  * @brief Gets the sensor device measurement configuration
@@ -336,7 +336,7 @@ int32_t xensiv_pasco2_set_interrupt_config(const xensiv_pasco2_t * dev, xensiv_p
  * @param[out] meas_config Pointer to populate with the sensor device measurement configuration
  * @return XENSIV_PASCO2_OK if getting the measurement configuration was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_measurement_config(const xensiv_pasco2_t * dev, xensiv_pasco2_measurement_config_t * meas_config);
+int32_t xensiv_pasco2_get_measurement_config(const xensiv_pasco2_t *dev, xensiv_pasco2_measurement_config_t *meas_config);
 
 /**
  * @brief Sets the sensor device measurement configuration
@@ -345,7 +345,7 @@ int32_t xensiv_pasco2_get_measurement_config(const xensiv_pasco2_t * dev, xensiv
  * @param[in] meas_config New sensor device measurement configuration to apply
  * @return XENSIV_PASCO2_OK if setting the measurement configuration was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_measurement_config(const xensiv_pasco2_t * dev, xensiv_pasco2_measurement_config_t meas_config);
+int32_t xensiv_pasco2_set_measurement_config(const xensiv_pasco2_t *dev, xensiv_pasco2_measurement_config_t meas_config);
 
 /**
  * @brief Gets the current CO2 ppm values from the sensor device
@@ -354,16 +354,16 @@ int32_t xensiv_pasco2_set_measurement_config(const xensiv_pasco2_t * dev, xensiv
  * @param[out] val Pointer to populate with the CO2 ppm value
  * @return XENSIV_PASCO2_OK if obtaining the current CO2 value successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_result(const xensiv_pasco2_t * dev, uint16_t * val);
+int32_t xensiv_pasco2_get_result(const xensiv_pasco2_t *dev, uint16_t *val);
 
 /**
- * @brief Sets the measurement rate for continuos mode
+ * @brief Sets the measurement rate for continuous mode
  *
  * @param[in] dev Pointer to the XENSIV™ PAS CO2 sensor device
  * @param[in] val New measurement rate to apply [5-4095s]
  * @return XENSIV_PASCO2_OK if setting the measurement rate was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_measurement_rate(const xensiv_pasco2_t * dev, uint16_t val);
+int32_t xensiv_pasco2_set_measurement_rate(const xensiv_pasco2_t *dev, uint16_t val);
 
 /**
  * @brief Gets the measurement status of the sensor device.
@@ -375,7 +375,7 @@ int32_t xensiv_pasco2_set_measurement_rate(const xensiv_pasco2_t * dev, uint16_t
  * @param[out] status Pointer to populate with the sensor device measurement status
  * @return XENSIV_PASCO2_OK if getting the measurement was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_measurement_status(const xensiv_pasco2_t * dev, xensiv_pasco2_meas_status_t * status);
+int32_t xensiv_pasco2_get_measurement_status(const xensiv_pasco2_t *dev, xensiv_pasco2_meas_status_t *status);
 
 /**
  * @brief Clears the measurement status of the sensor device
@@ -386,7 +386,7 @@ int32_t xensiv_pasco2_get_measurement_status(const xensiv_pasco2_t * dev, xensiv
  *                 @arg @ref XENSIV_PASCO2_REG_MEAS_STS_ALARM_CLR_MSK   Clears the sticky bit MEAS_STS.ALARM
  * @return XENSIV_PASCO2_OK if clearing the measurement status selected bits was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_clear_measurement_status(const xensiv_pasco2_t * dev, uint8_t mask);
+int32_t xensiv_pasco2_clear_measurement_status(const xensiv_pasco2_t *dev, uint8_t mask);
 
 /**
  * @brief Sets the alarm threshold
@@ -395,7 +395,7 @@ int32_t xensiv_pasco2_clear_measurement_status(const xensiv_pasco2_t * dev, uint
  * @param[in] val New alarm threshold value to apply
  * @return XENSIV_PASCO2_OK if setting the alarm threshold was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_alarm_threshold(const xensiv_pasco2_t * dev, uint16_t val);
+int32_t xensiv_pasco2_set_alarm_threshold(const xensiv_pasco2_t *dev, uint16_t val);
 
 /**
  * @brief Sets the pressure compensation value.
@@ -409,7 +409,7 @@ int32_t xensiv_pasco2_set_alarm_threshold(const xensiv_pasco2_t * dev, uint16_t 
  * @param[in] val New pressure compensation value to apply
  * @return XENSIV_PASCO2_OK if setting the pressure reference value was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_pressure_compensation(const xensiv_pasco2_t * dev, uint16_t val);
+int32_t xensiv_pasco2_set_pressure_compensation(const xensiv_pasco2_t *dev, uint16_t val);
 
 /**
  * @brief Sets the offset compensation value
@@ -419,7 +419,7 @@ int32_t xensiv_pasco2_set_pressure_compensation(const xensiv_pasco2_t * dev, uin
  * @param[in] val New pressure calibration value to apply
  * @return XENSIV_PASCO2_OK if setting the measurement offset was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_offset_compensation(const xensiv_pasco2_t * dev, uint16_t val);
+int32_t xensiv_pasco2_set_offset_compensation(const xensiv_pasco2_t *dev, uint16_t val);
 
 /**
  * @brief Writes to the scratchpad register
@@ -428,7 +428,7 @@ int32_t xensiv_pasco2_set_offset_compensation(const xensiv_pasco2_t * dev, uint1
  * @param[in] val New scratchpad register value to apply
  * @return XENSIV_PASCO2_OK if writing to the scratch pad register was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_set_scratch_pad(const xensiv_pasco2_t * dev, uint8_t val);
+int32_t xensiv_pasco2_set_scratch_pad(const xensiv_pasco2_t *dev, uint8_t val);
 
 /**
  * @brief Reads from the scratchpad register
@@ -437,7 +437,7 @@ int32_t xensiv_pasco2_set_scratch_pad(const xensiv_pasco2_t * dev, uint8_t val);
  * @param[out] val Pointer to populate with the sensor device scratchpad register value
  * @return XENSIV_PASCO2_OK if reading from the scratch pad register was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_get_scratch_pad(const xensiv_pasco2_t * dev, uint8_t * val);
+int32_t xensiv_pasco2_get_scratch_pad(const xensiv_pasco2_t *dev, uint8_t *val);
 
 /**
  * @brief Triggers a sensor device command
@@ -446,7 +446,7 @@ int32_t xensiv_pasco2_get_scratch_pad(const xensiv_pasco2_t * dev, uint8_t * val
  * @param[in] cmd Command to trigger
  * @return XENSIV_PASCO2_OK if triggering the command  was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_cmd(const xensiv_pasco2_t * dev, xensiv_pasco2_cmd_t cmd);
+int32_t xensiv_pasco2_cmd(const xensiv_pasco2_t *dev, xensiv_pasco2_cmd_t cmd);
 
 /**
  * @brief Triggers a single mode measurement
@@ -454,7 +454,7 @@ int32_t xensiv_pasco2_cmd(const xensiv_pasco2_t * dev, xensiv_pasco2_cmd_t cmd);
  * @param[in] dev Pointer to the XENSIV™ PAS CO2 sensor device
  * @return XENSIV_PASCO2_OK if starting the measurement was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_start_single_mode(const xensiv_pasco2_t * dev);
+int32_t xensiv_pasco2_start_single_mode(const xensiv_pasco2_t *dev);
 
 /**
  * @brief Starts measurements in continuous mode
@@ -463,7 +463,7 @@ int32_t xensiv_pasco2_start_single_mode(const xensiv_pasco2_t * dev);
  * @param[in] val Measurement rate to apply [5-4095s]
  * @return XENSIV_PASCO2_OK if starting the measurements was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_start_continuous_mode(const xensiv_pasco2_t * dev, uint16_t val);
+int32_t xensiv_pasco2_start_continuous_mode(const xensiv_pasco2_t *dev, uint16_t val);
 
 /**
  * @brief Performs force compensation.
@@ -474,7 +474,7 @@ int32_t xensiv_pasco2_start_continuous_mode(const xensiv_pasco2_t * dev, uint16_
  * @param[in] cmd Command to trigger
  * @return XENSIV_PASCO2_OK if the force compensation was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_perform_forced_compensation(const xensiv_pasco2_t * dev, uint16_t co2_ref);
+int32_t xensiv_pasco2_perform_forced_compensation(const xensiv_pasco2_t *dev, uint16_t co2_ref);
 
 /**
  * @brief Target platform-specific function to perform I2C write/read transfer.
@@ -487,7 +487,7 @@ int32_t xensiv_pasco2_perform_forced_compensation(const xensiv_pasco2_t * dev, u
  * @param[in] rx_len I2C receive data size
  * @return XENSIV_PASCO2_OK if the I2C transfer was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uint8_t * tx_buffer, size_t tx_len, uint8_t * rx_buffer, size_t rx_len);
+int32_t xensiv_pasco2_plat_i2c_transfer(void *ctx, uint16_t dev_addr, const uint8_t *tx_buffer, size_t tx_len, uint8_t *rx_buffer, size_t rx_len);
 
 /**
  * @brief Target platform-specific function to read over UART
@@ -497,7 +497,7 @@ int32_t xensiv_pasco2_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uin
  * @param[in] len Number of bytes to receive
  * @return XENSIV_PASCO2_OK if the UART read was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_plat_uart_read(void *ctx, uint8_t * data, size_t len);
+int32_t xensiv_pasco2_plat_uart_read(void *ctx, uint8_t *data, size_t len);
 
 /**
  * @brief Target platform-specific function to write over UART
@@ -507,12 +507,12 @@ int32_t xensiv_pasco2_plat_uart_read(void *ctx, uint8_t * data, size_t len);
  * @param[in] len Number of bytes to transmit
  * @return XENSIV_PASCO2_OK if the UART write was successful; an error indicating what went wrong otherwise
  */
-int32_t xensiv_pasco2_plat_uart_write(void *ctx, uint8_t * data, size_t len);
+int32_t xensiv_pasco2_plat_uart_write(void *ctx, uint8_t *data, size_t len);
 
 /**
  * @brief Target platform-specific function that waits for a specified time period in milliseconds
  *
- * @param[in] ms Number of miliseconds to wait for
+ * @param[in] ms Number of milliseconds to wait for
  */
 void xensiv_pasco2_plat_delay(uint32_t ms);
 
@@ -525,7 +525,7 @@ void xensiv_pasco2_plat_delay(uint32_t ms);
 uint16_t xensiv_pasco2_plat_htons(uint16_t x);
 
 /**
- * @brief Target platform-specific function that implements a runtime assertion; used to verify the assumptions made by the program and take appropiate actions if assumption is false
+ * @brief Target platform-specific function that implements a runtime assertion; used to verify the assumptions made by the program and take appropriate actions if assumption is false
  *
  * @param[in] expr Expression to be verified
  */

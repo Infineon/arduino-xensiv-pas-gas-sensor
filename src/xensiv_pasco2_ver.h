@@ -1,7 +1,7 @@
 /***********************************************************************************************//**
  * \file xensiv_pasco2.h
  *
- * Description: This file constains the exact version of the XENSIV™ PAS CO2 sensor
+ * Description: This file contains the exact version of the XENSIV™ PAS CO2 sensor
  *              obtained from https://github.com/Infineon/sensor-xensiv-pasco2.
  *
  ***************************************************************************************************

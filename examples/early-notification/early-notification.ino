@@ -31,7 +31,7 @@
  *    signal, and it is additionally connected to the 
  *    microcontroller for only readout synchronization purposes.
  *
- *  In this example, we consider the third option. The micrcontroller
+ *  In this example, we consider the third option. The microcontroller
  *  waits for the falling edge on the interrupt signal to trigger the
  *  readout.
  */
