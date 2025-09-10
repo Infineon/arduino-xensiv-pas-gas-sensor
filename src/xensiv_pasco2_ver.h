@@ -1,8 +1,8 @@
 /***********************************************************************************************//**
- * \file xensiv_pasco2.h
+ * \file xensiv_pas_gas.h
  *
- * Description: This file contains the exact version of the XENSIV™ PAS CO2 sensor
- *              obtained from https://github.com/Infineon/sensor-xensiv-pasco2.
+ * Description: This file contains the exact version of the XENSIV™ PAS GAS sensor
+ *              obtained from https://github.com/Infineon/sensor-xensiv-xensiv_pas_gas.
  *
  ***************************************************************************************************
  * \copyright
@@ -22,10 +22,10 @@
  * limitations under the License.
  **************************************************************************************************/
 
-#ifndef XENSIV_PASCO2_VER_H_
-#define XENSIV_PASCO2_VER_H_
+#ifndef XENSIV_PAS_GAS_VER_H_
+#define XENSIV_PAS_GAS_VER_H_
 
-#define SENSOR_XENSIV_PASCO2_VERSION   "1.0.0"
-#define SENSOR_XENSIV_PASCO2_COMMIT    "f8fae620724b7294429fea2aea42388ca83e6608"
+#define SENSOR_XENSIV_PAS_GAS_VERSION   "1.0.0"
+#define SENSOR_XENSIV_PAS_GAS_COMMIT    "f8fae620724b7294429fea2aea42388ca83e6608"
 
 #endif

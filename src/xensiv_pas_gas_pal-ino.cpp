@@ -1,6 +1,6 @@
 /** 
- * @file        pas-co2-pal-ino.cpp
- * @brief       XENSIV™ PAS CO2 Arduino PAL Implementation
+ * @file        xensiv_pas_gas-pal-ino.cpp
+ * @brief       XENSIV™ PAS GAS Arduino PAL Implementation
  * @copyright   Copyright (c) 2020-2021 Infineon Technologies AG
  *              
  * SPDX-License-Identifier: MIT
@@ -9,9 +9,11 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "xensiv_pasco2.h"
+#include "xensiv_pas_gas_platform.h"
+#include "xensiv_pas_gas.h"
 
-#define XENSIV_PASCO2_UART_TIMEOUT_MS           (500U)
+
+#define XENSIV_PAS_GAS_UART_TIMEOUT_MS           (500U)
 
 #define INO_ASSERT(x)   do {                \
                             if(!(x))        \
@@ -20,7 +22,7 @@
                             }               \
                         } while(false)
 
-int32_t xensiv_pasco2_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uint8_t * tx_buffer, size_t tx_len, uint8_t * rx_buffer, size_t rx_len)
+int32_t xensiv_pas_gas_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uint8_t * tx_buffer, size_t tx_len, uint8_t * rx_buffer, size_t rx_len)
 {
     INO_ASSERT(ctx != NULL);
     INO_ASSERT(tx_buffer != NULL);    
@@ -34,12 +36,12 @@ int32_t xensiv_pasco2_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uin
 
     if(written != tx_len)
     {
-        return XENSIV_PASCO2_ERR_COMM;
+        return XENSIV_PAS_GAS_ERR_COMM;
     }
 
     if(0 != wire->endTransmission(send_stop))
     {
-        return XENSIV_PASCO2_ERR_COMM;
+        return XENSIV_PAS_GAS_ERR_COMM;
     }
 
     if(NULL != rx_buffer)
@@ -48,7 +50,7 @@ int32_t xensiv_pasco2_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uin
 
         if(bytes_read != rx_len)
         {
-            return XENSIV_PASCO2_ERR_COMM;
+            return XENSIV_PAS_GAS_ERR_COMM;
         }
 
         for(uint16_t i = 0; (i < rx_len) && (wire->available() > 0) ; i++)
@@ -58,20 +60,20 @@ int32_t xensiv_pasco2_plat_i2c_transfer(void * ctx, uint16_t dev_addr, const uin
 
         if(0 != wire->endTransmission(true))
         {
-            return XENSIV_PASCO2_ERR_COMM;
+            return XENSIV_PAS_GAS_ERR_COMM;
         } 
     }
 
-   return XENSIV_PASCO2_OK;
+   return XENSIV_PAS_GAS_OK;
 }
 
-int32_t xensiv_pasco2_plat_uart_read(void * ctx, uint8_t * data, size_t len)
+int32_t xensiv_pas_gas_plat_uart_read(void * ctx, uint8_t * data, size_t len)
 {
     INO_ASSERT(ctx != NULL);
     INO_ASSERT(data != NULL);
 
     HardwareSerial * uart = (HardwareSerial *)ctx;
-    uint32_t timeout = XENSIV_PASCO2_UART_TIMEOUT_MS;
+    uint32_t timeout = XENSIV_PAS_GAS_UART_TIMEOUT_MS;
     size_t xfer_len = 0;
 
     while (((size_t)(uart->available()) < len) && (timeout > 0U))
@@ -86,11 +88,11 @@ int32_t xensiv_pasco2_plat_uart_read(void * ctx, uint8_t * data, size_t len)
     }
 
     return (len == xfer_len) ? 
-            XENSIV_PASCO2_OK : 
-            XENSIV_PASCO2_ERR_COMM;
+            XENSIV_PAS_GAS_OK : 
+            XENSIV_PAS_GAS_ERR_COMM;
 }
 
-int32_t xensiv_pasco2_plat_uart_write(void * ctx, uint8_t * data, size_t len)
+int32_t xensiv_pas_gas_plat_uart_write(void * ctx, uint8_t * data, size_t len)
 {
     INO_ASSERT(ctx != NULL);
     INO_ASSERT(data != NULL);
@@ -102,23 +104,23 @@ int32_t xensiv_pasco2_plat_uart_write(void * ctx, uint8_t * data, size_t len)
     size_t xfer_len = uart->write(data, len);
 
     return (len == xfer_len) ? 
-            XENSIV_PASCO2_OK : 
-            XENSIV_PASCO2_ERR_COMM;
+            XENSIV_PAS_GAS_OK : 
+            XENSIV_PAS_GAS_ERR_COMM;
 }
 
-void xensiv_pasco2_plat_delay(uint32_t ms)
+void xensiv_pas_gas_plat_delay(uint32_t ms)
 {
     delay(ms);
 }
 
-uint16_t xensiv_pasco2_plat_htons(uint16_t x)
+uint16_t xensiv_pas_gas_plat_htons(uint16_t x)
 {
     uint16_t rev_x = ((x & 0xFF) << 8) | ((x & 0xFF00) >> 8);
 
     return rev_x;
 }
 
-void xensiv_pasco2_plat_assert(int expr)
+void xensiv_pas_gas_plat_assert(int expr)
 {
     INO_ASSERT(expr);
 }
