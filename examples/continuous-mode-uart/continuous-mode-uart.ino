@@ -1,12 +1,13 @@
 #include <Arduino.h>
-#include <pas-co2-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
+#include <xensiv_pas_gas_co2-ino.hpp> 
 
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 #define PRESSURE_REFERENCE  900
 
 /*
- * Create CO2 object
+ * Create gas sensor object
  * Hardware serial Boards list: 
  * Arduino UNO R4 Wifi
  * Arduino Mega 2560
@@ -15,10 +16,10 @@
  * Arduino MKR 1000 WiFi
  * XMC4700 Relax Kit
  */
-PASCO2Ino cotwo(&Serial1);     
+XENSIV_PAS_GASCO2Ino gassensor(&Serial1);     
 
 
-int16_t co2ppm;
+int16_t gasrawvalue;
 Error_t err;
 
 void setup()
@@ -29,8 +30,8 @@ void setup()
     Serial.println("serial initialized");
 
     /* Initialize the sensor */
-    err = cotwo.begin();
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.begin();
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
       Serial.println(err);
@@ -39,8 +40,8 @@ void setup()
     /* We can set the reference pressure before starting 
      * the measure 
      */
-    err = cotwo.setPressRef(PRESSURE_REFERENCE);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.setPressRef(PRESSURE_REFERENCE);
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("pressure reference error: ");
       Serial.println(err);
@@ -50,8 +51,8 @@ void setup()
      * Configure the sensor to measureme periodically 
      * every 60 seconds
      */
-    err = cotwo.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS);
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
       Serial.println(err);
@@ -65,24 +66,24 @@ void loop()
     /* Wait for the value to be ready. */
     delay(PERIODIC_MEAS_INTERVAL_IN_SECONDS*1000);
 
-    err = cotwo.getCO2(co2ppm);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.getGAS_conc(gasrawvalue);
+    if(XENSIV_PAS_GAS_OK != err)
     {
       /* Retry in case of timing synch mismatch */
-      if(XENSIV_PASCO2_ERR_COMM == err)
+      if(XENSIV_PAS_GAS_ERR_COMM == err)
       {
         delay(600);
-        err = cotwo.getCO2(co2ppm);
-        if(XENSIV_PASCO2_OK != err)          
+        err = gassensor.getGAS_conc(gasrawvalue);
+        if(XENSIV_PAS_GAS_OK != err)          
         {
-          Serial.print("get co2 error: ");
+          Serial.print("get gas error: ");
           Serial.println(err);
         }
       }
     }
 
-    Serial.print("co2 ppm value : ");
-    Serial.println(co2ppm);
+    Serial.print("GAS value : ");
+    Serial.println(gasrawvalue);
 
     /*
      * Assuming we have some mechanism to obtain a
@@ -90,8 +91,8 @@ void loop()
      * we could compensate again by setting the new reference. 
      * Here we just keep the initial value.
      */
-    err = cotwo.setPressRef(PRESSURE_REFERENCE);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.setPressRef(PRESSURE_REFERENCE);
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("pressure reference error: ");
       Serial.println(err);

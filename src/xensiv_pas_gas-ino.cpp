@@ -1,17 +1,17 @@
 /** 
- * @file        pas-co2-ino.cpp
- * @brief       XENSIV™ PAS CO2 Arduino API
+ * @file        xensiv_pas_gas-ino.cpp
+ * @brief       XENSIV™ PAS GAS Arduino API
  * @copyright   Copyright (c) 2020-2021 Infineon Technologies AG
  *              
  * SPDX-License-Identifier: MIT
  */
 
-#include "pas-co2-ino.hpp"
+#include "xensiv_pas_gas-ino.hpp"
 
 /**
- * @brief   Assertion of XENSIV™ PAS CO2 return code
+ * @brief   Assertion of XENSIV™ PAS GAS return code
  */
-#define INO_ASSERT_RET(x)   if( x != XENSIV_PASCO2_OK ) { return x; }
+#define GASINO_ASSERT_RET(x)   if( x != XENSIV_PAS_GAS_OK ) { return x; }
 
 /**
  * @brief   External serial interface init and deinit
@@ -21,16 +21,16 @@
  *          and end() class function respectively 
  * 
  */
-#define PAS_CO2_SERIAL_PAL_INIT_EXTERNAL
+#define PAS_GAS_SERIAL_PAL_INIT_EXTERNAL
 
 /**
- * @brief      XENSIV™ PAS CO2 I2C Arduino Constructor
+ * @brief      XENSIV™ PAS GAS I2C Arduino Constructor
  *
  * @param[in]   wire    TwoWire interface instance. Default is the Arduino primary Wire instance.
  * @param[in]   intPin  Interrupt pin. Default is UnusedPin         
  * @pre         None
  */
-PASCO2Ino::PASCO2Ino(TwoWire * wire,
+XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(TwoWire * wire,
                                  uint8_t   intPin)
 : i2c(wire), uart(nullptr), intPin(intPin)
 {
@@ -38,13 +38,13 @@ PASCO2Ino::PASCO2Ino(TwoWire * wire,
 }
 
 /**
- * @brief      XENSIV™ PAS CO2 UART Arduino Constructor
+ * @brief      XENSIV™ PAS GAS UART Arduino Constructor
  * 
  * @param[in]   serial  Serial interface instance
  * @param[in]   intPin  Interrupt pin. Default is UnusedPin         
  * @pre         None
  */
-PASCO2Ino::PASCO2Ino(HardwareSerial * serial,
+XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(HardwareSerial * serial,
                                  uint8_t          intPin)
 : i2c(nullptr), uart(serial), intPin(intPin)
 {
@@ -52,90 +52,34 @@ PASCO2Ino::PASCO2Ino(HardwareSerial * serial,
 }
 
 /**
- * @brief       XENSIV™ PAS CO2 Arduino Destructor 
+ * @brief       XENSIV™ PAS GAS Arduino Destructor 
  * @details     It disables the sensor and deletes all the
  *              dynamically created PAL instances in the 
  *              constructor
  * @pre         None
  */
-PASCO2Ino::~PASCO2Ino()
+XENSIV_PAS_GASIno::~XENSIV_PAS_GASIno()
 {
 
-}
-
-/**
- * @brief   Begins the sensor
- * 
- * @details Initializes the serial interface if the initialization
- *          is delegated to the PASCO2 class.
- *          Sets the I2C freq or UART baudrate to the default values 
- *          prior the serial interface initialization.
- *          Initializes the interrupt pin if used.
- * 
- * @return  XENSIV™ PAS CO2 error code
- * @retval  XENSIV_PASCO2_OK if success 
- * @pre     None
- */
-Error_t PASCO2Ino::begin()
-{
-    int32_t ret = XENSIV_PASCO2_OK;
-    xensiv_pasco2_measurement_config_t  measConf;
-
-    /* Initialize sensor interface */
-    if(nullptr != i2c)
-    {
-        #ifndef PAS_CO2_SERIAL_PAL_INIT_EXTERNAL
-        i2c->begin();
-        i2c->setClock(freqHz);
-        #endif 
-        ret = xensiv_pasco2_init_i2c(&dev, i2c);
-    }
-    else if(nullptr != uart)
-    {
-        #ifndef PAS_CO2_SERIAL_PAL_INIT_EXTERNAL
-        uart->begin(baudrateBps);   
-        #endif
-        ret = xensiv_pasco2_init_uart(&dev, uart);
-    }
-
-    /* Initialize int_pin */
-    if( unusedPin != intPin)
-    {
-        pinMode(intPin, INPUT_PULLUP);
-    }
-
-    /**
-     * Set the sensor in idle mode.
-     * In case PWM_DIS is by hardware configuring 
-     * the device to continuous mode
-     */
-    ret = xensiv_pasco2_get_measurement_config(&dev, &measConf);
-    INO_ASSERT_RET(ret);
-
-    measConf.b.op_mode = XENSIV_PASCO2_OP_MODE_IDLE;
-
-    ret = xensiv_pasco2_set_measurement_config(&dev, measConf);
-     
-    return ret;
 }
 
 /**
  * @brief   Ends the sensor
  * 
  * @details Deinitializes the serial interface if the deinitialization
- *          is delegated to the PASCO2Ino class. 
+ *          is delegated to the XENSIV_PAS_GASIno class. 
  *          Deinitializes the interrupt pin if used.
  * 
- * @return  XENSIV™ PAS CO2 error code
- * @retval  XENSIV_PASCO2_OK always
+ * @return  XENSIV™ PAS GAS error code
+ * @retval  XENSIV_PAS_GAS_OK always
  * @pre     begin()
  */
-Error_t PASCO2Ino::end()
+Error_t XENSIV_PAS_GASIno::end()
 {
     /**< Deinitialize sensor interface*/
     if(nullptr != i2c)
     {
-        #ifndef PAS_CO2_SERIAL_PAL_INIT_EXTERNAL
+        #ifndef PAS_GAS_SERIAL_PAL_INIT_EXTERNAL
         #if !defined(ARDUINO_ARCH_ESP32)
         i2c->end();
         #endif
@@ -143,7 +87,7 @@ Error_t PASCO2Ino::end()
     }   
     else if(nullptr != uart)
     {
-        #ifndef PAS_CO2_SERIAL_PAL_INIT_EXTERNAL
+        #ifndef PAS_GAS_SERIAL_PAL_INIT_EXTERNAL
         uart->end();
         #endif
     }
@@ -154,7 +98,7 @@ Error_t PASCO2Ino::end()
         detachInterrupt(digitalPinToInterrupt(intPin));
     }
 
-    return XENSIV_PASCO2_OK;
+    return XENSIV_PAS_GAS_OK;
 }
 
 /**
@@ -167,24 +111,24 @@ Error_t PASCO2Ino::end()
  *              ---------------------------------------------------------------
  *              If the function is called with no arguments, the sensor
  *              will be triggered to perform a single shot measurement. 
- *              The user needs to poll with getCO2() until the CO2 value is 
+ *              The user needs to poll with getGAS_conc() until the gas value is 
  *              available and has been read out from the sensor.
- *              The CO2 concentration value read will be zero as long as 
+ *              The gas concentration value read will be zero as long as 
  *              no value is available or if any error occurred in the 
  *              readout attempt. 
  *              Polling example:
  * 
  *              @code
- *              PASCO2Ino cotwo(serial_intf); 
- *              int16_t   co2ppm;
+ *              XENSIV_PAS_GASIno gassensor(serial_intf); 
+ *              int16_t   gasrawvalue;
  * 
  *              serial_intf.begin();
  * 
- *              cotwo.begin();              
+ *              gassensor.begin();              
  * 
- *              cotwo.startMeasure();
+ *              gassensor.startMeasure();
  * 
- *              do{ cotwo.getCO2(co2ppm); } while (co2ppm == 0);  
+ *              do{ gassensor.getGAS_conc(gasrawvalue); } while (gasrawvalue == 0);  
  *              @endcode
  * 
  *              Continuous measurement
@@ -192,27 +136,27 @@ Error_t PASCO2Ino::end()
  *              Continuous measurements (periodInSec) will configure the sensor
  *              to perform a measurement every desired period. Between 5 and
  *              4095 seconds.
- *              Without further arguments, the user has to poll with getCO2()
+ *              Without further arguments, the user has to poll with getGAS_conc()
  *              until the value is available. Any super loop or thread 
- *              routine, can just consists on reading the CO2 (getCO2()). 
+ *              routine, can just consists on reading the gas (getGAS_conc()). 
  *              For example, measure every 5 minutes:
  * 
  *              @code
- *              PASCO2Ino cotwo(serial_intf);
- *              int16_t   co2ppm;
+ *              XENSIV_PAS_GASIno gassensor(serial_intf);
+ *              int16_t   gasrawvalue;
  * 
  *              serial_intf.begin();
  * 
- *              cotwo.begin();  
+ *              gassensor.begin();  
  * 
- *              cotwo.startMeasure(300);
+ *              gassensor.startMeasure(300);
  * 
  *              while(1)
  *              {
  *                  delay(300000); // Measure will be ready every 5 min
  * 
- *                  do{ cotwo.getCO2(co2ppm); } while (co2ppm == 0);  
- *                  // ... do something with the co2 value ... 
+ *                  do{ gassensor.getGAS_conc(gasrawvalue); } while (gasrawvalue == 0);  
+ *                  // ... do something with the gas value ... 
  *              }
  *              @endcode
  *
@@ -235,20 +179,20 @@ Error_t PASCO2Ino::end()
  *                  intFlag = true;
  *              }
  * 
- *              PASCO2Ino cotwo(serial_intf, interrupt);
- *              int16_t   co2ppm;
+ *              XENSIV_PAS_GASIno gassensor(serial_intf, interrupt);
+ *              int16_t   gasrawvalue;
  *              
  *              serial_intf.begin();
  *              
- *              cotwo.begin();  
+ *              gassensor.begin();  
  * 
- *              cotwo.startMeasure(300,0,cback);
+ *              gassensor.startMeasure(300,0,cback);
  * 
  *              while(1)
  *              {
  *                  while(!intFlag) { // block or yield() };
- *                  cotwo.getCO2(co2ppm);   
- *                  // ... do something with the co2 value ... 
+ *                  gassensor.getGAS_conc(gasrawvalue);   
+ *                  // ... do something with the gas value ... 
  *                  intFlag = false;
  *              }
  *              @endcode
@@ -257,10 +201,10 @@ Error_t PASCO2Ino::end()
  *              ---------------------------------------------------------------
  *              If the alarm threshold argument is non-zero, the alarm mode 
  *              is activated, and the sensor internal flag will be enabled 
- *              if the concentration of CO2 goes above the specified value.
+ *              if the concentration of gas goes above the specified value.
  *              This option is better combined with the interrupt mode. Thus,
  *              if the interrupt mode is available and a callback function
- *              is passed, the interrupt will occur only when the co2 
+ *              is passed, the interrupt will occur only when the gas 
  *              concentration goes above the threshold. 
  *              This makes mostly sense for continuous measurement configuration. 
  *              But it can be used as well for a single shot configuration
@@ -272,7 +216,7 @@ Error_t PASCO2Ino::end()
  *              the 12V emitter power supply just before the measurement is
  *              performed, and switch it off as the interrupt signal is disabled.
  *              Therefore, the power supply 12V only needs to be on during the
- *              CO2 sensing.
+ *              GAS sensing.
  *                  
  *              When this flag is set, the alarm interrupt functionality is not 
  *              available. Both options cannot be combined.
@@ -291,67 +235,67 @@ Error_t PASCO2Ino::end()
  * @param[in]   cback               Pointer to the callback function to be called upon
  *                                  interrupt
  * @param[in]   earlyNotification   Enables early notification interrupt. Disabled (false) by default 
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::startMeasure(int16_t periodInSec, int16_t alarmTh, void (*cback) (void *), bool earlyNotification)
-{
-    xensiv_pasco2_measurement_config_t  measConf;
-    xensiv_pasco2_interrupt_config_t intConf; 
-    int32_t ret = XENSIV_PASCO2_OK;   
+Error_t XENSIV_PAS_GASIno::startMeasure(int16_t periodInSec, int16_t alarmTh, void (*cback) (void *), bool earlyNotification)
+{   
+    xensiv_pas_gas_measurement_config_t measConf;
+    xensiv_pas_gas_interrupt_config_t intConf; 
+    int32_t ret = XENSIV_PAS_GAS_OK;   
 
     /* Get meas configuration*/
-    ret = xensiv_pasco2_get_measurement_config(&dev, &measConf);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_measurement_config(&dev, &measConf);
+    GASINO_ASSERT_RET(ret);
 
     /**
      * Set the device in idle mode to avoid 
      * any conflict if stopMeasure() was not
      * previously called.
      */
-    measConf.b.op_mode = XENSIV_PASCO2_OP_MODE_IDLE;
+    measConf.b.op_mode = XENSIV_PAS_GAS_OP_MODE_IDLE;
 
-    ret = xensiv_pasco2_set_measurement_config(&dev, measConf);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_set_measurement_config(&dev, measConf);
+    GASINO_ASSERT_RET(ret);
 
     /* Get int configuration */
-    ret = xensiv_pasco2_get_interrupt_config(&dev, &intConf);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_interrupt_config(&dev, &intConf);
+    GASINO_ASSERT_RET(ret);
 
     /* Default configuration */
-    measConf.b.op_mode = XENSIV_PASCO2_OP_MODE_SINGLE;
-    intConf.b.int_func = XENSIV_PASCO2_INTERRUPT_FUNCTION_DRDY;
+    measConf.b.op_mode = XENSIV_PAS_GAS_OP_MODE_SINGLE;
+    intConf.b.int_func = XENSIV_PAS_GAS_INTERRUPT_FUNCTION_DRDY;
              
 
     if( periodInSec > 0 )
     {   
-        ret = xensiv_pasco2_set_measurement_rate(&dev, periodInSec);
-        INO_ASSERT_RET(ret);
+        ret = xensiv_pas_gas_set_measurement_rate(&dev, periodInSec);
+        GASINO_ASSERT_RET(ret);
 
-        measConf.b.op_mode = XENSIV_PASCO2_OP_MODE_CONTINUOUS;
+        measConf.b.op_mode = XENSIV_PAS_GAS_OP_MODE_CONTINUOUS;
     }
 
     if( alarmTh >  0 )
     {
-        ret = xensiv_pasco2_set_alarm_threshold(&dev, alarmTh);
-        INO_ASSERT_RET(ret);
+        ret = xensiv_pas_gas_set_alarm_threshold(&dev, alarmTh);
+        GASINO_ASSERT_RET(ret);
 
-        intConf.b.alarm_typ = XENSIV_PASCO2_ALARM_TYPE_LOW_TO_HIGH;
-        intConf.b.int_func  = XENSIV_PASCO2_INTERRUPT_FUNCTION_ALARM;
+        intConf.b.alarm_typ = XENSIV_PAS_GAS_ALARM_TYPE_LOW_TO_HIGH;
+        intConf.b.int_func  = XENSIV_PAS_GAS_INTERRUPT_FUNCTION_ALARM;
     }
     else
     {
-        ret = xensiv_pasco2_set_alarm_threshold(&dev, 0x0000);
-        INO_ASSERT_RET(ret);
+        ret = xensiv_pas_gas_set_alarm_threshold(&dev, 0x0000);
+        GASINO_ASSERT_RET(ret);
 
-        intConf.b.alarm_typ = XENSIV_PASCO2_ALARM_TYPE_HIGH_TO_LOW;       
+        intConf.b.alarm_typ = XENSIV_PAS_GAS_ALARM_TYPE_HIGH_TO_LOW;       
     }
 
     if(cback != nullptr)
     {
         /* Enable sensor interrupt */
-        intConf.b.int_typ = XENSIV_PASCO2_INTERRUPT_TYPE_HIGH_ACTIVE;
+        intConf.b.int_typ = XENSIV_PAS_GAS_INTERRUPT_TYPE_HIGH_ACTIVE;
         #if defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_RENESAS) || defined(ARDUINO_ARCH_PSOC6)
             PinStatus int_event;
         #else
@@ -372,7 +316,7 @@ Error_t PASCO2Ino::startMeasure(int16_t periodInSec, int16_t alarmTh, void (*cba
     else
     {
         /* Disable sensor interrupt */
-        intConf.b.int_func = XENSIV_PASCO2_INTERRUPT_FUNCTION_NONE;
+        intConf.b.int_func = XENSIV_PAS_GAS_INTERRUPT_FUNCTION_NONE;
 
         if(unusedPin != intPin)
         {
@@ -384,13 +328,13 @@ Error_t PASCO2Ino::startMeasure(int16_t periodInSec, int16_t alarmTh, void (*cba
     /* This option will disable the alarm interrupt function */ 
     if(true == earlyNotification)
     {
-        intConf.b.int_func = XENSIV_PASCO2_INTERRUPT_FUNCTION_EARLY;
+        intConf.b.int_func = XENSIV_PAS_GAS_INTERRUPT_FUNCTION_EARLY;
     }
 
-    ret = xensiv_pasco2_set_interrupt_config(&dev, intConf);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_set_interrupt_config(&dev, intConf);
+    GASINO_ASSERT_RET(ret);
 
-    ret = xensiv_pasco2_set_measurement_config(&dev, measConf);
+    ret = xensiv_pas_gas_set_measurement_config(&dev, measConf);
 
     return ret;
 }
@@ -400,53 +344,52 @@ Error_t PASCO2Ino::startMeasure(int16_t periodInSec, int16_t alarmTh, void (*cba
  * 
  * @details     Sets operation mode to idle
  * 
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::stopMeasure()
+Error_t XENSIV_PAS_GASIno::stopMeasure()
 {
-    int32_t ret = XENSIV_PASCO2_OK;  
-
-    xensiv_pasco2_measurement_config_t  measConf;
+    int32_t ret = XENSIV_PAS_GAS_OK;  
+    xensiv_pas_gas_measurement_config_t measConf;
 
     /* Get meas configuration*/
-    ret = xensiv_pasco2_get_measurement_config(&dev, &measConf);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_measurement_config(&dev, &measConf);
+    GASINO_ASSERT_RET(ret);
 
     /* Set meas configuration to idle mode */
-    measConf.b.op_mode = XENSIV_PASCO2_OP_MODE_IDLE;
-    ret = xensiv_pasco2_set_measurement_config(&dev, measConf);
+    measConf.b.op_mode = XENSIV_PAS_GAS_OP_MODE_IDLE;
+    ret = xensiv_pas_gas_set_measurement_config(&dev, measConf);
 
     return ret;
 }
 
 /**
- * @brief       Gets the CO2 concentration measured
+ * @brief       Gets the GAS concentration measured
  *               
  * 
  * @details     The value read is zero when no measurement is 
  *              yet available or an error has occurred.
  * 
- * @param[out]  co2ppm  CO2 concentration read (in ppm)
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @param[out]  gasrawvalue  GAS concentration read 
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         startMeasure()
  */
-Error_t PASCO2Ino::getCO2(int16_t & CO2PPM)
+Error_t XENSIV_PAS_GASIno::getGAS_conc(int16_t & GASRAWVALUE)
 {
-    int32_t ret = XENSIV_PASCO2_OK;  
+    int32_t ret = XENSIV_PAS_GAS_OK;  
 
     /* Initially set to 0.*/
-    CO2PPM = 0;
+    GASRAWVALUE = 0;
 
     /* Read the data */
-    ret = xensiv_pasco2_get_result(&dev, (uint16_t*)&CO2PPM);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_result(&dev, (uint16_t*)&GASRAWVALUE);
+    GASINO_ASSERT_RET(ret);
 
     /* Clear masks from status register */
-    ret = xensiv_pasco2_clear_measurement_status(&dev,(XENSIV_PASCO2_REG_MEAS_STS_INT_STS_CLR_MSK | XENSIV_PASCO2_REG_MEAS_STS_ALARM_CLR_MSK));
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_clear_measurement_status(&dev,(XENSIV_PAS_GAS_REG_MEAS_STS_INT_STS_CLR_MSK | XENSIV_PAS_GAS_REG_MEAS_STS_ALARM_CLR_MSK));
+    GASINO_ASSERT_RET(ret);
 
     return ret;
 }
@@ -465,22 +408,22 @@ Error_t PASCO2Ino::getCO2(int16_t & CO2PPM)
  *              the corresponding clear flag bitfields.
  * 
  * @param[out]  diagnosis  Struct to store the diagnosis flags values   
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         None
  */
-Error_t PASCO2Ino::getDiagnosis(Diag_t & diagnosis)
+Error_t XENSIV_PAS_GASIno::getDiagnosis(Diag_t & diagnosis)
 {
-    int32_t ret = XENSIV_PASCO2_OK; 
+    int32_t ret = XENSIV_PAS_GAS_OK; 
 
     /* Get current status */
-    ret = xensiv_pasco2_get_status(&dev, &diagnosis);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_status(&dev, &diagnosis);
+    GASINO_ASSERT_RET(ret);
 
     /* Clear read flags */
-    ret = xensiv_pasco2_clear_status(&dev, (XENSIV_PASCO2_REG_SENS_STS_ICCER_CLR_MSK |
-                                            XENSIV_PASCO2_REG_SENS_STS_ORVS_CLR_MSK  |
-                                            XENSIV_PASCO2_REG_SENS_STS_ORTMP_CLR_MSK ));
+    ret = xensiv_pas_gas_clear_status(&dev, (XENSIV_PAS_GAS_REG_SENS_STS_ICCER_CLR_MSK |
+                                            XENSIV_PAS_GAS_REG_SENS_STS_ORVS_CLR_MSK  |
+                                            XENSIV_PAS_GAS_REG_SENS_STS_ORTMP_CLR_MSK ));
 
     return ret;
 }
@@ -490,26 +433,26 @@ Error_t PASCO2Ino::getDiagnosis(Diag_t & diagnosis)
  * 
  * @param[in]   aboc        Automatic baseline compenstation mode  
  * @param[in]   abocRef     Automatic baseline compensation reference
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::setABOC(ABOC_t aboc, int16_t abocRef)
-{
-    xensiv_pasco2_measurement_config_t  measConf;
-    int32_t ret = XENSIV_PASCO2_OK; 
+Error_t XENSIV_PAS_GASIno::setABOC(ABOC_t aboc, int16_t abocRef)
+{   
+    xensiv_pas_gas_measurement_config_t measConf;
+    int32_t ret = XENSIV_PAS_GAS_OK; 
 
     /* Get meas configuration */
-    ret = xensiv_pasco2_get_measurement_config(&dev, &measConf);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_measurement_config(&dev, &measConf);
+    GASINO_ASSERT_RET(ret);
 
     /* Set compensation offset */
-    ret = xensiv_pasco2_set_offset_compensation(&dev, (uint16_t) abocRef);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_set_offset_compensation(&dev, (uint16_t) abocRef);
+    GASINO_ASSERT_RET(ret);
 
     /* Set meas configuration with ABOC */
     measConf.b.boc_cfg = aboc;
-    ret = xensiv_pasco2_set_measurement_config(&dev, measConf);
+    ret = xensiv_pas_gas_set_measurement_config(&dev, measConf);
 
     return ret;
 }
@@ -517,46 +460,46 @@ Error_t PASCO2Ino::setABOC(ABOC_t aboc, int16_t abocRef)
 /**
  * @brief       Performs force compensation
  * 
- * @details     Calculates the offset compensation when the sensor is exposed to a CO2 reference
+ * @details     Calculates the offset compensation when the sensor is exposed to a gas reference
  *              value.
  * @warning     The device is left in idle mode after the compensation value is stored in
- *              non-volatile memory. 
- * 
- * @param[in]   co2Ref  Automatic baseline compenstation mode  
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ *              non-volatile memory.
+ *
+ * @param[in]   GASRef  Gas reference value
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::performForcedCompensation(uint16_t co2Ref)
+Error_t XENSIV_PAS_GASIno::performForcedCompensation(uint16_t GASRef)
 {
-    return xensiv_pasco2_perform_forced_compensation(&dev, co2Ref);
+    return xensiv_pas_gas_perform_forced_compensation(&dev, GASRef);
 }
 
 /**
  * @brief       Resets the forced calibration correction factor
  * 
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::clearForcedCompensation()
+Error_t XENSIV_PAS_GASIno::clearForcedCompensation()
 {
-    return xensiv_pasco2_cmd(&dev, XENSIV_PASCO2_CMD_RESET_FCS);
+    return xensiv_pas_gas_cmd(&dev, XENSIV_PAS_GAS_CMD_SOFT_RESET);
 }
 
 /**
  * @brief       Sets the sensor pressure reference
  * 
  * @param[in]   pressRef    Pressure reference value. Min value is 750, and max 1150.
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::setPressRef(uint16_t pressRef)
+Error_t XENSIV_PAS_GASIno::setPressRef(uint16_t pressRef)
 {
-    int32_t ret = XENSIV_PASCO2_OK; 
+    int32_t ret = XENSIV_PAS_GAS_OK; 
 
-    ret = xensiv_pasco2_set_pressure_compensation(&dev, pressRef);
+    ret = xensiv_pas_gas_set_pressure_compensation(&dev, pressRef);
 
     return ret;
 }
@@ -564,16 +507,16 @@ Error_t PASCO2Ino::setPressRef(uint16_t pressRef)
 /**
  * @brief       Resets the sensor via serial command
  * 
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::reset()
+Error_t XENSIV_PAS_GASIno::reset()
 {
-    int32_t ret = XENSIV_PASCO2_OK; 
+    int32_t ret = XENSIV_PAS_GAS_OK; 
 
-    ret = xensiv_pasco2_cmd(&dev, XENSIV_PASCO2_CMD_SOFT_RESET);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_cmd(&dev, XENSIV_PAS_GAS_CMD_SOFT_RESET);
+    GASINO_ASSERT_RET(ret);
 
     return ret;
 }
@@ -583,17 +526,17 @@ Error_t PASCO2Ino::reset()
  *  
  * @param[out]  prodID  Product identifier
  * @param[out]  revID   Version identifier
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::getDeviceID(uint8_t & prodID, uint8_t & revID)
+Error_t XENSIV_PAS_GASIno::getDeviceID(uint8_t & prodID, uint8_t & revID)
 {
-    int32_t ret = XENSIV_PASCO2_OK; 
-    xensiv_pasco2_id_t id;
+    int32_t ret = XENSIV_PAS_GAS_OK; 
+    xensiv_pas_gas_id_t id;
     
-    ret = xensiv_pasco2_get_id(&dev, &id);
-    INO_ASSERT_RET(ret);
+    ret = xensiv_pas_gas_get_id(&dev, &id);
+    GASINO_ASSERT_RET(ret);
 
     prodID = id.b.prod;
     revID =  id.b.rev;
@@ -607,13 +550,13 @@ Error_t PASCO2Ino::getDeviceID(uint8_t & prodID, uint8_t & revID)
  * @param[in]   regAddr Start register address
  * @param[out]  data    Pointer to the data buffer to store the register values of the sensor
  * @param[in]   len     Number of bytes of data to be read
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::getRegister(uint8_t regAddr, uint8_t * data, uint8_t len)
+Error_t XENSIV_PAS_GASIno::getRegister(uint8_t regAddr, uint8_t * data, uint8_t len)
 {
-    return xensiv_pasco2_get_reg(&dev, regAddr, data, len);
+    return xensiv_pas_gas_get_reg(&dev, regAddr, data, len);
 }
 
 /**
@@ -622,11 +565,11 @@ Error_t PASCO2Ino::getRegister(uint8_t regAddr, uint8_t * data, uint8_t len)
  * @param[in]   regAddr Start register address
  * @param[in]   data    Pointer to the data buffer to be written in the sensor
  * @param[in]   len     Number of bytes of data to be written
- * @return      XENSIV™ PAS CO2 error code
- * @retval      XENSIV_PASCO2_OK if success
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t PASCO2Ino::setRegister(uint8_t regAddr, const uint8_t * data, uint8_t len)
+Error_t XENSIV_PAS_GASIno::setRegister(uint8_t regAddr, const uint8_t * data, uint8_t len)
 {
-    return xensiv_pasco2_set_reg(&dev, regAddr, data, len);
+    return xensiv_pas_gas_set_reg(&dev, regAddr, data, len);
 }

@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <pas-co2-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
+#include <xensiv_pas_gas_r290-ino.hpp>
 
 /* 
  * The sensor supports 100KHz and 400KHz. 
@@ -13,12 +14,12 @@
 // #define MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 
 /**
- * Create CO2 object. Unless otherwise specified,
+ * Create gas sensor object. Unless otherwise specified,
  * using the Wire interface
  */
-PASCO2Ino cotwo;
+XENSIV_PAS_GASR290Ino gassensor;
 
-int16_t co2ppm;
+int16_t gasrawvalue;
 Error_t err;
 
 void setup()
@@ -32,8 +33,8 @@ void setup()
   Wire.setClock(I2C_FREQ_HZ);
 
   /* Initialize the sensor */
-  err = cotwo.begin();
-  if(XENSIV_PASCO2_OK != err)
+  err = gassensor.begin();
+  if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("initialization error: ");
     Serial.println(err);
@@ -47,8 +48,8 @@ void loop()
   /* 
    * Trigger a one shot measurement
    */
-  err = cotwo.startMeasure();
-  if(XENSIV_PASCO2_OK != err)
+  err = gassensor.startMeasure();
+  if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");
     Serial.println(err);
@@ -58,24 +59,24 @@ void loop()
   delay(MEAS_INTERVAL_IN_SECONDS*1000);
 
   /**
-   *  getCO2() is called until the value is 
+   *  getGAS_conc() is called until the value is 
    *  available.  
-   *  getCO2() returns 0 when no measurement 
+   *  getGAS_conc() returns 0 when no measurement 
    *  result is yet available or an error has
    *  occurred.
    */
 
   do
   {
-    err = cotwo.getCO2(co2ppm);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.getGAS_conc(gasrawvalue);
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("error: ");
       Serial.println(err);
       break;
     }
-  } while (0 == co2ppm);
+  } while (0 == gasrawvalue);
 
-  Serial.print("co2 ppm value : ");
-  Serial.println(co2ppm);
+  Serial.print("GAS value : ");
+  Serial.println(gasrawvalue);
 }

@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <pas-co2-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
+#include <xensiv_pas_gas_co2-ino.hpp>
 
 /**
  * In this example, the interrupt is used to control the  12V emitter 
@@ -49,14 +50,13 @@ uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup 
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 #define EARLY_NOTIFICATION_ENABLED         true
-
 /*
  * The constructor takes the Wire instance as i2c interface,
  * and the controller interrupt pin
  */
-PASCO2Ino cotwo(&Wire, interruptPin);
+XENSIV_PAS_GASCO2Ino gassensor(&Wire, interruptPin);
 
-int16_t co2ppm;
+int16_t gasrawvalue;
 Error_t err;
 
 /* 
@@ -64,7 +64,7 @@ Error_t err;
  * executed every time that the sensor is about to start 
  * performing the measurement and when it is completed.
  * In the main loop we use that flag to synchronize the 
- * sensor CO2 concentration readout.
+ * sensor  GAS concentration readout.
  */
 volatile bool measurementReady = false;
 void isr (void * )
@@ -96,8 +96,8 @@ void setup()
     * No need to initialize the interrupt pin. This is done 
     * in the sensor begin() function 
     */
-    err = cotwo.begin();
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.begin();
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
       Serial.println(err);
@@ -107,8 +107,8 @@ void setup()
     * Continuous measurement every 10 seconds.
     * Enable early notification enabled
     */
-    err = cotwo.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, 0, isr, EARLY_NOTIFICATION_ENABLED);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, 0, isr, EARLY_NOTIFICATION_ENABLED);
+    if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
       Serial.println(err);
@@ -124,13 +124,13 @@ void loop()
     Serial.println("measurement ready");
     measurementReady = false;
 
-    err = cotwo.getCO2(co2ppm);
-    if(XENSIV_PASCO2_OK != err)
+    err = gassensor.getGAS_conc(gasrawvalue);
+    if(XENSIV_PAS_GAS_OK != err)
     {
-      Serial.print("get co2 error: ");
+      Serial.print("get gas error: ");
       Serial.println(err);
     }
 
-    Serial.print("co2 ppm value : ");
-    Serial.println(co2ppm);
+    Serial.print("GAS value : ");
+    Serial.println(gasrawvalue);
 }

@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <pas-co2-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
+#include <xensiv_pas_gas_co2-ino.hpp>
 
 /* 
  * The sensor supports 100KHz and 400KHz. 
@@ -9,12 +10,11 @@
  * communication issues.
  */
 #define I2C_FREQ_HZ 400000  
-
 /**
- * Create CO2 object. Unless otherwise specified,
+ * Create  GAS object. Unless otherwise specified,
  * using the Wire interface
  */
-PASCO2Ino cotwo;
+XENSIV_PAS_GASCO2Ino gassensor;
 
 uint8_t prodId, revId;
 Error_t err;
@@ -30,15 +30,15 @@ void setup()
   Wire.setClock(I2C_FREQ_HZ);
 
   /* Initialize the sensor */
-  err = cotwo.begin();
-  if(XENSIV_PASCO2_OK != err)
+  err = gassensor.begin();
+  if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("initialization error: ");
     Serial.println(err);
   }
 
-  err = cotwo.getDeviceID(prodId, revId);
-  if(XENSIV_PASCO2_OK != err)
+  err = gassensor.getDeviceID(prodId, revId);
+  if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");
     Serial.println(err);
