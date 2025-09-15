@@ -107,4 +107,4 @@ void xensiv_pas_gas_plat_assert(int expr);
 
 /** \} group_board_libs_platform */
 
-#endif // ifndef XENSIV_PAS_GAS_PLATFORM_H_
+#endif /* XENSIV_PAS_GAS_PLATFORM_H_ */

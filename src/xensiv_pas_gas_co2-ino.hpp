@@ -10,7 +10,7 @@
 #define PAS_GAS_CO2_INO_HPP_
 
 #include "xensiv_pas_gas-ino.hpp"
-#include "xensiv_pas_gas_co2.h"
+#include "corelib/xensiv_pas_gas_co2.h"
 
 /**
  * @addtogroup gasinoapi

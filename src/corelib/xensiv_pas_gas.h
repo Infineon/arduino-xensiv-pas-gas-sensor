@@ -468,4 +468,4 @@ int32_t xensiv_pas_gas_perform_forced_compensation(const xensiv_pas_gas_t *dev, 
 
 /** \} group_board_libs */
 
-#endif
+#endif /* XENSIV_PAS_GAS_H_ */
