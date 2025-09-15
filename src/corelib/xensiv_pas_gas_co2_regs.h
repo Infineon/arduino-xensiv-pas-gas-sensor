@@ -3,7 +3,7 @@
  * \file xensiv_pas_gas_co2_regs.h
  *
  * Description: This file contains the register definitions
- *              for interacting with the XENSIV™ PAS GAS sensor.
+ *              for interacting with the XENSIV™ PAS CO2 sensor.
  *
  ***************************************************************************************************
  * \copyright
@@ -36,4 +36,4 @@
 #define XENSIV_PAS_GAS_CO2_REG_MEAS_CFG_PWM_OUTEN_POS        (5U)                                                    /*!< MEAS_CFG: PWM_OUTEN position (CO2 only) */
 #define XENSIV_PAS_GAS_CO2_REG_MEAS_CFG_PWM_OUTEN_MSK        (0x01U << XENSIV_PAS_GAS_CO2_REG_MEAS_CFG_PWM_OUTEN_POS)     /*!< MEAS_CFG: PWM_OUTEN mask (CO2 only) */
 
-#endif // XENSIV_PAS_GAS_CO2_REGS_H_
+#endif /* XENSIV_PAS_GAS_CO2_REGS_H_ */

@@ -146,4 +146,4 @@
 
 /** \} group_board_libs */
 
-#endif
+#endif /* XENSIV_PAS_GAS_REGS_H_ */
