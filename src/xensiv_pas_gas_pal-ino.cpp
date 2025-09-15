@@ -9,8 +9,8 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "xensiv_pas_gas_platform.h"
-#include "xensiv_pas_gas.h"
+#include "corelib/xensiv_pas_gas_platform.h"
+#include "corelib/xensiv_pas_gas.h"
 
 
 #define XENSIV_PAS_GAS_UART_TIMEOUT_MS           (500U)

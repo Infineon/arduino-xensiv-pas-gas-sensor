@@ -22,6 +22,8 @@
  * limitations under the License.
  **************************************************************************************************/
 
+#ifndef XENSIV_PAS_GAS_R290_H_
+#define XENSIV_PAS_GAS_R290_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -116,6 +118,7 @@ typedef union {
     } b;
     uint8_t u;                       /*!< Type used for byte access */
 } xensiv_pas_gas_r290_self_test_clr_t;
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -225,6 +228,9 @@ int32_t xensiv_pas_gas_r290_get_self_test(const xensiv_pas_gas_t *dev, xensiv_pa
  */
 int32_t xensiv_pas_gas_r290_clr_self_test(const xensiv_pas_gas_t *dev, xensiv_pas_gas_r290_self_test_clr_t self_test_clr);
 
+
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* XENSIV_PAS_GAS_R290_H_ */

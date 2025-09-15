@@ -13,7 +13,7 @@
 #include <Wire.h>
 #include <HardwareSerial.h>
 #include "xensiv_pas_gas_platf-ino.hpp"
-#include "xensiv_pas_gas.h"
+#include "corelib/xensiv_pas_gas.h"
 
 /**
  * @addtogroup gasinoapi

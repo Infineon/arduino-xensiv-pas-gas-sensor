@@ -2,7 +2,7 @@
  * \file xensiv_pas_gas_co2.h
  *
  * Description: This file contains the functions for interacting with the
- *              XENSIV™ PAS GAS sensor.
+ *              XENSIV™ PAS CO2 sensor.
  *
  ***************************************************************************************************
  * \copyright
@@ -21,6 +21,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **************************************************************************************************/
+
+#ifndef XENSIV_PAS_GAS_CO2_H_
+#define XENSIV_PAS_GAS_CO2_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -80,6 +83,10 @@ typedef union
     uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pas_gas_co2_measurement_config_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Initializes the XENSIV™ PAS GAS CO2 device.
  * It initializes the dev structure, verifies the integrity of the communication layer of the serial communication interface, and checks whether the sensor is ready
@@ -90,13 +97,10 @@ typedef union
  * @param[in] ctx Pointer to the platform-specific specific protocol communication handler
  * @return XENSIV_PAS_GAS_OK if the initialization was successful; an error indicating what went wrong otherwise
  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 int32_t xensiv_pas_gas_co2_init(xensiv_pas_gas_t *dev, xensiv_pas_gas_interface_t itf, void *ctx);
 
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* XENSIV_PAS_GAS_CO2_H_ */

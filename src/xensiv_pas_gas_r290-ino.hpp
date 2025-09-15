@@ -10,7 +10,7 @@
 #define PAS_GAS_R290_INO_HPP_
 
 #include "xensiv_pas_gas-ino.hpp"
-#include "xensiv_pas_gas_r290.h"
+#include "corelib/xensiv_pas_gas_r290.h"
 
 /**
  * @addtogroup gasinoapi
