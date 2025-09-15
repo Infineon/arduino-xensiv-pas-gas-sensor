@@ -1,0 +1,3 @@
+[submodule "extras/xensiv-pas-gas-sensor"]
+	path = extras/xensiv-pas-gas-sensor
+	url = https://github.com/Infineon/xensiv-pas-gas-sensor.git
