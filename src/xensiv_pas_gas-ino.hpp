@@ -42,7 +42,6 @@ class XENSIV_PAS_GASIno
         Error_t setABOC         (ABOC_t aboc, int16_t abocRef);
         Error_t setPressRef     (uint16_t pressRef);
         Error_t performForcedCompensation(uint16_t GASRef);
-        Error_t clearForcedCompensation  ();
         Error_t reset           ();
         Error_t getDeviceID     (uint8_t & prodID, uint8_t & revID);
 
