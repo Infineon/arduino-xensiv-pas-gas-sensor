@@ -476,18 +476,6 @@ Error_t XENSIV_PAS_GASIno::performForcedCompensation(uint16_t GASRef)
 }
 
 /**
- * @brief       Resets the forced calibration correction factor
- * 
- * @return      XENSIV™ PAS GAS error code
- * @retval      XENSIV_PAS_GAS_OK if success
- * @pre         begin()
- */
-Error_t XENSIV_PAS_GASIno::clearForcedCompensation()
-{
-    return xensiv_pas_gas_cmd(&dev, XENSIV_PAS_GAS_CMD_SOFT_RESET);
-}
-
-/**
  * @brief       Sets the sensor pressure reference
  * 
  * @param[in]   pressRef    Pressure reference value. Min value is 750, and max 1150.

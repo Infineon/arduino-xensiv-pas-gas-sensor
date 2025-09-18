@@ -26,9 +26,7 @@ class XENSIV_PAS_GASCO2Ino : public XENSIV_PAS_GASIno
         ~XENSIV_PAS_GASCO2Ino();
 
         Error_t begin           () override;
-        // Error_t startMeasure    (int16_t  periodInSec = 0, int16_t alarmTh = 0, void (*cback) (void *) = nullptr, bool earlyNotification = false) override;
-        // Error_t stopMeasure     () override;
-        // Error_t setABOC         (ABOC_t aboc, int16_t abocRef) override;
+        Error_t clearForcedCompensation  ();
 };
 
 #endif /** PAS_GAS_CO2_INO_HPP_ */
