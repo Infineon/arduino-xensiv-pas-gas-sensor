@@ -12,7 +12,8 @@
 #define I2C_FREQ_HZ     400000  
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
-#define ALARM_PPM_THRESHOLD  1200
+#define ALARM_GAS_THRESHOLD  1200  
+// #define ALARM_GAS_THRESHOLD  1000  /* for R290 sensor */
 
 uint8_t interrupt_pin = 9;      /* For XMC2Go. Change it for your hardware setup */
 
@@ -61,11 +62,12 @@ void setup()
 
     /*
     * Periodic measurement every 10 seconds.
-    * Interrupt alarm when the  GAS value 
-    * goes over 1200 ppm. The isr function is 
+    * Interrupt alarm when the  CO2 GAS value 
+    * goes over 1200 ppm or the R290 GAS value goes over 1000 ie, 10 % LFL.
+    * The isr function is 
     * passed enabling the sensor interrupt mode.
     */
-    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, ALARM_PPM_THRESHOLD, isr);
+    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, ALARM_GAS_THRESHOLD, isr);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
@@ -76,7 +78,7 @@ void setup()
 void loop()
 {
     /* Interrupt alarm requires a  GAS concentration above the threshold */
-    Serial.println("USER ACTION REQUIRED --> increase  gas to 1200 PPM to trigger the alarm!!");
+    Serial.println("USER ACTION REQUIRED --> increase co2 gas to 1200 PPM or r290 gas to 10 percent LFL to trigger the alarm!!");
     while(false == intFlag) { };
 
     /* Clear the interrupt flag */

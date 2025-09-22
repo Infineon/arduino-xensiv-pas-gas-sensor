@@ -59,7 +59,7 @@ void setup()
 
     Serial.print("forced compensation started with ");
     Serial.print(FORCED_COMPENSATION_GAS_REFERENCE  );
-    Serial.println(" ppm baseline reference ...");
+    Serial.println(" gas concentration baseline reference ...");
 
     err = gassensor.performForcedCompensation(FORCED_COMPENSATION_GAS_REFERENCE  );
     if (XENSIV_PAS_GAS_OK != err)
@@ -103,7 +103,7 @@ void loop()
       }
     }
 
-    Serial.print(" gas ppm value : ");
+    Serial.print(" gas value : ");
     Serial.println(gasrawvalue);
 
     /*

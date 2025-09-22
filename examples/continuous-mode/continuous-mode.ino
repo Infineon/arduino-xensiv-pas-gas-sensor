@@ -85,7 +85,7 @@ void loop()
       }
     }
 
-    Serial.print(" gas ppm value : ");
+    Serial.print(" gas value : ");
     Serial.println(gasrawvalue);
 
     /*
