@@ -40,8 +40,8 @@
 #define XENSIV_PAS_GAS_REG_MEAS_RATE_H                   (0x02U)                                                 /*!< MEAS_RATE_H: Address */
 #define XENSIV_PAS_GAS_REG_MEAS_RATE_L                   (0x03U)                                                 /*!< MEAS_RATE_L: Address */
 #define XENSIV_PAS_GAS_REG_MEAS_CFG                      (0x04U)                                                 /*!< MEAS_CFG: Address */
-#define XENSIV_PAS_GAS_REG_GASPPM_H                      (0x05U)                                                 /*!< GASPPM_H: Address */
-#define XENSIV_PAS_GAS_REG_GASPPM_L                      (0x06U)                                                 /*!< GASPPM_L: Address */
+#define XENSIV_PAS_GAS_REG_GASCONC_H                      (0x05U)                                                 /*!< GASCONC_H: Address */
+#define XENSIV_PAS_GAS_REG_GASCONC_L                      (0x06U)                                                 /*!< GASCONC_L: Address */
 #define XENSIV_PAS_GAS_REG_MEAS_STS                      (0x07U)                                                 /*!< MEAS_STS: Address */
 #define XENSIV_PAS_GAS_REG_INT_CFG                       (0x08U)                                                 /*!< INT_CFG: Address */
 #define XENSIV_PAS_GAS_REG_ALARM_TH_H                    (0x09U)                                                 /*!< ALARM_TH_H: Address */
@@ -89,11 +89,11 @@
 #define XENSIV_PAS_GAS_REG_MEAS_CFG_BOC_CFG_MSK          (0x03U << XENSIV_PAS_GAS_REG_MEAS_CFG_BOC_CFG_POS)       /*!< MEAS_CFG: BOC_CFG mask */
 
 // ------------------- GAS Data Fields -------------------//
-#define XENSIV_PAS_GAS_REG_GASPPM_H_VAL_POS              (0U)                                                    /*!< GASPPM_H: VAL position */
-#define XENSIV_PAS_GAS_REG_GASPPM_H_VAL_MSK              (0xffU << XENSIV_PAS_GAS_REG_GASPPM_H_VAL_POS)           /*!< GASPPM_H: VAL mask */
+#define XENSIV_PAS_GAS_REG_GASCONC_H_VAL_POS              (0U)                                                    /*!< GASCONC_H: VAL position */
+#define XENSIV_PAS_GAS_REG_GASCONC_H_VAL_MSK              (0xffU << XENSIV_PAS_GAS_REG_GASCONC_H_VAL_POS)           /*!< GASCONC_H: VAL mask */
 
-#define XENSIV_PAS_GAS_REG_GASPPM_L_VAL_POS              (0U)                                                    /*!< GASPPM_L: VAL position */
-#define XENSIV_PAS_GAS_REG_GASPPM_L_VAL_MSK              (0xffU << XENSIV_PAS_GAS_REG_GASPPM_L_VAL_POS)           /*!< GASPPM_L: VAL mask */
+#define XENSIV_PAS_GAS_REG_GASCONC_L_VAL_POS              (0U)                                                    /*!< GASCONC_L: VAL position */
+#define XENSIV_PAS_GAS_REG_GASCONC_L_VAL_MSK              (0xffU << XENSIV_PAS_GAS_REG_GASCONC_L_VAL_POS)           /*!< GASCONC_L: VAL mask */
 
 // ------------------- MEAS_STS Bitfields -------------------//
 #define XENSIV_PAS_GAS_REG_MEAS_STS_ALARM_CLR_POS        (0U)                                                    /*!< MEAS_STS: ALARM_CLR position */
