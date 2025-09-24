@@ -336,7 +336,7 @@ int32_t xensiv_pas_gas_get_result(const xensiv_pas_gas_t *dev, uint16_t *val) {
 
     if (XENSIV_PAS_GAS_OK == res) {
         if (meas_status.b.drdy != 0U) {
-            res = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_REG_GASPPM_H, (uint8_t *)val, 2U);
+            res = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_REG_GASCONC_H, (uint8_t *)val, 2U);
             *val = xensiv_pas_gas_plat_htons(*val);
         } else {
             res = XENSIV_PAS_GAS_READ_NRDY;

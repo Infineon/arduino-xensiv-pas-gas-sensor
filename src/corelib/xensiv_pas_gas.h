@@ -131,8 +131,8 @@ typedef enum
 /** Enum defining whether an alarm is issued in the case of a lower or higher threshold violation */
 typedef enum
 {
-    XENSIV_PAS_GAS_ALARM_TYPE_HIGH_TO_LOW = 0U,          /**< GAS ppm value falling below the alarm threshold */
-    XENSIV_PAS_GAS_ALARM_TYPE_LOW_TO_HIGH = 1U           /**< GAS ppm value rising above the alarm threshold */
+    XENSIV_PAS_GAS_ALARM_TYPE_HIGH_TO_LOW = 0U,          /**< GAS concentration value falling below the alarm threshold */
+    XENSIV_PAS_GAS_ALARM_TYPE_LOW_TO_HIGH = 1U           /**< GAS concentration value rising above the alarm threshold */
 } xensiv_pas_gas_alarm_type_t;
 
 /** Structure of the sensor's product and revision ID register (PROD_ID) */
@@ -334,10 +334,10 @@ int32_t xensiv_pas_gas_get_measurement_config(const xensiv_pas_gas_t *dev, xensi
 int32_t xensiv_pas_gas_set_measurement_config(const xensiv_pas_gas_t *dev, xensiv_pas_gas_measurement_config_t meas_config);
 
 /**
- * @brief Gets the current GAS ppm values from the sensor device
+ * @brief Gets the current GAS concentration values from the sensor device
  *
  * @param[in] dev Pointer to the XENSIV™ PAS GAS sensor device
- * @param[out] val Pointer to populate with the GAS ppm value
+ * @param[out] val Pointer to populate with the GAS concentration value
  * @return XENSIV_PAS_GAS_OK if obtaining the current GAS value successful; an error indicating what went wrong otherwise
  */
 int32_t xensiv_pas_gas_get_result(const xensiv_pas_gas_t *dev, uint16_t *val);
