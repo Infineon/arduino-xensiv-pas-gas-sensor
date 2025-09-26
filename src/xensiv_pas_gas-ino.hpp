@@ -37,7 +37,8 @@ class XENSIV_PAS_GASIno
         Error_t end             ();
         Error_t startMeasure    (int16_t  periodInSec = 0, int16_t alarmTh = 0, void (*cback) (void *) = nullptr, bool earlyNotification = false);
         Error_t stopMeasure     ();
-        Error_t getGAS_conc     (int16_t & GASRAWVALUE);
+        virtual Error_t getGAS_conc     (float & value);
+        virtual const char* getGAS_UnitStr() const = 0; // Pure virtual
         Error_t getDiagnosis    (Diag_t & diagnosis);
         Error_t setABOC         (ABOC_t aboc, int16_t abocRef);
         Error_t setPressRef     (uint16_t pressRef);
