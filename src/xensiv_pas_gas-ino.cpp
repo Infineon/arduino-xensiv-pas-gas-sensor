@@ -520,7 +520,7 @@ Error_t XENSIV_PAS_GASIno::reset()
  * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t XENSIV_PAS_GASIno::getDeviceID(uint8_t & prodID, uint8_t & revID)
+Error_t XENSIV_PAS_GASIno::getProductID(uint8_t & prodID, uint8_t & revID)
 {
     int32_t ret = XENSIV_PAS_GAS_OK; 
     xensiv_pas_gas_id_t id;

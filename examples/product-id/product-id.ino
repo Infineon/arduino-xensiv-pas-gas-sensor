@@ -39,7 +39,7 @@ void setup()
     Serial.println(err);
   }
 
-  err = gassensor->getDeviceID(prodId, revId);
+  err = gassensor->getProductID(prodId, revId);
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");

@@ -17,7 +17,7 @@
  * using the Wire interface
  */
 
-GasType_t sensor_type = GAS_TYPE_CO2; // Change to GAS_TYPE_R290 if using R290 sensor
+GasType_t sensor_type = GAS_TYPE_R290; // Change to GAS_TYPE_R290 if using R290 sensor
 XENSIV_PAS_GASIno* gassensor = nullptr;
 
 float gasrawvalue;
