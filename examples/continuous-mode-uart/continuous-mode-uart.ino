@@ -1,6 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas-ino.hpp>
-#include <xensiv_pas_gas_co2-ino.hpp> 
+#include <xensiv_pas_gas_generic-ino.hpp>
 
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
@@ -16,10 +15,11 @@
  * Arduino MKR 1000 WiFi
  * XMC4700 Relax Kit
  */
-XENSIV_PAS_GASCO2Ino gassensor(&Serial1);     
+GasType_t sensorType = GAS_TYPE_CO2;
+XENSIV_PAS_GASIno* gassensor = nullptr;
 
 
-int16_t gasrawvalue;
+float gasrawvalue;
 Error_t err;
 
 void setup()
@@ -29,8 +29,10 @@ void setup()
     delay(800);
     Serial.println("serial initialized");
 
+    gassensor = create_sensor(sensorType, &Serial1);
+
     /* Initialize the sensor */
-    err = gassensor.begin();
+    err = gassensor->begin();
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
@@ -40,7 +42,7 @@ void setup()
     /* We can set the reference pressure before starting 
      * the measure 
      */
-    err = gassensor.setPressRef(PRESSURE_REFERENCE);
+    err = gassensor->setPressRef(PRESSURE_REFERENCE);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("pressure reference error: ");
@@ -51,7 +53,7 @@ void setup()
      * Configure the sensor to measureme periodically 
      * every 60 seconds
      */
-    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS);
+    err = gassensor->startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
@@ -66,14 +68,14 @@ void loop()
     /* Wait for the value to be ready. */
     delay(PERIODIC_MEAS_INTERVAL_IN_SECONDS*1000);
 
-    err = gassensor.getGAS_conc(gasrawvalue);
+    err = gassensor->getGAS_conc(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       /* Retry in case of timing synch mismatch */
       if(XENSIV_PAS_GAS_ERR_COMM == err)
       {
         delay(600);
-        err = gassensor.getGAS_conc(gasrawvalue);
+        err = gassensor->getGAS_conc(gasrawvalue);
         if(XENSIV_PAS_GAS_OK != err)          
         {
           Serial.print("get gas error: ");
@@ -83,7 +85,9 @@ void loop()
     }
 
     Serial.print("GAS value : ");
-    Serial.println(gasrawvalue);
+    Serial.print(gasrawvalue);
+    Serial.print(" " );
+    Serial.println(gassensor->getGAS_UnitStr());
 
     /*
      * Assuming we have some mechanism to obtain a
@@ -91,7 +95,7 @@ void loop()
      * we could compensate again by setting the new reference. 
      * Here we just keep the initial value.
      */
-    err = gassensor.setPressRef(PRESSURE_REFERENCE);
+    err = gassensor->setPressRef(PRESSURE_REFERENCE);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("pressure reference error: ");
