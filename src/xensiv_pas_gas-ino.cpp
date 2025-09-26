@@ -226,7 +226,7 @@ Error_t XENSIV_PAS_GASIno::end()
  *                                  The default value is 0, meaning single shot operation. 
  *                                  The valid period range goes between 5 and 4095 seconds
  * @param[in]   alarmTh             Enables upper alarm threshold mode for the specified
- *                                  ppm value 
+ *                                  conc value 
  *                                  The default value is 0, meaning no alarm mode. 
  *                                  For any non-zero value, the sensor will internally set 
  *                                  the alarm flag. If an interrupt callback function is 
@@ -296,7 +296,7 @@ Error_t XENSIV_PAS_GASIno::startMeasure(int16_t periodInSec, int16_t alarmTh, vo
     {
         /* Enable sensor interrupt */
         intConf.b.int_typ = XENSIV_PAS_GAS_INTERRUPT_TYPE_HIGH_ACTIVE;
-        #if defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_RENESAS) || defined(ARDUINO_ARCH_PSOC6)
+        #if defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_RENESAS) || defined(ARDUINO_ARCH_PSOC6) || defined(ARDUINO_ARCH_XMC)
             PinStatus int_event;
         #else
             uint8_t int_event;
@@ -376,16 +376,18 @@ Error_t XENSIV_PAS_GASIno::stopMeasure()
  * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         startMeasure()
  */
-Error_t XENSIV_PAS_GASIno::getGAS_conc(int16_t & GASRAWVALUE)
+Error_t XENSIV_PAS_GASIno::getGAS_conc(float & GASRAWVALUE)
 {
     int32_t ret = XENSIV_PAS_GAS_OK;  
-
+    int16_t raw = 0;
     /* Initially set to 0.*/
     GASRAWVALUE = 0;
 
     /* Read the data */
-    ret = xensiv_pas_gas_get_result(&dev, (uint16_t*)&GASRAWVALUE);
+    ret = xensiv_pas_gas_get_result(&dev, (uint16_t*)&raw);
     GASINO_ASSERT_RET(ret);
+
+    GASRAWVALUE = static_cast<float>(raw);
 
     /* Clear masks from status register */
     ret = xensiv_pas_gas_clear_measurement_status(&dev,(XENSIV_PAS_GAS_REG_MEAS_STS_INT_STS_CLR_MSK | XENSIV_PAS_GAS_REG_MEAS_STS_ALARM_CLR_MSK));
