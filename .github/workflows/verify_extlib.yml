@@ -1,0 +1,17 @@
+name: Verify extlib
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+    
+jobs:
+  arduino-devops:
+    uses: Infineon/arduino-devops/.github/workflows/verify-extlib.yml@latest
+    secrets: inherit
