@@ -1,6 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas-ino.hpp>
-#include <xensiv_pas_gas_co2-ino.hpp>
+#include <xensiv_pas_gas_generic-ino.hpp>
 
 /**
  * In this example, the interrupt is used to control the  12V emitter 
@@ -50,13 +49,11 @@ uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup 
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 #define EARLY_NOTIFICATION_ENABLED         true
-/*
- * The constructor takes the Wire instance as i2c interface,
- * and the controller interrupt pin
- */
-XENSIV_PAS_GASCO2Ino gassensor(&Wire, interruptPin);
 
-int16_t gasrawvalue;
+GasType_t sensor_type = GAS_TYPE_CO2; // Change to GAS_TYPE_R290 if using R290 sensor
+XENSIV_PAS_GASIno* gassensor = nullptr;
+
+float gasrawvalue;
 Error_t err;
 
 /* 
@@ -92,11 +89,12 @@ void setup()
     Wire.begin();
     Wire.setClock(I2C_FREQ_HZ);
 
+    gassensor = create_sensor(sensor_type, &Wire, interruptPin);
     /*
     * No need to initialize the interrupt pin. This is done 
     * in the sensor begin() function 
     */
-    err = gassensor.begin();
+    err = gassensor->begin();
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
@@ -107,7 +105,7 @@ void setup()
     * Continuous measurement every 10 seconds.
     * Enable early notification enabled
     */
-    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, 0, isr, EARLY_NOTIFICATION_ENABLED);
+    err = gassensor->startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, 0, isr, EARLY_NOTIFICATION_ENABLED);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
@@ -124,7 +122,7 @@ void loop()
     Serial.println("measurement ready");
     measurementReady = false;
 
-    err = gassensor.getGAS_conc(gasrawvalue);
+    err = gassensor->getGAS_conc(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("get gas error: ");
@@ -132,5 +130,7 @@ void loop()
     }
 
     Serial.print("GAS value : ");
-    Serial.println(gasrawvalue);
+    Serial.print(gasrawvalue);
+    Serial.print(" ");
+    Serial.println(gassensor->getGAS_UnitStr());
 }
