@@ -13,19 +13,19 @@
  */
 #define GASINO_ASSERT_RET(x)   if( x != XENSIV_PAS_GAS_OK ) { return x; }
 
-// /**
-//  * @brief   Begins the sensor
-//  * 
-//  * @details Initializes the serial interface if the initialization
-//  *          is delegated to the XENSIV_PAS_GAS class.
-//  *          Sets the I2C freq or UART baudrate to the default values 
-//  *          prior the serial interface initialization.
-//  *          Initializes the interrupt pin if used.
-//  * 
-//  * @return  XENSIV™ PAS GAS error code
-//  * @retval  XENSIV_PAS_GAS_OK if success 
-//  * @pre     None
-//  */
+/**
+ * @brief   Begins the sensor
+ * 
+ * @details Initializes the serial interface if the initialization
+ *          is delegated to the XENSIV_PAS_GAS class.
+ *          Sets the I2C freq or UART baudrate to the default values 
+ *          prior the serial interface initialization.
+ *          Initializes the interrupt pin if used.
+ * 
+ * @return  XENSIV™ PAS GAS error code
+ * @retval  XENSIV_PAS_GAS_OK if success 
+ * @pre     None
+ */
 Error_t XENSIV_PAS_GASCO2Ino::begin()
 {
     int32_t ret = XENSIV_PAS_GAS_OK;

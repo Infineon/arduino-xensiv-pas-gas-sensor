@@ -27,7 +27,7 @@ class XENSIV_PAS_GASCO2Ino : public XENSIV_PAS_GASIno
 
         Error_t begin           () override;
         Error_t clearForcedCompensation  ();
-        virtual const char* getGAS_UnitStr() const override { return "ppm"; } 
+        virtual const char* getGasConecentrationUnitStr() const override { return "ppm"; } 
 };
 
 #endif /** PAS_GAS_CO2_INO_HPP_ */

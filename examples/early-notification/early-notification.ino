@@ -122,7 +122,7 @@ void loop()
     Serial.println("measurement ready");
     measurementReady = false;
 
-    err = gassensor->getGAS_conc(gasrawvalue);
+    err = gassensor->getGasConecentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("get gas error: ");
@@ -132,5 +132,5 @@ void loop()
     Serial.print("GAS value : ");
     Serial.print(gasrawvalue);
     Serial.print(" ");
-    Serial.println(gassensor->getGAS_UnitStr());
+    Serial.println(gassensor->getGasConecentrationUnitStr());
 }

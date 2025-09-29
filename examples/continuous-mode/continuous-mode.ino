@@ -68,14 +68,14 @@ void loop()
     /* Wait for the value to be ready. */
     delay(PERIODIC_MEAS_INTERVAL_IN_SECONDS*1000);
 
-    err = gassensor->getGAS_conc(gasrawvalue);
+    err = gassensor->getGasConecentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       /* Retry in case of timing synch mismatch */
       if(XENSIV_PAS_GAS_ERR_COMM == err)
       {
         delay(600);
-        err = gassensor->getGAS_conc(gasrawvalue);
+        err = gassensor->getGasConecentration(gasrawvalue);
         if(XENSIV_PAS_GAS_OK != err)          
         {
           Serial.print("get gas error: ");
@@ -87,7 +87,7 @@ void loop()
     Serial.print(" gas value : ");
     Serial.print(gasrawvalue);
     Serial.print(" " );
-    Serial.println(gassensor->getGAS_UnitStr());
+    Serial.println(gassensor->getGasConecentrationUnitStr());
     /*
      * Assuming we have some mechanism to obtain a
      * pressure reference (i.e. a pressure sensor),

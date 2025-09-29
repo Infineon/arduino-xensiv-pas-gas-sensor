@@ -25,8 +25,8 @@ class XENSIV_PAS_GASR290Ino : public XENSIV_PAS_GASIno
         ~XENSIV_PAS_GASR290Ino();
 
         Error_t begin           () override;
-        Error_t getGAS_conc     (float & GASRAWVALUE) override;
-        virtual const char* getGAS_UnitStr() const override { return "%LFL"; } // R290 specific
+        Error_t getGasConecentration     (float & GASRAWVALUE) override;
+        virtual const char* getGasConecentrationUnitStr() const override { return "%LFL"; } // R290 specific
 };
 
 #endif /** PAS_GAS_R290_INO_HPP_ */

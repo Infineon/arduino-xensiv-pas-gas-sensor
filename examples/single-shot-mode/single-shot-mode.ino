@@ -62,16 +62,16 @@ void loop()
   delay(MEAS_INTERVAL_IN_SECONDS*1000);
 
   /**
-   *  getGAS_conc() is called until the value is 
+   *  getGasConecentration() is called until the value is 
    *  available.  
-   *  getGAS_conc() returns 0 when no measurement 
+   *  getGasConecentration() returns 0 when no measurement 
    *  result is yet available or an error has
    *  occurred.
    */
 
   do
   {
-    err = gassensor->getGAS_conc(gasrawvalue);
+    err = gassensor->getGasConecentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("error: ");
@@ -83,5 +83,5 @@ void loop()
   Serial.print("GAS value : ");
   Serial.print(gasrawvalue);
   Serial.print(" ");
-  Serial.println(gassensor->getGAS_UnitStr());
+  Serial.println(gassensor->getGasConecentrationUnitStr());
 }
