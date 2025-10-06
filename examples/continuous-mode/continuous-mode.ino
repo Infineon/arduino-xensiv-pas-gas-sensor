@@ -13,8 +13,7 @@
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 #define PRESSURE_REFERENCE  900
 
-GasType_t sensorType = GAS_TYPE_CO2;
-XENSIV_PAS_GASIno* gassensor = nullptr;
+XENSIV_PAS_GASIno* gassensor = XENSIV_PAS_GASFactory::create_sensor(GAS_TYPE_R290, &Wire, 9); // Use your actual intPin value
 
 float gasrawvalue;
 Error_t err;
@@ -28,8 +27,6 @@ void setup()
     /* Initialize the i2c interface used by the sensor */
     Wire.begin();
     Wire.setClock(I2C_FREQ_HZ);
-
-    gassensor = create_sensor(sensorType, &Wire);
     
     /* Initialize the sensor */
     err = gassensor->begin();

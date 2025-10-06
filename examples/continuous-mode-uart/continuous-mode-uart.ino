@@ -15,8 +15,7 @@
  * Arduino MKR 1000 WiFi
  * XMC4700 Relax Kit
  */
-GasType_t sensorType = GAS_TYPE_CO2;
-XENSIV_PAS_GASIno* gassensor = nullptr;
+XENSIV_PAS_GASIno* gassensor = XENSIV_PAS_GASFactory::create_sensor(GAS_TYPE_R290, &Wire, 9); // Use your actual intPin value
 
 
 float gasrawvalue;
@@ -28,8 +27,6 @@ void setup()
     Serial.begin(9600);
     delay(800);
     Serial.println("serial initialized");
-
-    gassensor = create_sensor(sensorType, &Serial1);
 
     /* Initialize the sensor */
     err = gassensor->begin();

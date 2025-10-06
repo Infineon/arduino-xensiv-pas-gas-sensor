@@ -50,8 +50,7 @@ uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup 
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 #define EARLY_NOTIFICATION_ENABLED         true
 
-GasType_t sensor_type = GAS_TYPE_CO2; // Change to GAS_TYPE_R290 if using R290 sensor
-XENSIV_PAS_GASIno* gassensor = nullptr;
+XENSIV_PAS_GASIno* gassensor = XENSIV_PAS_GASFactory::create_sensor(GAS_TYPE_R290, &Wire, 9); // Use your actual intPin value
 
 float gasrawvalue;
 Error_t err;
@@ -89,7 +88,6 @@ void setup()
     Wire.begin();
     Wire.setClock(I2C_FREQ_HZ);
 
-    gassensor = create_sensor(sensor_type, &Wire, interruptPin);
     /*
     * No need to initialize the interrupt pin. This is done 
     * in the sensor begin() function 

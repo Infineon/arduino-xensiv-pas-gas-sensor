@@ -13,8 +13,7 @@
  * Create  GAS object. Unless otherwise specified,
  * using the Wire interface
  */
-GasType_t sensor_type = GAS_TYPE_CO2; // Change to GAS_TYPE_R290 if using R290 sensor
-XENSIV_PAS_GASIno* gassensor = nullptr;
+XENSIV_PAS_GASIno* gassensor = XENSIV_PAS_GASFactory::create_sensor(GAS_TYPE_R290, &Wire, 9); // Use your actual intPin value
 
 uint8_t prodId, revId;
 Error_t err;
@@ -28,8 +27,6 @@ void setup()
   /* Initialize the i2c interface used by the sensor */
   Wire.begin();
   Wire.setClock(I2C_FREQ_HZ);
-
-  gassensor=create_sensor(sensor_type, &Wire);
 
   /* Initialize the sensor */
   err = gassensor->begin();
