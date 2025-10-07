@@ -60,7 +60,7 @@ typedef union
         uint32_t : 3;
         uint32_t iccerr : 1;                            /*!< Communication error notification bit.
                                                              Indicates whether an invalid command has been received by the serial communication interface*/
-        uint32_t orvs : 1;                              /*!< Out-of-range VDD12V error bit */
+        uint32_t orvs : 1;                              /*!< Out-of-range VDD5V error bit */
         uint32_t ortmp : 1;                             /*!< Out-of-range temperature error bit */
         uint32_t pwm_dis_st : 1;                        /*!< PWM_DIS pin status */
         uint32_t sen_rdy : 1;                           /*!< Sensor ready bit */
