@@ -31,9 +31,9 @@ class XENSIV_PAS_GASR290Ino : public XENSIV_PAS_GASIno
         /******************************** R290 specific functions *****************************/
         Error_t getDeviceID     (uint8_t & devID);
         Error_t getAlarmConfig  (bool & activeHigh);
-        Error_t setABOCPrefill   (uint8_t hours);
         Error_t getABOCCycle    (uint8_t & days);
         Error_t setABOCCycle    (uint8_t days);
+        Error_t setABOCPrefill   (uint8_t hours);
         Error_t getDenoiseConfig(uint8_t & smoothing_factor);
         Error_t setDenoiseConfig(uint8_t smoothing_factor);
         Error_t selfTestErrorClear(bool clear);
