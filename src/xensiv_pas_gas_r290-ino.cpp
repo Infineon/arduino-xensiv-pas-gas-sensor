@@ -146,36 +146,6 @@ Error_t XENSIV_PAS_GASR290Ino::getAlarmConfig(bool & activeHigh)
 }
 
 /**
- * @brief       Sets the ABOC prefill value (in hours)
- * @details     Prefills the ABOC flash table to shorten the current ABOC cycle.
- *              The value is capped at (ABOC cycle - 1) hours.
- * @param[in]   hours  Number of hours to prefill (0 to ABOC cycle - 1)
- * @return      XENSIV™ PAS GAS error code
- * @retval      XENSIV_PAS_GAS_OK if success
- * @pre         begin()
- */
-Error_t XENSIV_PAS_GASR290Ino::setABOCPrefill(uint8_t hours)
-{
-    int32_t ret = XENSIV_PAS_GAS_OK; 
-    // Get current ABOC cycle to determine max allowed value
-    uint8_t aboc_cycle = 0;
-    
-    ret = getABOCCycle(aboc_cycle);
-    GASINO_ASSERT_RET(ret);
-
-    uint8_t max_hours = (aboc_cycle > 1) ? (aboc_cycle - 1) : 0;
-    if (hours > max_hours) {
-        hours = max_hours; // Cap at max allowed value
-    }
-
-    // Write to ABOC_PREFILL register
-    ret = xensiv_pas_gas_set_reg(&dev, XENSIV_PAS_GAS_R290_REG_ABOC_PREFILL, &hours, 1U);
-    GASINO_ASSERT_RET(ret);
-
-    return ret;
-}
-
-/**
  * @brief       Sets the ABOC cycle in days
  *  
  * @param[in]   days  ABOC cycle in days (7 to 70 days)
@@ -191,7 +161,7 @@ Error_t XENSIV_PAS_GASR290Ino::setABOCCycle(uint8_t days)
 
     if ((days < 7) || (days > 70))
     {
-        //return XENSIV_PAS_GAS_INVALID_PARAMETER;
+        return XENSIV_PAS_GAS_INVALID_PARAMETER;
     }
 
     abocCycle.b.aboc_cycle = days;
@@ -220,6 +190,36 @@ Error_t XENSIV_PAS_GASR290Ino::getABOCCycle(uint8_t &days)
     GASINO_ASSERT_RET(ret);
 
     days = abocCycle.b.aboc_cycle;
+    return ret;
+}
+
+/**
+ * @brief       Sets the ABOC prefill value (in hours)
+ * @details     Prefills the ABOC flash table to shorten the current ABOC cycle.
+ *              The value is capped at (ABOC cycle - 1) hours.
+ * @param[in]   hours  Number of hours to prefill (0 to ABOC cycle - 1)
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
+ * @pre         begin()
+ */
+Error_t XENSIV_PAS_GASR290Ino::setABOCPrefill(uint8_t hours)
+{
+    int32_t ret = XENSIV_PAS_GAS_OK; 
+    // Get current ABOC cycle to determine max allowed value
+    uint8_t aboc_cycle = 0;
+    
+    ret = getABOCCycle(aboc_cycle);
+    GASINO_ASSERT_RET(ret);
+
+    uint8_t max_hours = (aboc_cycle > 1) ? (aboc_cycle - 1) : 0;
+    if (hours > max_hours) {
+        hours = max_hours; // Cap at max allowed value
+    }
+
+    // Write to ABOC_PREFILL register
+    ret = xensiv_pas_gas_set_reg(&dev, XENSIV_PAS_GAS_R290_REG_ABOC_PREFILL, &hours, 1U);
+    GASINO_ASSERT_RET(ret);
+
     return ret;
 }
 
