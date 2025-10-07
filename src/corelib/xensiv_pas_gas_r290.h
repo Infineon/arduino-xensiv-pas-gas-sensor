@@ -49,7 +49,7 @@ typedef union
     {
         uint32_t : 3;
         uint32_t iccerr : 1;                            /*!< Communication error notification bit (R290). */
-        uint32_t orvs : 1;                              /*!< Out-of-range VDD12V error bit (R290). */
+        uint32_t orvs : 1;                              /*!< Out-of-range VDD5V error bit (R290). */
         uint32_t ortmp : 1;                             /*!< Out-of-range temperature error bit (R290). */
         uint32_t sen_rdy : 1;                           /*!< Sensor ready bit (R290). */
         uint32_t : 1;
