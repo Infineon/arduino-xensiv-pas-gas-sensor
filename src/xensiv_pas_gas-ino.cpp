@@ -111,7 +111,7 @@ Error_t XENSIV_PAS_GASIno::end()
  *              ---------------------------------------------------------------
  *              If the function is called with no arguments, the sensor
  *              will be triggered to perform a single shot measurement. 
- *              The user needs to poll with getGasConecentration() until the gas value is 
+ *              The user needs to poll with getGasConcentration() until the gas value is 
  *              available and has been read out from the sensor.
  *              The gas concentration value read will be zero as long as 
  *              no value is available or if any error occurred in the 
@@ -128,7 +128,7 @@ Error_t XENSIV_PAS_GASIno::end()
  * 
  *              gassensor.startMeasure();
  * 
- *              do{ gassensor.getGasConecentration(gasrawvalue); } while (gasrawvalue == 0);  
+ *              do{ gassensor.getGasConcentration(gasrawvalue); } while (gasrawvalue == 0);  
  *              @endcode
  * 
  *              Continuous measurement
@@ -136,9 +136,9 @@ Error_t XENSIV_PAS_GASIno::end()
  *              Continuous measurements (periodInSec) will configure the sensor
  *              to perform a measurement every desired period. Between 5 and
  *              4095 seconds.
- *              Without further arguments, the user has to poll with getGasConecentration()
+ *              Without further arguments, the user has to poll with getGasConcentration()
  *              until the value is available. Any super loop or thread 
- *              routine, can just consists on reading the gas (getGasConecentration()). 
+ *              routine, can just consists on reading the gas (getGasConcentration()). 
  *              For example, measure every 5 minutes:
  * 
  *              @code
@@ -155,7 +155,7 @@ Error_t XENSIV_PAS_GASIno::end()
  *              {
  *                  delay(300000); // Measure will be ready every 5 min
  * 
- *                  do{ gassensor.getGasConecentration(gasrawvalue); } while (gasrawvalue == 0);  
+ *                  do{ gassensor.getGasConcentration(gasrawvalue); } while (gasrawvalue == 0);  
  *                  // ... do something with the gas value ... 
  *              }
  *              @endcode
@@ -191,7 +191,7 @@ Error_t XENSIV_PAS_GASIno::end()
  *              while(1)
  *              {
  *                  while(!intFlag) { // block or yield() };
- *                  gassensor.getGasConecentration(gasrawvalue);   
+ *                  gassensor.getGasConcentration(gasrawvalue);   
  *                  // ... do something with the gas value ... 
  *                  intFlag = false;
  *              }
@@ -376,7 +376,7 @@ Error_t XENSIV_PAS_GASIno::stopMeasure()
  * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         startMeasure()
  */
-Error_t XENSIV_PAS_GASIno::getGasConecentration(float & GASRAWVALUE)
+Error_t XENSIV_PAS_GASIno::getGasConcentration(float & GASRAWVALUE)
 {
     int32_t ret = XENSIV_PAS_GAS_OK;  
     int16_t raw = 0;

@@ -86,7 +86,7 @@ Error_t XENSIV_PAS_GASR290Ino::begin()
  * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         startMeasure()
  */
-Error_t XENSIV_PAS_GASR290Ino::getGasConecentration(float & GASRAWVALUE)
+Error_t XENSIV_PAS_GASR290Ino::getGasConcentration(float & GASRAWVALUE)
 {
     int32_t ret = XENSIV_PAS_GAS_OK;  
 
