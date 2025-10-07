@@ -59,7 +59,7 @@
 #define XENSIV_PAS_GAS_ERR_NOT_READY             (3)
 /** Result code indicating whether a non-valid command has been received by the serial communication interface */
 #define XENSIV_PAS_GAS_ICCERR                    (4)
-/** Result code indicating whether a condition where VDD12V has been outside the specified valid range has been detected */
+/** Result code indicating whether a condition where VDD5V has been outside the specified valid range has been detected */
 #define XENSIV_PAS_GAS_ORVS                      (5)
 /** Result code indicating whether a condition where the temperature has been outside the specified valid range has been detected */
 #define XENSIV_PAS_GAS_ORTMP                     (6)
@@ -67,6 +67,8 @@
 #define XENSIV_PAS_GAS_READ_NRDY                 (7)
 /** Result code indicating that an invalid sensor interface was selected*/
 #define XENSIV_PAS_GAS_INVALID_SENSOR_INTERFACE  (8)
+/**< Result code indicating that an invalid parameter was passed to a function */
+#define XENSIV_PAS_GAS_INVALID_PARAMETER         (9)
 
 /** Minimum allowed measurement rate */
 #define XENSIV_PAS_GAS_MEAS_RATE_MIN             (5U)
@@ -154,7 +156,7 @@ typedef union
         uint32_t : 3;
         uint32_t iccerr : 1;                            /*!< Communication error notification bit.
                                                              Indicates whether an invalid command has been received by the serial communication interface*/
-        uint32_t orvs : 1;                              /*!< Out-of-range VDD12V error bit */
+        uint32_t orvs : 1;                              /*!< Out-of-range VDD5V error bit */
         uint32_t ortmp : 1;                             /*!< Out-of-range temperature error bit */
         uint32_t : 2;                                   /*!< Reserved (usage depends on variant) */
     } b;                                                /*!< Structure used for bit  access */
