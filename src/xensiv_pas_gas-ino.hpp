@@ -44,17 +44,18 @@ class XENSIV_PAS_GASIno
         Error_t end             ();
         Error_t startMeasure    (int16_t  periodInSec = 0, int16_t alarmTh = 0, void (*cback) (void *) = nullptr, bool earlyNotification = false);
         Error_t stopMeasure     ();
-        virtual Error_t getGasConcentration     (float & value) ; 
-        virtual const char* getGasConcentrationUnitStr() const { return ""; } 
         Error_t getDiagnosis    (Diag_t & diagnosis);
         Error_t setABOC         (ABOC_t aboc, int16_t abocRef);
         Error_t setPressRef     (uint16_t pressRef);
         Error_t performForcedCompensation(uint16_t GASRef);
         Error_t reset           ();
         Error_t getProductID     (uint8_t & prodID, uint8_t & revID);
-        virtual Error_t clearForcedCompensation  () { return XENSIV_PAS_GAS_OK; };
         Error_t getRegister     (uint8_t regAddr, uint8_t * data, uint8_t len);
         Error_t setRegister     (uint8_t regAddr, const uint8_t * data, uint8_t len);
+
+        Error_t clearForcedCompensation  () ;
+        Error_t getGasConcentration     (float & value) ; 
+        const char* getGasConcentrationUnitStr() ; 
         const char* getPasGasErrorStr(Error_t err);
 
     protected:

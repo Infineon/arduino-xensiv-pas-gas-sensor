@@ -24,9 +24,6 @@ class XENSIV_PAS_GASR290Ino : public XENSIV_PAS_GASIno
         XENSIV_PAS_GASR290Ino (HardwareSerial * serial, uint8_t intPin = unusedPin) : XENSIV_PAS_GASIno(sensor_r290, serial, intPin) {};
         ~XENSIV_PAS_GASR290Ino();
 
-        Error_t getGasConcentration     (float & GASRAWVALUE) override;
-        virtual const char* getGasConcentrationUnitStr() const override { return "%LFL"; } 
-
         /******************************** R290 specific functions *****************************/
         Error_t getDeviceID     (uint8_t & devID);
         Error_t getAlarmConfig  (bool & activeHigh);

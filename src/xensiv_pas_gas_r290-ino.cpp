@@ -14,40 +14,6 @@
 #define GASINO_ASSERT_RET(x)   if( x != XENSIV_PAS_GAS_OK ) { return x; }
 
 /**
- * @brief       Gets the GAS concentration measured
- *               
- * 
- * @details     The value read is zero when no measurement is 
- *              yet available or an error has occurred.
- * 
- * @param[out]  gasrawvalue  GAS concentration read in LFL
- * @return      XENSIV™ PAS GAS error code
- * @retval      XENSIV_PAS_GAS_OK if success
- * @pre         startMeasure()
- */
-Error_t XENSIV_PAS_GASR290Ino::getGasConcentration(float & GASRAWVALUE)
-{
-    int32_t ret = XENSIV_PAS_GAS_OK;  
-
-    /* Initially set to 0.*/
-    GASRAWVALUE = 0;
-    int16_t raw = 0;
-
-    /* Read the data */
-    ret = xensiv_pas_gas_get_result(&dev, (uint16_t*)&raw);
-    GASINO_ASSERT_RET(ret);
-
-    // /* Convert to float */
-    GASRAWVALUE = static_cast<float>(raw) / 100.0f; // R290: convert to %LFL
-
-    /* Clear masks from status register */
-    ret = xensiv_pas_gas_clear_measurement_status(&dev,(XENSIV_PAS_GAS_REG_MEAS_STS_INT_STS_CLR_MSK | XENSIV_PAS_GAS_REG_MEAS_STS_ALARM_CLR_MSK));
-    GASINO_ASSERT_RET(ret);
-
-    return ret;
-}
-
-/**
  * @brief       Gets device product identifier 
  *  
  * @param[out]  devID  Device identifier
