@@ -103,17 +103,17 @@ Error_t XENSIV_PAS_GASIno::begin()
 
     switch (gasType)
     {
-        case sensor_r290:
-            ret = xensiv_pas_gas_r290_init(&dev, itf, ctx);
-            break;
-        case sensor_co2:
-            ret = xensiv_pas_gas_co2_init(&dev, itf, ctx);
-            break;
-        case sensor_a2l:
-            ret = xensiv_pas_gas_a2l_init(&dev, itf, ctx);
-            break;
-        default:
-            return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
+    case SENSOR_R290:
+        ret = xensiv_pas_gas_r290_init(&dev, itf, ctx);
+        break;
+    case SENSOR_CO2:
+        ret = xensiv_pas_gas_co2_init(&dev, itf, ctx);
+        break;
+    case SENSOR_A2L:
+        ret = xensiv_pas_gas_a2l_init(&dev, itf, ctx);
+        break;
+    default:
+        return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
     }
     if (ret != XENSIV_PAS_GAS_OK)
         return ret;
@@ -440,12 +440,16 @@ Error_t XENSIV_PAS_GASIno::getGasConcentration(float &gasRawValue)
         /* Convert to float */
         gasRawValue = static_cast<float>(raw) / 100.0f; // R290: convert to %LFL
         break;
+    case SENSOR_A2L:
+        /* Convert to float */
+        gasRawValue = static_cast<float>(raw) / 100.0f; // A2L: convert to %LFL
+        break;
     case SENSOR_CO2:
         /* Convert to float */
         gasRawValue = static_cast<float>(raw); // CO2: convert to ppm
         break;
     default:
-        return XENSIV_PAS_GAS_INVALID_sensorType;
+        return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
     }
 
     /* Clear masks from status register */
@@ -659,14 +663,14 @@ const char *XENSIV_PAS_GASIno::getGasConcentrationUnitStr()
 {
     switch (gasType)
     {
-        case sensor_r290:
-            return "%LFL"; // R290
-        case sensor_co2:
-            return "ppm";  // CO2
-        case sensor_a2l:
-            return "%LFL";  // A2L
-        default:
-            return "";
+    case SENSOR_R290:
+        return "%LFL"; // R290
+    case SENSOR_CO2:
+        return "ppm"; // CO2
+    case SENSOR_A2L:
+        return "%LFL"; // A2L
+    default:
+        return "";
     }
 }
 
@@ -681,12 +685,12 @@ Error_t XENSIV_PAS_GASIno::clearForcedCompensation()
 {
     switch (gasType)
     {
-        case sensor_co2:
-            return xensiv_pas_gas_cmd(&dev,  (xensiv_pas_gas_cmd_t)XENSIV_PAS_GAS_CO2_CMD_RESET_FCS);
-        case sensor_a2l:
-            return xensiv_pas_gas_cmd(&dev,  (xensiv_pas_gas_cmd_t)XENSIV_PAS_GAS_A2L_CMD_RESET_FCS);
-        default:
-            return XENSIV_PAS_GAS_OK;
+    case SENSOR_CO2:
+        return xensiv_pas_gas_cmd(&dev, (xensiv_pas_gas_cmd_t)XENSIV_PAS_GAS_CO2_CMD_RESET_FCS);
+    case SENSOR_A2L:
+        return xensiv_pas_gas_cmd(&dev, (xensiv_pas_gas_cmd_t)XENSIV_PAS_GAS_A2L_CMD_RESET_FCS);
+    default:
+        return XENSIV_PAS_GAS_OK;
     }
 }
 

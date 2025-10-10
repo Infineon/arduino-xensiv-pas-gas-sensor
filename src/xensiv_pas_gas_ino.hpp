@@ -10,6 +10,7 @@
 #define PAS_CO2_INO_HPP_
 
 #include "corelib/xensiv_pas_gas.h"
+#include "corelib/xensiv_pas_gas_a2l.h"
 #include "corelib/xensiv_pas_gas_co2.h"
 #include "corelib/xensiv_pas_gas_r290.h"
 #include <Arduino.h>
@@ -27,11 +28,12 @@ typedef xensiv_pas_gas_boc_cfg_t ABOC_t;
 typedef enum
 {
     SENSOR_CO2,
-    SENSOR_R290
+    SENSOR_R290,
+    SENSOR_A2L
 } GasType_t;
 
-#ifndef XENSIV_PAS_GAS_INVALID_sensorType
-#define XENSIV_PAS_GAS_INVALID_sensorType 10
+#ifndef XENSIV_PAS_GAS_INVALID_SENSOR_TYPE
+#define XENSIV_PAS_GAS_INVALID_SENSOR_TYPE 10
 #endif
 
 class XENSIV_PAS_GASIno

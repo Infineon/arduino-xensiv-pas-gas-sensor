@@ -26,6 +26,8 @@
 #ifndef XENSIV_PAS_GAS_CO2_REGS_H_
 #define XENSIV_PAS_GAS_CO2_REGS_H_
 
+#include "xensiv_pas_gas_regs.h"
+
 // --------------------------SENS_STS Bitfields CO2 sensor only Register---------------------------//
 #define XENSIV_PAS_GAS_CO2_REG_SENS_STS_PWM_DIS_ST_POS       (6U)                                                    /*!< SENS_STS: PWM_DIS_ST position (CO2 only) */
 #define XENSIV_PAS_GAS_CO2_REG_SENS_STS_PWM_DIS_ST_MSK       (0x01U << XENSIV_PAS_GAS_CO2_REG_SENS_STS_PWM_DIS_ST_POS)    /*!< SENS_STS: PWM_DIS_ST mask (CO2 only) */
