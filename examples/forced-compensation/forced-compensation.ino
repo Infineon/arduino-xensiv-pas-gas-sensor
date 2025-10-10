@@ -6,7 +6,7 @@
 #define FORCED_COMPENSATION_GAS_REFERENCE    400
 #define PRESSURE_REFERENCE  900
 
-GasType_t sensorType = SENSOR_CO2; // Change to SENSOR_R290 if using R290 sensor
+GasType_t sensorType = SENSOR_CO2; // Change to SENSOR_R290 if using R290 sensor and to SENSOR_A2L for A2L sensor
 XENSIV_PAS_GASIno gasSensor(sensorType, &Wire);
 
 float gasRawValue;

@@ -123,7 +123,7 @@ int32_t xensiv_pas_gas_a2l_set_alarm_hysteresis(const xensiv_pas_gas_t *dev, uin
     xensiv_pas_gas_plat_assert(dev != NULL);
 
     alarm_hys = (uint16_t)xensiv_pas_gas_plat_htons(alarm_hys);
-    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, &alarm_hys, 2U);
+    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, (uint8_t *)&alarm_hys, 2U);
 }
 
 int32_t xensiv_pas_gas_a2l_get_alarm_hysteresis(const xensiv_pas_gas_t *dev, uint16_t *alarm_hys) {
@@ -139,7 +139,7 @@ int32_t xensiv_pas_gas_a2l_set_absolute_humidity_ref(const xensiv_pas_gas_t *dev
     xensiv_pas_gas_plat_assert(dev != NULL);
 
     abs_hum_ref = (uint16_t)xensiv_pas_gas_plat_htons(abs_hum_ref);
-    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, &abs_hum_ref, 2U);
+    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, (uint8_t *)&abs_hum_ref, 2U);
 }
 
 int32_t  xensiv_pas_gas_a2l_get_absolute_humidity_ref(const xensiv_pas_gas_t *dev, uint16_t *abs_hum_ref) {

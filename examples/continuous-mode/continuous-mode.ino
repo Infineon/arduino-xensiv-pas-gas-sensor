@@ -7,7 +7,7 @@
 
 #define PRESSURE_REFERENCE  900
 
-GasType_t sensorType = SENSOR_CO2;  // Change to SENSOR_R290 if using R290 sensor
+GasType_t sensorType = SENSOR_CO2;  // Change to SENSOR_R290 if using R290 sensor and to SENSOR_A2L for A2L sensor
 
 #if USE_UART_INTERFACE
 XENSIV_PAS_GASIno gasSensor(sensorType, &Serial1);

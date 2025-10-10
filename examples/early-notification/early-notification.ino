@@ -42,7 +42,7 @@ uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup 
 
 #define EARLY_NOTIFICATION_ENABLED         true
 
-GasType_t sensorType = SENSOR_CO2; // Change to SENSOR_R290 if using R290 sensor
+GasType_t sensorType = SENSOR_CO2; // Change to SENSOR_R290 if using R290 sensor and to SENSOR_A2L for A2L sensor
 XENSIV_PAS_GASIno gasSensor(sensorType, &Wire, interruptPin);
 
 float gasRawValue;

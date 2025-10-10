@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include "xensiv_pas_gas.h"
+#include "xensiv_pas_gas_co2_regs.h"
 
 /** Minimum allowed measurement rate */
 #define XENSIV_PAS_GAS_CO2_MEAS_RATE_MIN            (5U)

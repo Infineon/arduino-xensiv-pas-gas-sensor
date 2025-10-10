@@ -7,7 +7,7 @@
  * Create gas sensor object. Unless otherwise specified,
  * using the Wire interface
  */
-GasType_t sensorType = SENSOR_R290; // Change to SENSOR_CO2 if using co2 sensor
+GasType_t sensorType = SENSOR_R290; // Change to SENSOR_CO2 if using co2 sensor and to SENSOR_A2L for A2L sensor
 XENSIV_PAS_GASIno gasSensor(sensorType, &Wire);
 
 float gasRawValue;

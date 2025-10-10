@@ -25,6 +25,8 @@
 #ifndef XENSIV_PAS_GAS_R290_REGS_H_
 #define XENSIV_PAS_GAS_R290_REGS_H_
 
+#include "xensiv_pas_gas_regs.h"
+
 // ------------------- R290 Sensor Only Registers ------------------//
 #define XENSIV_PAS_GAS_R290_REG_DEV_ID            (0x23U)
 #define XENSIV_PAS_GAS_R290_REG_ABOC_PREFILL      (0x5DU)

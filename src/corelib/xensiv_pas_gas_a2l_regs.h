@@ -25,6 +25,8 @@
 #ifndef XENSIV_PAS_GAS_A2L_REGS_H_
 #define XENSIV_PAS_GAS_A2L_REGS_H_
 
+#include "xensiv_pas_gas_regs.h"
+
 // --------------------------A2L sensor Registers---------------------------//
 #define XENSIV_PAS_GAS_A2L_REG_CFG_SAVE             (0x20U)
 #define XENSIV_PAS_GAS_A2L_REG_DEV_ID_IDX           (0x22U)

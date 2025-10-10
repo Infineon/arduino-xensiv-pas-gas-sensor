@@ -25,10 +25,6 @@
 #ifndef XENSIV_PAS_GAS_REGS_H_
 #define XENSIV_PAS_GAS_REGS_H_
 
-#include "xensiv_pas_gas_r290_regs.h"
-#include "xensiv_pas_gas_co2_regs.h"
-#include "xensiv_pas_gas_a2l_regs.h"
-
 /**
  * \addtogroup group_board_libs XENSIV™ PAS GAS sensor
  * \{
