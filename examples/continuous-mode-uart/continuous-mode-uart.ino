@@ -66,14 +66,14 @@ void loop()
     /* Wait for the value to be ready. */
     delay(PERIODIC_MEAS_INTERVAL_IN_SECONDS*1000);
 
-    err = gassensor.getGasConecentration(gasrawvalue);
+    err = gassensor.getGasConcentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       /* Retry in case of timing synch mismatch */
       if(XENSIV_PAS_GAS_ERR_COMM == err)
       {
         delay(600);
-        err = gassensor.getGasConecentration(gasrawvalue);
+        err = gassensor.getGasConcentration(gasrawvalue);
         if(XENSIV_PAS_GAS_OK != err)          
         {
           Serial.print("get gas error: ");
@@ -85,7 +85,7 @@ void loop()
     Serial.print("GAS value : ");
     Serial.print(gasrawvalue);
     Serial.print(" " );
-    Serial.println(gassensor.getGasConecentrationUnitStr());
+    Serial.println(gassensor.getGasConcentrationUnitStr());
 
     /*
      * Assuming we have some mechanism to obtain a
