@@ -38,7 +38,7 @@ void setup()
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("initialization error: ");
-    Serial.println(err);
+    Serial.println(gassensor.getPasGasErrorStr(err));
   }
 
 }
@@ -53,7 +53,7 @@ void loop()
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");
-    Serial.println(err);
+    Serial.println(gassensor.getPasGasErrorStr(err));
   }
 
   /* Wait for the value to be ready. */
@@ -73,7 +73,7 @@ void loop()
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("error: ");
-      Serial.println(err);
+      Serial.println(gassensor.getPasGasErrorStr(err));
       break;
     }
   } while (0 == gasrawvalue);

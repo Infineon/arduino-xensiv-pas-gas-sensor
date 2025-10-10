@@ -634,3 +634,20 @@ Error_t XENSIV_PAS_GASIno::setRegister(uint8_t regAddr, const uint8_t * data, ui
 {
     return xensiv_pas_gas_set_reg(&dev, regAddr, data, len);
 }
+
+const char* XENSIV_PAS_GASIno::getPasGasErrorStr(Error_t err)
+{
+    switch(err){
+        case XENSIV_PAS_GAS_OK: return "OK";
+        case XENSIV_PAS_GAS_ERR_COMM: return "Communication error";
+        case XENSIV_PAS_GAS_ERR_WRITE_TOO_LARGE: return "Write too large";
+        case XENSIV_PAS_GAS_ERR_NOT_READY: return "Not ready";
+        case XENSIV_PAS_GAS_ICCERR: return "Serial command error";
+        case XENSIV_PAS_GAS_ORVS: return "VDD5V out of range";
+        case XENSIV_PAS_GAS_ORTMP: return "Temperature out of range";
+        case XENSIV_PAS_GAS_READ_NRDY: return "GAS value not ready";
+        case XENSIV_PAS_GAS_INVALID_SENSOR_INTERFACE: return "Invalid sensor interface";
+        case XENSIV_PAS_GAS_INVALID_PARAMETER: return "Invalid parameter";
+        default: return "Unknown error";
+    }
+}
