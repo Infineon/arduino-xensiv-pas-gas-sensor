@@ -433,7 +433,19 @@ Error_t XENSIV_PAS_GASIno::getGasConcentration(float & GASRAWVALUE)
     ret = xensiv_pas_gas_get_result(&dev, (uint16_t*)&raw);
     GASINO_ASSERT_RET(ret);
 
-    GASRAWVALUE = static_cast<float>(raw);
+    switch(gasType)
+    {
+        case sensor_r290:
+            /* Convert to float */
+            GASRAWVALUE = static_cast<float>(raw) / 100.0f; // R290: convert to %LFL
+            break;
+        case sensor_co2:
+            /* Convert to float */
+            GASRAWVALUE = static_cast<float>(raw); // CO2: convert to ppm
+            break;
+        default:
+            return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
+    }
 
     /* Clear masks from status register */
     ret = xensiv_pas_gas_clear_measurement_status(&dev,(XENSIV_PAS_GAS_REG_MEAS_STS_INT_STS_CLR_MSK | XENSIV_PAS_GAS_REG_MEAS_STS_ALARM_CLR_MSK));
@@ -635,6 +647,52 @@ Error_t XENSIV_PAS_GASIno::setRegister(uint8_t regAddr, const uint8_t * data, ui
     return xensiv_pas_gas_set_reg(&dev, regAddr, data, len);
 }
 
+
+/**
+ * @brief       Gets string description of the gas concentration unit
+ * 
+ * @return      Pointer to the string description of the gas concentration unit
+ * @pre         None
+ */
+const char* XENSIV_PAS_GASIno::getGasConcentrationUnitStr() 
+{
+    switch(gasType)
+    {
+        case sensor_r290:
+            return "%LFL"; // R290
+        case sensor_co2:
+            return "ppm";  // CO2
+        default:
+            return "";
+    }
+}
+
+/**
+ * @brief       Resets the forced calibration correction factor
+ * 
+ * @return      XENSIV™ PAS GAS error code
+ * @retval      XENSIV_PAS_GAS_OK if success
+ * @pre         begin()
+ */
+Error_t XENSIV_PAS_GASIno::clearForcedCompensation()
+{   
+    switch (gasType)
+    {
+        case sensor_co2:
+            return xensiv_pas_gas_cmd(&dev,  (xensiv_pas_gas_cmd_t)XENSIV_PAS_GAS_CO2_CMD_RESET_FCS);
+        default:
+            return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
+    }
+
+}
+
+/**
+ * @brief       Gets string description of the error code
+ * 
+ * @param[in]   err     XENSIV™ PAS GAS error code
+ * @return      Pointer to the string description of the error code
+ * @pre         None
+ */
 const char* XENSIV_PAS_GASIno::getPasGasErrorStr(Error_t err)
 {
     switch(err){
