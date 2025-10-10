@@ -1,4 +1,3 @@
-
 /***********************************************************************************************//**
  * \file xensiv_pas_gas_regs.h
  *
@@ -28,6 +27,7 @@
 
 #include "xensiv_pas_gas_r290_regs.h"
 #include "xensiv_pas_gas_co2_regs.h"
+#include "xensiv_pas_gas_a2l_regs.h"
 
 /**
  * \addtogroup group_board_libs XENSIV™ PAS GAS sensor
