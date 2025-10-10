@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas_generic-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
 
 /* 
  * The sensor supports 100KHz and 400KHz. 
@@ -17,8 +17,8 @@
  * using the Wire interface
  */
 
-GasType_t sensor_type = GAS_TYPE_R290; // Change to GAS_TYPE_R290 if using R290 sensor
-XENSIV_PAS_GASIno* gassensor = nullptr;
+gastype_t sensor_type = sensor_r290; // Change to sensor_co2 if using co2 sensor
+XENSIV_PAS_GASIno gassensor(sensor_type, &Wire);
 
 float gasrawvalue;
 Error_t err;
@@ -33,10 +33,8 @@ void setup()
   Wire.begin();
   Wire.setClock(I2C_FREQ_HZ);
 
-  gassensor = create_sensor(sensor_type, &Wire);
-
   /* Initialize the sensor */
-  err = gassensor->begin();
+  err = gassensor.begin();
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("initialization error: ");
@@ -51,7 +49,7 @@ void loop()
   /* 
    * Trigger a one shot measurement
    */
-  err = gassensor->startMeasure();
+  err = gassensor.startMeasure();
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");
@@ -71,7 +69,7 @@ void loop()
 
   do
   {
-    err = gassensor->getGasConecentration(gasrawvalue);
+    err = gassensor.getGasConecentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("error: ");
@@ -83,5 +81,5 @@ void loop()
   Serial.print("GAS value : ");
   Serial.print(gasrawvalue);
   Serial.print(" ");
-  Serial.println(gassensor->getGasConecentrationUnitStr());
+  Serial.println(gassensor.getGasConecentrationUnitStr());
 }
