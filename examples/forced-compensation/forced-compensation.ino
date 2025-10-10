@@ -35,26 +35,26 @@ void setup()
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
-      Serial.println(err);
+      Serial.println(gassensor.getPasGasErrorStr(err));
     }
 
       err = gassensor.clearForcedCompensation();
         if (XENSIV_PAS_GAS_OK != err) {
                 Serial.print("clear forced compensation error: ");
-                Serial.println(err);
+                Serial.println(gassensor.getPasGasErrorStr(err));
             }
 
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("clear forced compensation error: ");
-      Serial.println(err);
+      Serial.println(gassensor.getPasGasErrorStr(err));
     }
 
   err = gassensor.setPressRef(PRESSURE_REFERENCE);
   if (XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("pressure reference error: ");
-    Serial.println(err);
+    Serial.println(gassensor.getPasGasErrorStr(err));
   }
 
     Serial.print("forced compensation started with ");
@@ -65,7 +65,7 @@ void setup()
     if (XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("forced compensation error: ");
-      Serial.println(err);
+      Serial.println(gassensor.getPasGasErrorStr(err));
     }
 
     Serial.println("forced compensation finished");
@@ -78,7 +78,7 @@ void setup()
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
-      Serial.println(err);
+      Serial.println(gassensor.getPasGasErrorStr(err));
     }
 }
 
@@ -98,7 +98,7 @@ void loop()
         if(XENSIV_PAS_GAS_OK != err)          
         {
           Serial.print("get  gas error: ");
-          Serial.println(err);
+          Serial.println(gassensor.getPasGasErrorStr(err));
         }
       }
     }
@@ -118,6 +118,6 @@ void loop()
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("pressure reference error: ");
-      Serial.println(err);
+      Serial.println(gassensor.getPasGasErrorStr(err));
     }
 }

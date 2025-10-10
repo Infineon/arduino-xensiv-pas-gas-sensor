@@ -55,6 +55,7 @@ class XENSIV_PAS_GASIno
         virtual Error_t clearForcedCompensation  () { return XENSIV_PAS_GAS_OK; };
         Error_t getRegister     (uint8_t regAddr, uint8_t * data, uint8_t len);
         Error_t setRegister     (uint8_t regAddr, const uint8_t * data, uint8_t len);
+        const char* getPasGasErrorStr(Error_t err);
 
     protected:
 

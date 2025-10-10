@@ -34,14 +34,14 @@ void setup()
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("initialization error: ");
-    Serial.println(err);
+    Serial.println(gassensor.getPasGasErrorStr(err));
   }
 
   err = gassensor.getProductID(prodId, revId);
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");
-    Serial.println(err);
+    Serial.println(gassensor.getPasGasErrorStr(err));
   }
 
   Serial.print("product id  : ");
