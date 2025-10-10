@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas_generic-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
 /* 
  * The sensor supports 100KHz and 400KHz. 
  * You hardware setup and pull-ups value will
@@ -15,8 +15,8 @@
 
 uint8_t interrupt_pin = 9;      /* For XMC2Go. Change it for your hardware setup */
 
-GasType_t sensorType = GAS_TYPE_CO2;
-XENSIV_PAS_GASIno* gassensor = nullptr;
+gastype_t sensorType = sensor_co2;    // Change to sensor_r290 if using R290 sensor
+XENSIV_PAS_GASIno gassensor(sensorType, &Wire, interrupt_pin);
 
 float gasrawvalue;
 Error_t err;
@@ -43,15 +43,12 @@ void setup()
     /* Initialize the i2c serial interface used by the sensor */
     Wire.begin();
     Wire.setClock(I2C_FREQ_HZ);
-
-    
-    gassensor = create_sensor(sensorType, &Wire, interrupt_pin);
     
     /*
     * No need to initialized the interrupt pin. This is done 
     * in the sensor begin() function 
     */
-    err = gassensor->begin();
+    err = gassensor.begin();
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
@@ -65,7 +62,7 @@ void setup()
     * The isr function is 
     * passed enabling the sensor interrupt mode.
     */
-    err = gassensor->startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, ALARM_GAS_THRESHOLD, isr);
+    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, ALARM_GAS_THRESHOLD, isr);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
@@ -83,7 +80,7 @@ void loop()
     Serial.println("int occurred");
     intFlag = false;
 
-    err = gassensor->getGasConecentration(gasrawvalue);
+    err = gassensor.getGasConecentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("get gas error: ");
@@ -93,6 +90,6 @@ void loop()
     Serial.print("GAS value : ");
     Serial.print(gasrawvalue);
     Serial.print(" " );
-    Serial.println(gassensor->getGasConecentrationUnitStr());
+    Serial.println(gassensor.getGasConecentrationUnitStr());
 
 }

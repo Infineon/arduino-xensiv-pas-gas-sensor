@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas_generic-ino.hpp>
+#include <xensiv_pas_gas-ino.hpp>
 
 /**
  * In this example, the interrupt is used to control the  12V emitter 
@@ -50,8 +50,8 @@ uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup 
 // #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 #define EARLY_NOTIFICATION_ENABLED         true
 
-GasType_t sensor_type = GAS_TYPE_CO2; // Change to GAS_TYPE_R290 if using R290 sensor
-XENSIV_PAS_GASIno* gassensor = nullptr;
+gastype_t sensor_type = sensor_co2; // Change to sensor_r290 if using R290 sensor
+XENSIV_PAS_GASIno gassensor(sensor_type, &Wire, interruptPin);
 
 float gasrawvalue;
 Error_t err;
@@ -89,12 +89,11 @@ void setup()
     Wire.begin();
     Wire.setClock(I2C_FREQ_HZ);
 
-    gassensor = create_sensor(sensor_type, &Wire, interruptPin);
     /*
     * No need to initialize the interrupt pin. This is done 
     * in the sensor begin() function 
     */
-    err = gassensor->begin();
+    err = gassensor.begin();
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
@@ -105,7 +104,7 @@ void setup()
     * Continuous measurement every 10 seconds.
     * Enable early notification enabled
     */
-    err = gassensor->startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, 0, isr, EARLY_NOTIFICATION_ENABLED);
+    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, 0, isr, EARLY_NOTIFICATION_ENABLED);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
@@ -122,7 +121,7 @@ void loop()
     Serial.println("measurement ready");
     measurementReady = false;
 
-    err = gassensor->getGasConecentration(gasrawvalue);
+    err = gassensor.getGasConecentration(gasrawvalue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("get gas error: ");
@@ -132,5 +131,5 @@ void loop()
     Serial.print("GAS value : ");
     Serial.print(gasrawvalue);
     Serial.print(" ");
-    Serial.println(gassensor->getGasConecentrationUnitStr());
+    Serial.println(gassensor.getGasConecentrationUnitStr());
 }
