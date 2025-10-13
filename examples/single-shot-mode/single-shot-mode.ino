@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas-ino.hpp>
+#include <xensiv_pas_gas_ino.hpp>
 
 /* 
  * The sensor supports 100KHz and 400KHz. 
@@ -17,10 +17,10 @@
  * using the Wire interface
  */
 
-gastype_t sensor_type = sensor_r290; // Change to sensor_co2 if using co2 sensor
-XENSIV_PAS_GASIno gassensor(sensor_type, &Wire);
+GasType_t sensorType = SENSOR_R290; // Change to SENSOR_CO2 if using co2 sensor
+XENSIV_PAS_GASIno gasSensor(sensorType, &Wire);
 
-float gasrawvalue;
+float gasRawValue;
 Error_t err;
 
 void setup()
@@ -34,11 +34,11 @@ void setup()
   Wire.setClock(I2C_FREQ_HZ);
 
   /* Initialize the sensor */
-  err = gassensor.begin();
+  err = gasSensor.begin();
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("initialization error: ");
-    Serial.println(gassensor.getPasGasErrorStr(err));
+    Serial.println(gasSensor.getPasGasErrorStr(err));
   }
 
 }
@@ -49,11 +49,11 @@ void loop()
   /* 
    * Trigger a one shot measurement
    */
-  err = gassensor.startMeasure();
+  err = gasSensor.startMeasure();
   if(XENSIV_PAS_GAS_OK != err)
   {
     Serial.print("error: ");
-    Serial.println(gassensor.getPasGasErrorStr(err));
+    Serial.println(gasSensor.getPasGasErrorStr(err));
   }
 
   /* Wait for the value to be ready. */
@@ -69,17 +69,17 @@ void loop()
 
   do
   {
-    err = gassensor.getGasConcentration(gasrawvalue);
+    err = gasSensor.getGasConcentration(gasRawValue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("error: ");
-      Serial.println(gassensor.getPasGasErrorStr(err));
+      Serial.println(gasSensor.getPasGasErrorStr(err));
       break;
     }
-  } while (0 == gasrawvalue);
+  } while (0 == gasRawValue);
 
   Serial.print("GAS value : ");
-  Serial.print(gasrawvalue);
+  Serial.print(gasRawValue);
   Serial.print(" ");
-  Serial.println(gassensor.getGasConcentrationUnitStr());
+  Serial.println(gasSensor.getGasConcentrationUnitStr());
 }
