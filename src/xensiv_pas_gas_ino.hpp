@@ -1,21 +1,21 @@
-/** 
+/**
  * @file        xensiv_pas_gas-ino.hpp
  * @brief       XENSIV™ PAS GAS Arduino API
  * @copyright   Copyright (c) 2020-2021 Infineon Technologies AG
- *              
+ *
  * SPDX-License-Identifier: MIT
  */
 
 #ifndef PAS_CO2_INO_HPP_
 #define PAS_CO2_INO_HPP_
 
-#include <Arduino.h>
-#include <Wire.h>
-#include <HardwareSerial.h>
-#include "xensiv_pas_gas_platf_ino.hpp"
 #include "corelib/xensiv_pas_gas.h"
-#include "corelib/xensiv_pas_gas_r290.h"
 #include "corelib/xensiv_pas_gas_co2.h"
+#include "corelib/xensiv_pas_gas_r290.h"
+#include "xensiv_pas_gas_platf_ino.hpp"
+#include <Arduino.h>
+#include <HardwareSerial.h>
+#include <Wire.h>
 
 /**
  * @addtogroup gasinoapi
@@ -25,50 +25,53 @@
 typedef int32_t Error_t;
 typedef xensiv_pas_gas_status_t Diag_t;
 typedef xensiv_pas_gas_boc_cfg_t ABOC_t;
-typedef enum { SENSOR_CO2, SENSOR_R290 } GasType_t;
+typedef enum
+{
+    SENSOR_CO2,
+    SENSOR_R290
+} GasType_t;
 
 #ifndef XENSIV_PAS_GAS_INVALID_sensorType
-#define XENSIV_PAS_GAS_INVALID_sensorType   10
+#define XENSIV_PAS_GAS_INVALID_sensorType 10
 #endif
 
 class XENSIV_PAS_GASIno
 {
-    public:
+  public:
+    static constexpr uint8_t unusedPin = 0xFFU; /**< Unused pin */
 
-        static constexpr uint8_t       unusedPin = 0xFFU; /**< Unused pin */        
+    XENSIV_PAS_GASIno(GasType_t gasType, TwoWire *wire = &Wire, uint8_t intPin = unusedPin);
+    XENSIV_PAS_GASIno(GasType_t gasType, HardwareSerial *serial, uint8_t intPin = unusedPin);
+    ~XENSIV_PAS_GASIno();
+    Error_t begin();
+    Error_t end();
+    Error_t startMeasure(int16_t periodInSec = 0, int16_t alarmTh = 0, void (*cback)(void *) = nullptr,
+                         bool earlyNotification = false);
+    Error_t stopMeasure();
+    Error_t getDiagnosis(Diag_t &diagnosis);
+    Error_t setABOC(ABOC_t aboc, int16_t abocRef);
+    Error_t setPressRef(uint16_t pressRef);
+    Error_t performForcedCompensation(uint16_t GASRef);
+    Error_t reset();
+    Error_t getProductID(uint8_t &prodID, uint8_t &revID);
+    Error_t getRegister(uint8_t regAddr, uint8_t *data, uint8_t len);
+    Error_t setRegister(uint8_t regAddr, const uint8_t *data, uint8_t len);
 
-                XENSIV_PAS_GASIno (GasType_t gasType, TwoWire * wire = &Wire, uint8_t intPin = unusedPin);
-                XENSIV_PAS_GASIno (GasType_t gasType, HardwareSerial * serial, uint8_t intPin = unusedPin);
-                ~XENSIV_PAS_GASIno();
-        Error_t begin   ();
-        Error_t end             ();
-        Error_t startMeasure    (int16_t  periodInSec = 0, int16_t alarmTh = 0, void (*cback) (void *) = nullptr, bool earlyNotification = false);
-        Error_t stopMeasure     ();
-        Error_t getDiagnosis    (Diag_t & diagnosis);
-        Error_t setABOC         (ABOC_t aboc, int16_t abocRef);
-        Error_t setPressRef     (uint16_t pressRef);
-        Error_t performForcedCompensation(uint16_t GASRef);
-        Error_t reset           ();
-        Error_t getProductID     (uint8_t & prodID, uint8_t & revID);
-        Error_t getRegister     (uint8_t regAddr, uint8_t * data, uint8_t len);
-        Error_t setRegister     (uint8_t regAddr, const uint8_t * data, uint8_t len);
+    Error_t clearForcedCompensation();
+    Error_t getGasConcentration(float &value);
+    const char *getGasConcentrationUnitStr();
+    const char *getPasGasErrorStr(Error_t err);
 
-        Error_t clearForcedCompensation  () ;
-        Error_t getGasConcentration     (float & value) ; 
-        const char* getGasConcentrationUnitStr() ; 
-        const char* getPasGasErrorStr(Error_t err);
+  protected:
+    TwoWire *i2c;         /**< I2C interface*/
+    HardwareSerial *uart; /**< UART interface */
+    uint8_t intPin;       /**< Interrupt pin */
 
-    protected:
+    static constexpr uint16_t baudrateBps = 9600; /**< UART baud rate in bps */
+    static constexpr uint32_t freqHz = 400000;    /**< I2C frequency in Hz*/
 
-        TwoWire         * i2c;          /**< I2C interface*/
-        HardwareSerial  * uart;         /**< UART interface */   
-        uint8_t           intPin;       /**< Interrupt pin */
-
-        static constexpr uint16_t baudrateBps = 9600;      /**< UART baud rate in bps */
-        static constexpr uint32_t freqHz      = 4000;    /**< I2C frequency in Hz*/
-
-        xensiv_pas_gas_t   dev;          /**< XENSIV™ PAS GAS corelib object */
-        GasType_t gasType;               /**< Sensor type (CO2 or R290) */
+    xensiv_pas_gas_t dev; /**< XENSIV™ PAS GAS corelib object */
+    GasType_t gasType;    /**< Sensor type (CO2 or R290) */
 };
 
 /** @} */

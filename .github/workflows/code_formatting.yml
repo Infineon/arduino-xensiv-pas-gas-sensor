@@ -20,3 +20,8 @@ jobs:
       run: source tools/ci.sh && ci_c_code_formatting_run
     - name: Check code formatting
       run: git diff --exit-code
+
+    - name: Clang-format check (C++)
+      run: |
+        sudo apt-get install -y clang-format
+        find . -regex '.*\.(cpp|hpp)$' -exec clang-format --dry-run --Werror -style=file {} +
