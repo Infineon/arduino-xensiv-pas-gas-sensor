@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <xensiv_pas_gas-ino.hpp>
+#include <xensiv_pas_gas_ino.hpp>
 /* 
  * The sensor supports 100KHz and 400KHz. 
  * You hardware setup and pull-ups value will
@@ -13,12 +13,12 @@
 #define ALARM_GAS_THRESHOLD  1200  
 // #define ALARM_GAS_THRESHOLD  1000  /* for R290 sensor */
 
-uint8_t interrupt_pin = 9;      /* For XMC2Go. Change it for your hardware setup */
+uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup */
 
-gastype_t sensorType = sensor_co2;    // Change to sensor_r290 if using R290 sensor
-XENSIV_PAS_GASIno gassensor(sensorType, &Wire, interrupt_pin);
+GasType_t sensorType = SENSOR_CO2;    // Change to SENSOR_R290 if using R290 sensor
+XENSIV_PAS_GASIno gasSensor(sensorType, &Wire, interruptPin);
 
-float gasrawvalue;
+float gasRawValue;
 Error_t err;
 
 /* 
@@ -48,11 +48,11 @@ void setup()
     * No need to initialized the interrupt pin. This is done 
     * in the sensor begin() function 
     */
-    err = gassensor.begin();
+    err = gasSensor.begin();
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("initialization error: ");
-      Serial.println(gassensor.getPasGasErrorStr(err));
+      Serial.println(gasSensor.getPasGasErrorStr(err));
     }
 
     /*
@@ -62,11 +62,11 @@ void setup()
     * The isr function is 
     * passed enabling the sensor interrupt mode.
     */
-    err = gassensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, ALARM_GAS_THRESHOLD, isr);
+    err = gasSensor.startMeasure(PERIODIC_MEAS_INTERVAL_IN_SECONDS, ALARM_GAS_THRESHOLD, isr);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("start measure error: ");
-      Serial.println(gassensor.getPasGasErrorStr(err));
+      Serial.println(gasSensor.getPasGasErrorStr(err));
     }
 }
 
@@ -80,16 +80,16 @@ void loop()
     Serial.println("int occurred");
     intFlag = false;
 
-    err = gassensor.getGasConcentration(gasrawvalue);
+    err = gasSensor.getGasConcentration(gasRawValue);
     if(XENSIV_PAS_GAS_OK != err)
     {
       Serial.print("get gas error: ");
-      Serial.println(gassensor.getPasGasErrorStr(err));
+      Serial.println(gasSensor.getPasGasErrorStr(err));
     }
 
     Serial.print("GAS value : ");
-    Serial.print(gasrawvalue);
+    Serial.print(gasRawValue);
     Serial.print(" " );
-    Serial.println(gassensor.getGasConcentrationUnitStr());
+    Serial.println(gasSensor.getGasConcentrationUnitStr());
 
 }

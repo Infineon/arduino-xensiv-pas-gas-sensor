@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "xensiv_pas_gas_r290-ino.hpp"
+#include "xensiv_pas_gas_r290_ino.hpp"
 
 /**
  * @brief   Assertion of XENSIV™ PAS GAS return code

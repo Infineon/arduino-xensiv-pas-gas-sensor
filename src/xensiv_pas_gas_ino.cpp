@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "xensiv_pas_gas-ino.hpp"
+#include "xensiv_pas_gas_ino.hpp"
 
 /**
  * @brief   Assertion of XENSIV™ PAS GAS return code
@@ -30,9 +30,9 @@
  * @param[in]   intPin  Interrupt pin. Default is UnusedPin         
  * @pre         None
  */
-XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(gastype_t gastype, TwoWire * wire,
+XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(GasType_t gasType, TwoWire * wire,
                                  uint8_t   intPin)
-: i2c(wire), uart(nullptr), intPin(intPin), gasType(gastype)
+: i2c(wire), uart(nullptr), intPin(intPin), gasType(gasType)
 {
 
 }
@@ -44,9 +44,9 @@ XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(gastype_t gastype, TwoWire * wire,
  * @param[in]   intPin  Interrupt pin. Default is UnusedPin         
  * @pre         None
  */
-XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(gastype_t gastype, HardwareSerial * serial,
+XENSIV_PAS_GASIno::XENSIV_PAS_GASIno(GasType_t gasType, HardwareSerial * serial,
                                  uint8_t          intPin)
-: i2c(nullptr), uart(serial), intPin(intPin), gasType(gastype)
+: i2c(nullptr), uart(serial), intPin(intPin), gasType(gasType)
 {
 
 }
@@ -63,19 +63,19 @@ XENSIV_PAS_GASIno::~XENSIV_PAS_GASIno()
 
 }
 
-// /**
-//  * @brief   Begins the sensor
-//  * 
-//  * @details Initializes the serial interface if the initialization
-//  *          is delegated to the XENSIV_PAS_GASR290 class.
-//  *          Sets the I2C freq or UART baudrate to the default values 
-//  *          prior the serial interface initialization.
-//  *          Initializes the interrupt pin if used.
-//  * 
-//  * @return  XENSIV™ PAS GAS error code
-//  * @retval  XENSIV_PAS_GAS_OK if success 
-//  * @pre     None
-//  */
+/**
+ * @brief   Begins the sensor
+ * 
+ * @details Initializes the serial interface if the initialization
+ *          is delegated to the XENSIV_PAS_GASR290 class.
+ *          Sets the I2C freq or UART baudrate to the default values 
+ *          prior the serial interface initialization.
+ *          Initializes the interrupt pin if used.
+ * 
+ * @return  XENSIV™ PAS GAS error code
+ * @retval  XENSIV_PAS_GAS_OK if success 
+ * @pre     None
+ */
 Error_t XENSIV_PAS_GASIno::begin()
 {
     int32_t ret = XENSIV_PAS_GAS_OK;
@@ -106,14 +106,14 @@ Error_t XENSIV_PAS_GASIno::begin()
 
     switch(gasType)
     {
-        case sensor_r290:
+        case SENSOR_R290:
             ret = xensiv_pas_gas_r290_init(&dev, itf, ctx);
             break;
-        case sensor_co2:
+        case SENSOR_CO2:
             ret = xensiv_pas_gas_co2_init(&dev, itf, ctx);
             break;
         default:
-            return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
+            return XENSIV_PAS_GAS_INVALID_sensorType;
     }
     if (ret != XENSIV_PAS_GAS_OK) return ret;
 
@@ -190,16 +190,16 @@ Error_t XENSIV_PAS_GASIno::end()
  *              Polling example:
  * 
  *              @code
- *              XENSIV_PAS_GASIno gassensor(serial_intf); 
- *              int16_t   gasrawvalue;
+ *              XENSIV_PAS_GASIno gasSensor(serial_intf); 
+ *              int16_t   gasRawValue;
  * 
  *              serial_intf.begin();
  * 
- *              gassensor.begin();              
+ *              gasSensor.begin();              
  * 
- *              gassensor.startMeasure();
+ *              gasSensor.startMeasure();
  * 
- *              do{ gassensor.getGasConcentration(gasrawvalue); } while (gasrawvalue == 0);  
+ *              do{ gasSensor.getGasConcentration(gasRawValue); } while (gasRawValue == 0);  
  *              @endcode
  * 
  *              Continuous measurement
@@ -213,20 +213,20 @@ Error_t XENSIV_PAS_GASIno::end()
  *              For example, measure every 5 minutes:
  * 
  *              @code
- *              XENSIV_PAS_GASIno gassensor(serial_intf);
- *              int16_t   gasrawvalue;
+ *              XENSIV_PAS_GASIno gasSensor(serial_intf);
+ *              int16_t   gasRawValue;
  * 
  *              serial_intf.begin();
  * 
- *              gassensor.begin();  
+ *              gasSensor.begin();  
  * 
- *              gassensor.startMeasure(300);
+ *              gasSensor.startMeasure(300);
  * 
  *              while(1)
  *              {
  *                  delay(300000); // Measure will be ready every 5 min
  * 
- *                  do{ gassensor.getGasConcentration(gasrawvalue); } while (gasrawvalue == 0);  
+ *                  do{ gasSensor.getGasConcentration(gasRawValue); } while (gasRawValue == 0);  
  *                  // ... do something with the gas value ... 
  *              }
  *              @endcode
@@ -250,19 +250,19 @@ Error_t XENSIV_PAS_GASIno::end()
  *                  intFlag = true;
  *              }
  * 
- *              XENSIV_PAS_GASIno gassensor(serial_intf, interrupt);
- *              int16_t   gasrawvalue;
+ *              XENSIV_PAS_GASIno gasSensor(serial_intf, interrupt);
+ *              int16_t   gasRawValue;
  *              
  *              serial_intf.begin();
  *              
- *              gassensor.begin();  
+ *              gasSensor.begin();  
  * 
- *              gassensor.startMeasure(300,0,cback);
+ *              gasSensor.startMeasure(300,0,cback);
  * 
  *              while(1)
  *              {
  *                  while(!intFlag) { // block or yield() };
- *                  gassensor.getGasConcentration(gasrawvalue);   
+ *                  gasSensor.getGasConcentration(gasRawValue);   
  *                  // ... do something with the gas value ... 
  *                  intFlag = false;
  *              }
@@ -417,17 +417,17 @@ Error_t XENSIV_PAS_GASIno::startMeasure(int16_t periodInSec, int16_t alarmTh, vo
  * @details     The value read is zero when no measurement is 
  *              yet available or an error has occurred.
  * 
- * @param[out]  gasrawvalue  GAS concentration read 
+ * @param[out]  gasRawValue  GAS concentration read 
  * @return      XENSIV™ PAS GAS error code
  * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         startMeasure()
  */
-Error_t XENSIV_PAS_GASIno::getGasConcentration(float & GASRAWVALUE)
+Error_t XENSIV_PAS_GASIno::getGasConcentration(float & gasRawValue)
 {
     int32_t ret = XENSIV_PAS_GAS_OK;  
     int16_t raw = 0;
     /* Initially set to 0.*/
-    GASRAWVALUE = 0;
+    gasRawValue = 0;
 
     /* Read the data */
     ret = xensiv_pas_gas_get_result(&dev, (uint16_t*)&raw);
@@ -435,16 +435,16 @@ Error_t XENSIV_PAS_GASIno::getGasConcentration(float & GASRAWVALUE)
 
     switch(gasType)
     {
-        case sensor_r290:
+        case SENSOR_R290:
             /* Convert to float */
-            GASRAWVALUE = static_cast<float>(raw) / 100.0f; // R290: convert to %LFL
+            gasRawValue = static_cast<float>(raw) / 100.0f; // R290: convert to %LFL
             break;
-        case sensor_co2:
+        case SENSOR_CO2:
             /* Convert to float */
-            GASRAWVALUE = static_cast<float>(raw); // CO2: convert to ppm
+            gasRawValue = static_cast<float>(raw); // CO2: convert to ppm
             break;
         default:
-            return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
+            return XENSIV_PAS_GAS_INVALID_sensorType;
     }
 
     /* Clear masks from status register */
@@ -658,9 +658,9 @@ const char* XENSIV_PAS_GASIno::getGasConcentrationUnitStr()
 {
     switch(gasType)
     {
-        case sensor_r290:
+        case SENSOR_R290:
             return "%LFL"; // R290
-        case sensor_co2:
+        case SENSOR_CO2:
             return "ppm";  // CO2
         default:
             return "";
@@ -678,10 +678,10 @@ Error_t XENSIV_PAS_GASIno::clearForcedCompensation()
 {   
     switch (gasType)
     {
-        case sensor_co2:
+        case SENSOR_CO2:
             return xensiv_pas_gas_cmd(&dev,  (xensiv_pas_gas_cmd_t)XENSIV_PAS_GAS_CO2_CMD_RESET_FCS);
         default:
-            return XENSIV_PAS_GAS_INVALID_SENSOR_TYPE;
+            return XENSIV_PAS_GAS_INVALID_sensorType;
     }
 
 }
