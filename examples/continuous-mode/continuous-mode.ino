@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <xensiv_pas_gas_ino.hpp>
 
+#define USE_UART_INTERFACE 0  /* Set to 1 to use UART interface; 0 to use I2C interface */
 /* 
  * The sensor supports 100KHz and 400KHz. 
  * You hardware setup and pull-ups value will
@@ -14,7 +15,12 @@
 #define PRESSURE_REFERENCE  900
 
 GasType_t sensorType = SENSOR_CO2;  // Change to SENSOR_R290 if using R290 sensor
+
+#if USE_UART_INTERFACE
+XENSIV_PAS_GASIno gasSensor(sensorType, &Serial1);
+#else
 XENSIV_PAS_GASIno gasSensor(sensorType, &Wire);
+#endif
 
 float gasRawValue;
 Error_t err;
@@ -25,10 +31,15 @@ void setup()
     delay(800);
     Serial.println("serial initialized");
 
+    #if USE_UART_INTERFACE
+    /* Initialize the UART interface used by the sensor */
+    Serial1.begin(9600);
+    #else
     /* Initialize the i2c interface used by the sensor */
     Wire.begin();
     Wire.setClock(I2C_FREQ_HZ);
-    
+    #endif
+
     /* Initialize the sensor */
     err = gasSensor.begin();
     if(XENSIV_PAS_GAS_OK != err)
