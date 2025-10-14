@@ -282,9 +282,9 @@ Error_t XENSIV_PAS_GASIno::end()
  *              ---------------------------------------------------------------
  *              The early notification mode can be used for battery power
  *              solutions. The interrupt signal can trigger the enablement of
- *              the 12V emitter power supply just before the measurement is
+ *              the 5V emitter power supply just before the measurement is
  *              performed, and switch it off as the interrupt signal is disabled.
- *              Therefore, the power supply 12V only needs to be on during the
+ *              Therefore, the power supply 5V only needs to be on during the
  *              GAS sensing.
  *
  *              When this flag is set, the alarm interrupt functionality is not

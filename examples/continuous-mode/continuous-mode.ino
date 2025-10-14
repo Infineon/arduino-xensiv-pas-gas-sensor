@@ -2,16 +2,9 @@
 #include <xensiv_pas_gas_ino.hpp>
 
 #define USE_UART_INTERFACE 0  /* Set to 1 to use UART interface; 0 to use I2C interface */
-/* 
- * The sensor supports 100KHz and 400KHz. 
- * You hardware setup and pull-ups value will
- * also influence the i2c operation. You can 
- * change this value to 100000 in case of 
- * communication issues.
- */
-#define I2C_FREQ_HZ  400000                     
+
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
-// #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
+
 #define PRESSURE_REFERENCE  900
 
 GasType_t sensorType = SENSOR_CO2;  // Change to SENSOR_R290 if using R290 sensor
@@ -37,7 +30,7 @@ void setup()
     #else
     /* Initialize the i2c interface used by the sensor */
     Wire.begin();
-    Wire.setClock(I2C_FREQ_HZ);
+    
     #endif
 
     /* Initialize the sensor */

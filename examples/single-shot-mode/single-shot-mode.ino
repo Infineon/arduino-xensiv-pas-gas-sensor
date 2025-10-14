@@ -1,22 +1,12 @@
 #include <Arduino.h>
 #include <xensiv_pas_gas_ino.hpp>
 
-/* 
- * The sensor supports 100KHz and 400KHz. 
- * You hardware setup and pull-ups value will
- * also influence the i2c operation. You can 
- * change this value to 100000 in case of 
- * communication issues.
- */
-#define I2C_FREQ_HZ 400000  
 #define MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
-// #define MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
 
 /**
  * Create gas sensor object. Unless otherwise specified,
  * using the Wire interface
  */
-
 GasType_t sensorType = SENSOR_R290; // Change to SENSOR_CO2 if using co2 sensor
 XENSIV_PAS_GASIno gasSensor(sensorType, &Wire);
 
@@ -31,7 +21,7 @@ void setup()
 
   /* Initialize the i2c interface used by the sensor */
   Wire.begin();
-  Wire.setClock(I2C_FREQ_HZ);
+  
 
   /* Initialize the sensor */
   err = gasSensor.begin();

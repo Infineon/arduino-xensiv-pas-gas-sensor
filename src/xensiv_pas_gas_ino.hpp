@@ -68,7 +68,7 @@ class XENSIV_PAS_GASIno
     uint8_t intPin;       /**< Interrupt pin */
 
     static constexpr uint16_t baudrateBps = 9600; /**< UART baud rate in bps */
-    static constexpr uint32_t freqHz = 400000;    /**< I2C frequency in Hz*/
+    static constexpr uint32_t freqHz = 100000;    /**< I2C frequency in Hz*/
 
     xensiv_pas_gas_t dev; /**< XENSIV™ PAS GAS corelib object */
     GasType_t gasType;    /**< Sensor type (CO2 or R290) */
