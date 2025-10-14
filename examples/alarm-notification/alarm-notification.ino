@@ -1,17 +1,9 @@
 #include <Arduino.h>
 #include <xensiv_pas_gas_ino.hpp>
-/* 
- * The sensor supports 100KHz and 400KHz. 
- * You hardware setup and pull-ups value will
- * also influence the i2c operation. You can 
- * change this value to 100000 in case of 
- * communication issues.
- */
-#define I2C_FREQ_HZ     400000  
+
 #define PERIODIC_MEAS_INTERVAL_IN_SECONDS  10 /* demo-mode value; not recommended for long-term measurements */
-// #define PERIODIC_MEAS_INTERVAL_IN_SECONDS 60L /* specification value for stable operation (uncomment for long-time-measurements) */
+
 #define ALARM_GAS_THRESHOLD  1200  
-// #define ALARM_GAS_THRESHOLD  1000  /* for R290 sensor */
 
 uint8_t interruptPin = 9;      /* For XMC2Go. Change it for your hardware setup */
 
@@ -42,7 +34,6 @@ void setup()
 
     /* Initialize the i2c serial interface used by the sensor */
     Wire.begin();
-    Wire.setClock(I2C_FREQ_HZ);
     
     /*
     * No need to initialized the interrupt pin. This is done 
