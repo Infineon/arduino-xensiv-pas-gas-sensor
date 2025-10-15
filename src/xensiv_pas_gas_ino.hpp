@@ -12,7 +12,6 @@
 #include "corelib/xensiv_pas_gas.h"
 #include "corelib/xensiv_pas_gas_co2.h"
 #include "corelib/xensiv_pas_gas_r290.h"
-#include "xensiv_pas_gas_platf_ino.hpp"
 #include <Arduino.h>
 #include <HardwareSerial.h>
 #include <Wire.h>
