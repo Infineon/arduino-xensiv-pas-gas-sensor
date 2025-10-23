@@ -13,6 +13,20 @@
 #include "xensiv_pas_gas_ino.hpp"
 
 /**
+ * @brief Gas selection enum for GAS_CFG register
+ */
+
+typedef enum
+{
+    XENSIV_PAS_GAS_A2L_GAS_R454B = 0, // 00b
+    XENSIV_PAS_GAS_A2L_GAS_R32 = 1,   // 01b
+    XENSIV_PAS_GAS_A2L_GAS_NONE1 = 2, // 10b (no gas selection)
+    XENSIV_PAS_GAS_A2L_GAS_NONE2 = 3  // 11b (no gas selection)
+} xensiv_pas_gas_a2l_gas_selection_t;
+
+static const char *XENSIV_PAS_GAS_A2L_GAS_SELECTION_NAMES[] = {"R454b", "R32", "None", "None"};
+
+/**
  * @addtogroup gasinoapi
  * @{
  */
@@ -36,7 +50,18 @@ class XENSIV_PAS_GASA2LIno : public XENSIV_PAS_GASIno
     Error_t setDenoiseConfig(uint8_t smoothing_factor);
     Error_t selfTestErrorClear(bool clear);
     String getSelfTestStatusString();
+
+    Error_t getAlarmHysteresis(uint16_t &hysteresis);
+    Error_t setAlarmHysteresis(uint16_t hysteresis);
+    Error_t getAbsoluteHumidityRef(uint16_t &abs_humidity);
+    Error_t setAbsoluteHumidityRef(uint16_t abs_humidity);
+    Error_t enableHumidityCompensation(bool enable);
+    Error_t isHumidityCompensationEnabled(bool enable);
+    Error_t setGasSelection(xensiv_pas_gas_a2l_gas_selection_t gas);
+    Error_t getGasSelection(xensiv_pas_gas_a2l_gas_selection_t &gas);
+    Error_t getAvailableGases(uint8_t &gas_avail);
+
     /***************************************************************************************/
 };
 
-#endif /** PAS_GAS_R290_INO_HPP_ */
+#endif /** PAS_GAS_A2L_INO_HPP_ */

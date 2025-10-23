@@ -25,6 +25,7 @@
 typedef int32_t Error_t;
 typedef xensiv_pas_gas_status_t Diag_t;
 typedef xensiv_pas_gas_boc_cfg_t ABOC_t;
+
 typedef enum
 {
     SENSOR_CO2,

@@ -122,32 +122,56 @@ int32_t xensiv_pas_gas_a2l_get_gas_config(const xensiv_pas_gas_t *dev, xensiv_pa
 int32_t xensiv_pas_gas_a2l_set_alarm_hysteresis(const xensiv_pas_gas_t *dev, uint16_t alarm_hys) {
     xensiv_pas_gas_plat_assert(dev != NULL);
 
-    alarm_hys = (uint16_t)xensiv_pas_gas_plat_htons(alarm_hys);
-    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, (uint8_t *)&alarm_hys, 2U);
+    // Only 15 bits are valid, mask input
+    alarm_hys &= 0x7FFF;
+    
+    // Prepare register values
+    uint8_t reg_h = (uint8_t)((alarm_hys >> 8) & 0x7F); // Only bits 6:0 for VAL
+    uint8_t reg_l = (uint8_t)(alarm_hys & 0xFF);        // All bits for VAL 
+    uint8_t buf[2] = {reg_h, reg_l};
+ 
+    int32_t ret = xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, buf, 2U);
+    return ret;
 }
 
 int32_t xensiv_pas_gas_a2l_get_alarm_hysteresis(const xensiv_pas_gas_t *dev, uint16_t *alarm_hys) {
     xensiv_pas_gas_plat_assert(dev != NULL);
     xensiv_pas_gas_plat_assert(alarm_hys != NULL);
 
-    int32_t ret = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, (uint8_t *)alarm_hys, 2U);
-    *alarm_hys = xensiv_pas_gas_plat_htons(*alarm_hys);
+    uint8_t buf[2] = {0};
+    int32_t ret = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, buf, 2U);
+   
+    // Only 7 bits from H, 8 bits from L
+    *alarm_hys = (((uint16_t)(buf[0] & 0x7F)) << 8) | buf[1];
     return ret;
 }
 
 int32_t xensiv_pas_gas_a2l_set_absolute_humidity_ref(const xensiv_pas_gas_t *dev, uint16_t abs_hum_ref) {
     xensiv_pas_gas_plat_assert(dev != NULL);
 
-    abs_hum_ref = (uint16_t)xensiv_pas_gas_plat_htons(abs_hum_ref);
-    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, (uint8_t *)&abs_hum_ref, 2U);
+    // Only 10 bits are valid
+    abs_hum_ref &= 0x03FF;
+
+    // Prepare register values
+    uint8_t reg_h = (uint8_t)((abs_hum_ref >> 8) & 0x03); // bits 1:0
+    uint8_t reg_l = (uint8_t)(abs_hum_ref & 0xFF);        // bits 7:0
+    int32_t ret = xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, &reg_h, 1U);
+    if (ret == 0) {
+        ret = xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_L, &reg_l, 1U);
+    }
+    return ret;
 }
 
 int32_t  xensiv_pas_gas_a2l_get_absolute_humidity_ref(const xensiv_pas_gas_t *dev, uint16_t *abs_hum_ref) {
     xensiv_pas_gas_plat_assert(dev != NULL);
     xensiv_pas_gas_plat_assert(abs_hum_ref != NULL);
 
-    int32_t ret = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, (uint8_t *)abs_hum_ref, 2U);
-    *abs_hum_ref = xensiv_pas_gas_plat_htons(*abs_hum_ref);
+    uint8_t reg_h = 0, reg_l = 0;
+    int32_t ret = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, &reg_h, 1U);
+    if (ret == 0) {
+        ret = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_L, &reg_l, 1U);
+    }
+    *abs_hum_ref = (((uint16_t)(reg_h & 0x03)) << 8) | reg_l;
     return ret;
 }
 
