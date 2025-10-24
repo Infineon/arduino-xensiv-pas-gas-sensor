@@ -1,6 +1,6 @@
 - repo: extras/xensiv-pas-gas-sensor
-  tag: latest-v1.X-32-g7693d4c-dirty
-  head: 7693d4c6b7672d46c86da6d5386636fd5a643a11-dirty
+  tag: latest-v1.X-33-gd226248-dirty
+  head: d22624817d8770f1b036ce5ecfea704ad3b09833-dirty
   files:
     dest: src/corelib
     src: src

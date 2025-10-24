@@ -61,7 +61,6 @@ static inline uint8_t xensiv_pas_gas_ascii_to_digit(uint8_t ascii) {
 static int32_t xensiv_pas_gas_i2c_read(const xensiv_pas_gas_t *dev, uint8_t reg_addr, uint8_t *data, uint8_t len) {
     xensiv_pas_gas_plat_assert(dev != NULL);
     xensiv_pas_gas_plat_assert(dev->ctx != NULL);
-    xensiv_pas_gas_plat_assert(reg_addr <= XENSIV_PAS_GAS_REG_SENS_RST);
     xensiv_pas_gas_plat_assert(data != NULL);
 
     return xensiv_pas_gas_plat_i2c_transfer(dev->ctx, XENSIV_PAS_GAS_I2C_ADDR, &reg_addr, 1, data, len);
@@ -70,7 +69,6 @@ static int32_t xensiv_pas_gas_i2c_read(const xensiv_pas_gas_t *dev, uint8_t reg_
 static int32_t xensiv_pas_gas_i2c_write(const xensiv_pas_gas_t *dev, uint8_t reg_addr, const uint8_t *data, uint8_t len) {
     xensiv_pas_gas_plat_assert(dev != NULL);
     xensiv_pas_gas_plat_assert(dev->ctx != NULL);
-    xensiv_pas_gas_plat_assert(reg_addr <= XENSIV_PAS_GAS_REG_SENS_RST);
     xensiv_pas_gas_plat_assert(data != NULL);
     xensiv_pas_gas_plat_assert((len + 1U) < XENSIV_PAS_GAS_I2C_WRITE_BUFFER_LEN);
 
