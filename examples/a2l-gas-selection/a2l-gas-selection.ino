@@ -25,8 +25,22 @@ void setup()
     return;
   }
 
+  // get current gas selection
+
+  xensiv_pas_gas_a2l_gas_selection_t currentGas;
+  
+  err = gasSensor.getGasSelection(currentGas);
+  if (XENSIV_PAS_GAS_OK == err) {
+    Serial.print("Current gas selection: ");
+    Serial.println(XENSIV_PAS_GAS_A2L_GAS_SELECTION_NAMES[currentGas]);
+  } else {
+    Serial.print("getGasSelection error: ");
+    Serial.println(gasSensor.getPasGasErrorStr(err));
+  }
+
   // Select gas type: R454b or R32
   xensiv_pas_gas_a2l_gas_selection_t gasType = XENSIV_PAS_GAS_A2L_GAS_R32; // or XENSIV_PAS_GAS_A2L_GAS_R454B
+
   err = gasSensor.setGasSelection(gasType);
   if (XENSIV_PAS_GAS_OK != err) {
     Serial.print("Gas selection error: ");
@@ -35,6 +49,7 @@ void setup()
     Serial.print("Selected gas: ");
     Serial.println(XENSIV_PAS_GAS_A2L_GAS_SELECTION_NAMES[gasType]);
   }
+
 }
 
 void loop()
