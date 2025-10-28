@@ -12,19 +12,7 @@
 #include "corelib/xensiv_pas_gas_a2l.h"
 #include "xensiv_pas_gas_ino.hpp"
 
-/**
- * @brief Gas selection enum for GAS_CFG register
- */
-
-typedef enum
-{
-    XENSIV_PAS_GAS_A2L_GAS_R454B = 0, // 00b
-    XENSIV_PAS_GAS_A2L_GAS_R32 = 1,   // 01b
-    XENSIV_PAS_GAS_A2L_GAS_NONE1 = 2, // 10b (no gas selection)
-    XENSIV_PAS_GAS_A2L_GAS_NONE2 = 3  // 11b (no gas selection)
-} xensiv_pas_gas_a2l_gas_selection_t;
-
-static const char *XENSIV_PAS_GAS_A2L_GAS_SELECTION_NAMES[] = {"R454b", "R32", "None", "None"};
+static const char *XENSIV_PAS_GAS_A2L_GAS_SELECTION_NAMES[] = {"R454b", "R32"};
 
 /**
  * @addtogroup gasinoapi

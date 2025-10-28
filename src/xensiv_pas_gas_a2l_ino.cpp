@@ -361,9 +361,6 @@ Error_t XENSIV_PAS_GASA2LIno::setGasSelection(xensiv_pas_gas_a2l_gas_selection_t
 
     gas_cfg.b.gas_select = (uint8_t)gas;
 
-    // Ensure reserved bits 3:2 are zero before writing
-    gas_cfg.u &= 0xF3;                  // 11110011b: clear bits 3:2
-    gas_cfg.u |= ((uint8_t)gas & 0x03); // set bits 1:0
     return xensiv_pas_gas_a2l_set_gas_config(&dev, gas_cfg);
 }
 
@@ -374,14 +371,7 @@ Error_t XENSIV_PAS_GASA2LIno::setGasSelection(xensiv_pas_gas_a2l_gas_selection_t
  */
 Error_t XENSIV_PAS_GASA2LIno::getGasSelection(xensiv_pas_gas_a2l_gas_selection_t &gas)
 {
-    xensiv_pas_gas_a2l_gas_config_t gas_cfg = {0};
-    int32_t ret = xensiv_pas_gas_a2l_get_gas_config(&dev, &gas_cfg);
-
-    if (ret != XENSIV_PAS_GAS_OK)
-        return ret;
-
-    gas = (xensiv_pas_gas_a2l_gas_selection_t)(gas_cfg.b.gas_select & 0x03);
-    return XENSIV_PAS_GAS_OK;
+    return xensiv_pas_gas_a2l_get_gas_selection(&dev, &gas);
 }
 
 /**
@@ -391,14 +381,7 @@ Error_t XENSIV_PAS_GASA2LIno::getGasSelection(xensiv_pas_gas_a2l_gas_selection_t
  */
 Error_t XENSIV_PAS_GASA2LIno::getAvailableGases(uint8_t &gas_avail)
 {
-    xensiv_pas_gas_a2l_gas_config_t gas_cfg = {0};
-    int32_t ret = xensiv_pas_gas_a2l_get_gas_config(&dev, &gas_cfg);
-
-    if (ret != XENSIV_PAS_GAS_OK)
-        return ret;
-
-    gas_avail = (gas_cfg.u >> 4) & 0x0F; // bits 7:4
-    return XENSIV_PAS_GAS_OK;
+    return xensiv_pas_gas_a2l_get_available_gases(&dev, &gas_avail);
 }
 
 /**
