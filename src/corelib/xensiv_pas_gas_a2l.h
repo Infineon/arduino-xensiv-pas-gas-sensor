@@ -47,6 +47,16 @@ typedef enum
     XENSIV_PAS_GAS_A2L_CMD_RESET_FCS = 0xFCU,              /**< Resets the forced calibration correction factor */
 } xensiv_pas_gas_a2l_cmd_t;
 
+/**
+ * @brief Gas selection enum for GAS_CFG register
+ */
+
+typedef enum
+{
+    XENSIV_PAS_GAS_A2L_GAS_R454B = 0, // 00b
+    XENSIV_PAS_GAS_A2L_GAS_R32 = 1,   // 01b
+} xensiv_pas_gas_a2l_gas_selection_t;
+
 /** Structure of the A2L sensor's status register (SENS_STS) */
 typedef union
 {
@@ -148,7 +158,6 @@ typedef union {
     } b;
     uint8_t u;                       /*!< Type used for byte access */
 } xensiv_pas_gas_a2l_humidity_control_t;
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -292,6 +301,22 @@ int32_t xensiv_pas_gas_a2l_set_gas_config(const xensiv_pas_gas_t *dev, xensiv_pa
  * @return XENSIV_PAS_GAS_OK if the read was successful; an error indicating what went wrong otherwise
  */
 int32_t xensiv_pas_gas_a2l_get_gas_config(const xensiv_pas_gas_t *dev, xensiv_pas_gas_a2l_gas_config_t *gas_config);
+
+/**
+ * @brief Gets the current gas selection (GAS_SEL field) as enum value
+ * @param[in]  dev  Sensor device handle
+ * @param[out] gas  Gas selection (enum value)
+ * @return Error code
+ */
+int32_t xensiv_pas_gas_a2l_get_gas_selection(const xensiv_pas_gas_t *dev, xensiv_pas_gas_a2l_gas_selection_t *gas);
+
+/**
+ * @brief Gets the available gases bitmap (GAS_AVAIL field)
+ * @param[in]  dev        Sensor device handle
+ * @param[out] gas_avail  Available gases bitmap
+ * @return Error code
+ */
+int32_t xensiv_pas_gas_a2l_get_available_gases(const xensiv_pas_gas_t *dev, uint8_t *gas_avail);
 
 /**
  * @brief Sets the alarm hysteresis.

@@ -109,7 +109,9 @@ int32_t xensiv_pas_gas_a2l_clr_self_test(const xensiv_pas_gas_t *dev, xensiv_pas
 int32_t xensiv_pas_gas_a2l_set_gas_config(const xensiv_pas_gas_t *dev, xensiv_pas_gas_a2l_gas_config_t gas_config) {
     xensiv_pas_gas_plat_assert(dev != NULL);
 
-    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_GAS_CFG, &gas_config.u, 1U);
+    // Ensure reserved bits 3:2 are zero before writing, only bits 1:0 are set
+    uint8_t regval = (gas_config.u & 0xF3) | (gas_config.u & 0x03);
+    return xensiv_pas_gas_set_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_GAS_CFG, &regval, 1U);
 }
 
 int32_t xensiv_pas_gas_a2l_get_gas_config(const xensiv_pas_gas_t *dev, xensiv_pas_gas_a2l_gas_config_t *gas_config) {
@@ -117,6 +119,30 @@ int32_t xensiv_pas_gas_a2l_get_gas_config(const xensiv_pas_gas_t *dev, xensiv_pa
     xensiv_pas_gas_plat_assert(gas_config != NULL);
 
     return xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_A2L_REG_GAS_CFG, &gas_config->u, 1U);
+}
+
+int32_t xensiv_pas_gas_a2l_get_gas_selection(const xensiv_pas_gas_t *dev, xensiv_pas_gas_a2l_gas_selection_t *gas) {
+    xensiv_pas_gas_plat_assert(dev != NULL);
+    xensiv_pas_gas_plat_assert(gas != NULL);
+    xensiv_pas_gas_a2l_gas_config_t gas_cfg = {0};
+    int32_t ret = xensiv_pas_gas_a2l_get_gas_config(dev, &gas_cfg);
+    if (ret != XENSIV_PAS_GAS_OK) {
+        return ret;
+    }
+    *gas = (xensiv_pas_gas_a2l_gas_selection_t)(gas_cfg.b.gas_select & 0x03);
+    return XENSIV_PAS_GAS_OK;
+}
+
+int32_t xensiv_pas_gas_a2l_get_available_gases(const xensiv_pas_gas_t *dev, uint8_t *gas_avail) {
+    xensiv_pas_gas_plat_assert(dev != NULL);
+    xensiv_pas_gas_plat_assert(gas_avail != NULL);
+    xensiv_pas_gas_a2l_gas_config_t gas_cfg = {0};
+    int32_t ret = xensiv_pas_gas_a2l_get_gas_config(dev, &gas_cfg);
+    if (ret != XENSIV_PAS_GAS_OK) {
+        return ret;
+    }
+    *gas_avail = gas_cfg.b.gas_avail;
+    return XENSIV_PAS_GAS_OK;
 }
 
 int32_t xensiv_pas_gas_a2l_set_alarm_hysteresis(const xensiv_pas_gas_t *dev, uint16_t alarm_hys) {
