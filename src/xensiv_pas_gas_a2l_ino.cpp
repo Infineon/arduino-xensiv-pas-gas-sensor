@@ -252,7 +252,7 @@ Error_t XENSIV_PAS_GASA2LIno::selfTestErrorClear(bool clear)
 Error_t XENSIV_PAS_GASA2LIno::setAlarmHysteresis(uint16_t alarm_hys)
 {
     int32_t ret = XENSIV_PAS_GAS_OK;
-    if (alarm_hys > 32767)
+    if (alarm_hys > XENSIV_PAS_GAS_A2L_ALARM_HYS_MAX)
     {
         return XENSIV_PAS_GAS_INVALID_PARAMETER;
     }

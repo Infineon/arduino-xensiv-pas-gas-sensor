@@ -13,6 +13,7 @@
 #include "xensiv_pas_gas_ino.hpp"
 
 static const char *XENSIV_PAS_GAS_A2L_GAS_SELECTION_NAMES[] = {"R454b", "R32"};
+#define XENSIV_PAS_GAS_A2L_ALARM_HYS_MAX (32767U) // Maximum allowed value for alarm hysteresis
 
 /**
  * @addtogroup gasinoapi
