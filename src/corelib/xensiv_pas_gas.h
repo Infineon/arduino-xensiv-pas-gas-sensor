@@ -202,7 +202,7 @@ typedef union
     uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pas_gas_meas_status_t;
 
-struct xensiv_pas_gas_s;                                   /* Forward declaration */
+struct xensiv_pas_gas_s;                                /* Forward declaration */
 
 /* Function pointer to the platform-specific forced compensation function */
 typedef int32_t (*xensiv_pas_gas_fcs_fptr_t)(const struct xensiv_pas_gas_s *dev, uint16_t gas_ref);

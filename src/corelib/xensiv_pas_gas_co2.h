@@ -31,6 +31,13 @@
 #include "xensiv_pas_gas.h"
 #include "xensiv_pas_gas_co2_regs.h"
 
+/**
+ * \addtogroup group_board_libs XENSIV™ PAS GAS CO2 sensor
+ * \{
+ */
+
+/************************************** Macros *******************************************/
+
 /** Minimum allowed measurement rate */
 #define XENSIV_PAS_GAS_CO2_MEAS_RATE_MIN            (5U)
 
@@ -48,8 +55,8 @@ typedef enum
 /** Enum defining the PWM mode configuration */
 typedef enum
 {
-    XENSIV_PAS_GAS_CO2_PWM_MODE_SINGLE_PULSE = 0U,           /**< PWM single-pulse */
-    XENSIV_PAS_GAS_CO2_PWM_MODE_TRAIN_PULSE = 1U             /**< PWM pulse-train mode */
+    XENSIV_PAS_GAS_CO2_PWM_MODE_SINGLE_PULSE = 0U,         /**< PWM single-pulse */
+    XENSIV_PAS_GAS_CO2_PWM_MODE_TRAIN_PULSE = 1U           /**< PWM pulse-train mode */
 } xensiv_pas_gas_co2_pwm_mode_t;
 
 /** Structure of the sensor's status register (SENS_STS) */
@@ -84,6 +91,8 @@ typedef union
     uint8_t u;                                          /*!< Type used for byte access */
 } xensiv_pas_gas_co2_measurement_config_t;
 
+/******************************* Function prototypes *************************************/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -103,5 +112,7 @@ int32_t xensiv_pas_gas_co2_init(xensiv_pas_gas_t *dev, xensiv_pas_gas_interface_
 #ifdef __cplusplus
 }
 #endif
+
+/** \} group_board_libs */
 
 #endif /* XENSIV_PAS_GAS_CO2_H_ */
