@@ -1,3 +1,6 @@
 [submodule "extras/xensiv-pas-gas-sensor"]
 	path = extras/xensiv-pas-gas-sensor
 	url = https://github.com/Infineon/xensiv-pas-gas-sensor.git
+[submodule "tests/arduino-lib-tests/Unity"]
+	path = tests/arduino-lib-tests/Unity
+	url = git@github.com:ThrowTheSwitch/Unity.git
