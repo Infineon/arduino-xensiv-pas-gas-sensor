@@ -1,7 +1,7 @@
 FQBN  ?=
 PORT  ?=
 TESTS ?=
-UNITY_PATH ?=./lib-unit-tests/Unity
+UNITY_PATH ?=./ifx_ardunity/Unity
 
 # These vars are used for example-tests:
 SENSOR_TYPE ?= 
@@ -33,19 +33,14 @@ clean:
 
 arduino: clean
 	mkdir build
-# Copy source files
-# 	find ../src \( -name '*.cpp' -o -name '*.hpp' \) -print -exec \cp {} build \;
-# 	find ../src \( -name '*.c' -o -name '*.h' \) -print -exec \cp {} build/corelib \;
-# 	find ../src \( -name '*.c' -o -name '*.h' \) -print -exec \cp {} build \;
-# Copy all source files from lib-unit-tests (excluding Unity directory)
-	find lib-unit-tests -name '*.[hc]*' -not -path '*/Unity/*' -print -exec \cp {} build \;
-	cp test_includes.h build/
-
-
+# Copy all unity file needed for Arduino tests
+	find ifx_ardunity -name '*.[hc]*' -not -path '*/Unity/*' -print -exec \cp {} build \;
+# TODO: Copy test file needed 
+	cp ./test_xensiv_pas_gas.cpp build/
 
 unity: arduino
 	find $(UNITY_PATH) -name '*.[hc]' \( -path '*extras*' -a -path '*src*' -or -path '*src*' -a \! -path '*example*' \) -exec \cp {} build \;
-	cp lib-unit-tests/arduino/test_main.ino build/build.ino
+	cp test_main.ino build/build.ino
 
 
 .ONESHELL:
