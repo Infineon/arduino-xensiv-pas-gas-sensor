@@ -1,6 +1,5 @@
 // test includes
 #include "test_arduino_includes.hpp"
-#include "unity_fixture.h"
 
 extern "C" {
     /***
