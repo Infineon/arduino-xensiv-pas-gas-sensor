@@ -13,12 +13,12 @@ These installation processes are conveniently described in the official Arduino 
 Library Manager
 ---------------
 
-Library name: ```XENSIV PAS CO2```
+Library name: ```XENSIV PAS GAS```
 
 Manual Installation
 -------------------
 
-Download the desired .zip library version from the repository `releases <https://github.com/Infineon/arduino-pas-co2-sensor/releases>`_ section.
+Download the desired .zip library version from the repository `releases <https://github.com/Infineon/arduino-pas-gas-sensor/releases>`_ section.
  
 |:warning:| As a general recommendation, direct downloads from the master branch should be avoided. Even if it should not, it could contain incomplete or faulty code.
 
