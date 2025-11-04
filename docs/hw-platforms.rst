@@ -4,7 +4,7 @@ Hardware Platforms
 Supported Sensor Boards
 -----------------------
 
-This library can support any break-out board or (PAS) XENSIV™ CO2 Sensor based kit.
+This library supports almost all XENSIV™ PAS gas sensors family. The following sensor boards are supported:
 
 .. image:: img/pas-co2-module.png
     :width: 200
@@ -62,8 +62,8 @@ Pin Description
       - Communication interface selection.
     * - PWM DIS
       - PWM disable input (set high to disable PWM).
-    * - 12V
-      - 12V supply input - use as sensor supply when using breakable part stand-alone, else keep NC.
+    * - 5V
+      - 5V supply input - use as sensor supply when using breakable part stand-alone, else keep NC.
     * - TX/SDA
       - UART transmit or I2C SDA (serial data), depending on selected communication interface.
     * - SWD
@@ -112,14 +112,115 @@ Pin Description
       - Communication interface selection.
     * - PWM DIS
       - PWM disable input (set high to disable PWM).
-    * - 12V
-      - 12V sensor supply input (required).
+    * - 5V
+      - 5V sensor supply input (required).
     * - TX/SDA
       - UART transmit or I2C SDA (serial data), depending on selected communication interface.
     * - SWD
       - Serial wire debug data (keep NC).
     * - SWCLK
       - Serial wire debug clock (keep NC).
+
+XENSIV™ PAS R290 Miniboard
+"""""""""""""""""""""""""
+
+.. image:: img/pas-r290-miniboard.png
+    :width: 200
+
+* `XENSIV™ PAS R290 Miniboard product page <https://www.infineon.com/evaluation-board/EVAL-PASR290-MINIBOARD>`_
+* `XENSIV™ PAS R290 Miniboard documentation <https://www.infineon.com/evaluation-board/EVAL-PASR290-MINIBOARD#documents>`_
+
+Pinout Diagram
+^^^^^^^^^^^^^^
+
+.. image:: img/minieval_r290_pinout.png
+    :width: 400
+
+Pin Description
+^^^^^^^^^^^^^^^
+
+.. list-table::
+    :header-rows: 1
+
+    * - Pin Name
+      - Description
+    * - SDA
+      - I2C SDA (serial data).
+    * - SCL
+      - I2C SCL (serial clock).
+    * - GND
+      - Supply and signal ground.
+    * - 3.3V
+      - 3.3V logic supply input (required).
+    * - INT
+      - Interrupt output.
+    * - PWM
+      - PWM signal output.
+    * - RX
+      - UART receive side.
+    * - PSEL
+      - Communication interface selection.
+    * - PWM DIS
+      - PWM disable input (set high to disable PWM).
+    * - 5V
+      - 5V sensor supply input (required).
+    * - TX/SDA
+      - UART transmit or I2C SDA (serial data), depending on selected communication interface.
+    * - SWD
+      - Serial wire debug data (keep NC).
+    * - SWCLK
+      - Serial wire debug clock (keep NC).
+
+XENSIV™ PAS A2L Miniboard
+"""""""""""""""""""""""""
+
+.. image:: img/pas-a2l-miniboard.png
+    :width: 200
+
+* `XENSIV™ PAS A2L Miniboard product page <https://www.infineon.com/evaluation-board/EVAL-PASA2L-MINIBOARD>`_
+* `XENSIV™ PAS A2L Miniboard documentation <https://www.infineon.com/evaluation-board/EVAL-PASA2L-MINIBOARD#documents>`_
+
+Pinout Diagram
+^^^^^^^^^^^^^^
+
+.. image:: img/minieval_co2_pinout.png
+    :width: 400
+
+Pin Description
+^^^^^^^^^^^^^^^
+
+.. list-table::
+    :header-rows: 1
+
+    * - Pin Name
+      - Description
+    * - SDA
+      - I2C SDA (serial data).
+    * - SCL
+      - I2C SCL (serial clock).
+    * - GND
+      - Supply and signal ground.
+    * - 3.3V
+      - 3.3V logic supply input (required).
+    * - INT
+      - Interrupt output.
+    * - PWM
+      - PWM signal output.
+    * - RX
+      - UART receive side.
+    * - PSEL
+      - Communication interface selection.
+    * - PWM DIS
+      - PWM disable input (set high to disable PWM).
+    * - 5V
+      - 5V sensor supply input (required).
+    * - TX/SDA
+      - UART transmit or I2C SDA (serial data), depending on selected communication interface.
+    * - SWD
+      - Serial wire debug data (keep NC).
+    * - SWCLK
+      - Serial wire debug clock (keep NC).
+
 
 Supported MCU Platforms
 -----------------------

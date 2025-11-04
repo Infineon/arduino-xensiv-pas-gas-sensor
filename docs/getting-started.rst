@@ -3,7 +3,7 @@
 Getting Started
 ================
 
-In this quick tutorial we will go through one of the XENSIV™ PAS CO2 sensor examples available using the Shield2Go or the Miniboard and the XMC microcontroller family in Arduino.
+In this quick tutorial we will go through one of the XENSIV™ PAS GAS sensor examples available using the Miniboard and the XMC microcontroller family in Arduino.
 
 Required Hardware
 -----------------
@@ -34,15 +34,14 @@ Required Hardware
 In case of using the miniboard, the following items are also required:
 
     * Jumper cables
-    * 12V DC power supply
 
 Required Software
 -----------------
 
 * `Segger J-Link <https://www.segger.com/downloads/jlink>`_
 * `Arduino IDE <https://www.arduino.cc/en/main/software>`_
-* `XMC-for-Arduino <https://github.com/Infineon/XMC-for-Arduino>`_ 
-* `XENSIV™ PAS CO2 Arduino library <https://github.com/Infineon/arduino-pas-co2-sensor>`_
+* `XMC-for-Arduino <https://github.com/Infineon/XMC-for-Arduino>`_
+* `XENSIV™ PAS GAS Arduino library <https://github.com/Infineon/arduino-pas-gas-sensor>`_
 
 Software Installation
 ---------------------
@@ -52,7 +51,7 @@ Software Installation
 2. **Install XMC Board**. The official Arduino boards are already available in the Arduino software, but other third party boards as the Infineon XMC MCU based need to be explicitly included. Follow the instructions in the `link <https://github.com/Infineon/XMC-for-Arduino#installation-instructions>`_ to add the XMC board family to Arduino. Do not forget to install as well the JLink software.
 
 3. **Install the library**. In the Arduino IDE, go to the menu *Sketch > Include library > Library
-   Manager*. Type **XENSIV PAS CO2** and install the library.
+   Manager*. Type **XENSIV PAS GAS** and install the library.
 
     .. image:: img/ard-library-manager.png
         :width: 500
@@ -106,12 +105,12 @@ B. Miniboard
 1. I2C
 """"""
    
-In order to use the I2C interface we need to add a 10 Kohm pull-up resistors to the SDA and SCL lines, and a 12VDC voltage needs to be additionally provided to VDD12V pin. Connect the boards as shown in the following diagram:
+In order to use the I2C interface we need to add a 10 Kohm pull-up resistors to the SDA and SCL lines, and a 5VDC voltage needs to be additionally provided to VDD5V pin. Connect the boards as shown in the following diagram:
 
 .. image:: img/xmc2go-miniboard-i2c-conn-diag.png
     :width: 600
 
-You need to provide a 12V DC signal to for the emitter. 
+You need to provide a 5V DC signal to for the emitter. 
 Then, simply connect it to the computer with the USB cable. 
 
 **Note** |:warning:| : If the pin headers provided are not press-fit you will need to solder them on the corresponding boards. Otherwise, use your preferred way of connecting the hardware. 
@@ -119,7 +118,7 @@ Then, simply connect it to the computer with the USB cable.
 2. UART
 """""""
    
-In order to use the UART interface we need to connect PSEL pin to 3.3v, and a 12VDC voltage needs to be additionally provided to VDD12V pin. Connect the boards as shown in the following diagram:
+In order to use the UART interface we need to connect PSEL pin to 3.3v, and a 5VDC voltage needs to be additionally provided to VDD5V pin. Connect the boards as shown in the following diagram:
 
 .. image:: img/xmc2go-miniboard-uart-conn-diag.png
     :width: 500
@@ -137,13 +136,13 @@ With everything ready, now we are going to upload and run one of the library exa
 2. **Open the example**
 
     With the library installed in the Arduino IDE, you can include it from the menu *Sketch >
-    Include Library > XENSIV PAS CO2*. The header ``#include <pas-co2-ino.hpp>`` will be added to your
+    Include Library > XENSIV PAS GAS*. The header ``#include <pas-gas-ino.hpp>`` will be added to your
     sketch. 
-    In this case, open and run one of the examples provided in  *File > Examples > XENSIV PAS CO2*.
+    In this case, open and run one of the examples provided in  *File > Examples > XENSIV PAS GAS*.
 
-    Let´s try the continuous mode example for I2C: *File > Examples > XENSIV PAS CO2 > continuous-mode*.
+    Let´s try the continuous mode example for I2C: *File > Examples > XENSIV PAS GAS > continuous-mode*.
 
-    Let´s try the continuous mode example for UART: *File > Examples > XENSIV PAS CO2 > continuous-mode-uart*. 
+    Let´s try the continuous mode example for UART: *File > Examples > XENSIV PAS GAS > continuous-mode-uart*. 
  
 
 3. **Build and run the example**
