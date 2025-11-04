@@ -25,7 +25,7 @@ extern "C" {
     }
 
     // Test sensor initialization without hardware
-    TEST(XENSIV_PAS_GAS, TestNoHardwareInit) {
+    TEST_IFX(XENSIV_PAS_GAS, TestNoHardwareInit) {
         err = gasSensor->begin();
         TEST_ASSERT_NOT_EQUAL(XENSIV_PAS_GAS_OK, err);
         // Verify error string is available
