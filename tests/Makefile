@@ -37,6 +37,7 @@ arduino: clean
 # Copy source files
 	find ../src \( -name '*.cpp' -o -name '*.hpp' \) -print -exec \cp {} build \;
 	find ../src \( -name '*.c' -o -name '*.h' \) -print -exec \cp {} build/corelib \;
+	find ../src \( -name '*.c' -o -name '*.h' \) -print -exec \cp {} build \;
 # Copy all source files from lib-unit-tests (excluding Unity directory)
 	find lib-unit-tests -name '*.[hc]*' -not -path '*/Unity/*' -print -exec \cp {} build \;
 	cp test_includes.h build/
@@ -62,7 +63,7 @@ endif
 ifeq ($(FQBN),)
 	$(error "Must set variable FQBN in order to be able to compile Arduino sketches !")
 else
-	arduino-cli compile --clean --log --warnings all --fqbn $(FQBN) \
+	arduino-cli compile --clean --log --warnings all --verbose --fqbn $(FQBN) \
 	                        --build-property compiler.c.extra_flags="\"-DUNITY_INCLUDE_CONFIG_H=1\"" \
 							--build-property compiler.cpp.extra_flags="$(TESTS) $(SENSOR_TYPE_VAR) $(BOARD_TYPE_VAR)" \
 			        build
