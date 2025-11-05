@@ -190,14 +190,9 @@ int32_t xensiv_pas_gas_base_init(xensiv_pas_gas_t *dev, xensiv_pas_gas_interface
     }
 
     if ((XENSIV_PAS_GAS_OK == res) && (XENSIV_PAS_GAS_COMM_TEST_VAL == data)) {
-        /* Soft reset */
-        res = xensiv_pas_gas_cmd(dev, XENSIV_PAS_GAS_CMD_SOFT_RESET);
-        xensiv_pas_gas_plat_delay(XENSIV_PAS_GAS_SOFT_RESET_DELAY_MS);
 
-        if (XENSIV_PAS_GAS_OK == res) {
-            /* Read the sensor status and verify if the sensor is ready */
-            res = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_REG_SENS_STS, &data, 1U);
-        }
+        /* Read the sensor status and verify if the sensor is ready */
+        res = xensiv_pas_gas_get_reg(dev, (uint8_t)XENSIV_PAS_GAS_REG_SENS_STS, &data, 1U);
 
         if (XENSIV_PAS_GAS_OK == res) {
             if ((data & XENSIV_PAS_GAS_REG_SENS_STS_ICCER_MSK) != 0U) {
