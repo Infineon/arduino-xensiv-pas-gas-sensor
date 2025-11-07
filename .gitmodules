@@ -4,3 +4,9 @@
 [submodule "tests/ifx_ardunity/Unity"]
 	path = tests/ifx_ardunity/Unity
 	url = git@github.com:ThrowTheSwitch/Unity.git
+[submodule "extras/makers-devops"]
+	path = extras/makers-devops
+	url = https://github.com/Infineon/makers-devops.git
+[submodule "extras/arduino-devops"]
+	path = extras/arduino-devops
+	url = https://github.com/Infineon/arduino-devops.git
