@@ -6,46 +6,30 @@ The library can be installed in several ways:
 * Arduino IDE Library Manager 
 * Arduino IDE Import .zip library
 * Arduino IDE manual installation
-* PlatformIO
 
 These installation processes are conveniently described in the official Arduino `website <https://www.arduino.cc/en/guide/libraries>`_.
 
 Library Manager
 ---------------
 
-Library name: ```XENSIV PAS GAS```
+In order to install the library via the Arduino library manager open the Arduino IDE and open the library manager from the menu *Tools > Manage Libraries*. 
+Enter the library name ``XENSIV PAS GAS`` and press the *INSTALL* button as soon as the tool found the library.
+
+.ZIP Library Installation
+-------------------------
+
+If you prefer to install the library manually via a .zip-file go to the `release section <https://github.com/Infineon/arduino-xensiv-pas-gas-sensor/releases>`_ of the repository and get the .zip- or tar.gz-file from the desired release.
+As soon as you downloaded the file you can go back to the Arduino IDE and choose *Sketch > Include Library > Add .ZIP library* from the menu.
+
+.. warning:: 
+    As a general recommendation, direct downloads from the master branch should be avoided. Even if it should not, it could contain incomplete or faulty code. So please stick to the releases.
 
 Manual Installation
 -------------------
 
-Download the desired .zip library version from the repository `releases <https://github.com/Infineon/arduino-pas-gas-sensor/releases>`_ section.
- 
-|:warning:| As a general recommendation, direct downloads from the master branch should be avoided. Even if it should not, it could contain incomplete or faulty code.
+If you prefer to install the library completely manual we would recommend the two following ways. The first way would be to use the .zip-file which you get from the steps mentioned in the ".ZIP Library Installation" 
+part and unzip the downloaded folder. The unzipped folder has then to be copied to Arduino's library folder, which is usually ``C:\Users\USERNAME\Documents\Arduino\libraries`` in Windows. 
+After you have copied the folder you should see the examples and library resources in the Arduino IDE.
 
-.. image:: img/gh-master-zip.png
-    :width: 200
-
-
-PlatformIO
-----------
-
-If you are a `PlatformIO <https://platformio.org>`_ user, you have also this library available in the PlatformIO register.
-
-With the project created, now the library and its dependencies can be configured in the ***Platform.ini* Project File**. This file, located in the project root folder, includes one (or several) building environments *[env:__]*.
-
-In the *environment* section, the platform, board, and framework are specified. PlatformIO will take care of downloading and installing all dependencies.
-
-In the following example, we use the XMC 2Go Evaluation Kit (only available for Arduino):
-
-.. code-block::
-
-    [env:xmc1100_xmc2go]
-    platform = infineonxmc
-    board = xmc1100_xmc2go
-    framework = arduino
-
-    lib_deps =
-        infineon/XENSIV PAS CO2@^3.0.2
-
-
-Find more information in the `PlatformIO Registry <https://platformio.org/lib/show/12518/pas-co2-sensor>`_.
+The second and the preferable way if you want to develop something for the library is to clone the Github repository directly into the library folder of the Arduino IDE. 
+This allows you to easily check changes you make to the library and to upstream them later on if you have finished the development.

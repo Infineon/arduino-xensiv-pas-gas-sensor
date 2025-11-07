@@ -4,15 +4,8 @@ Hardware Platforms
 Supported Sensor Boards
 -----------------------
 
-This library supports almost all XENSIV™ PAS gas sensors family. The following sensor boards are supported:
-
-.. image:: img/pas-co2-module.png
-    :width: 200
-
-* `XENSIV™ PAS CO2 Stand-alone module product page <https://www.infineon.com/products/sensor/gas-sensors/co2-sensors#products>`_
-* `XENSIV™ PAS CO2 Sensor documentation <https://www.infineon.com/products/sensor/gas-sensors/co2-sensors#products/#!documents>`_
-
-The following kits can be integrated in Arduino compatible MCUs and are supported by this library:
+This library supports almost all XENSIV™ PAS gas sensors family. This includes the mini boards, as well as the Shield2Go boards of the sensors. Following you will see a list of boards which are
+supported by this library.
 
 XENSIV™ PAS CO2 Sensor Shield2Go
 """"""""""""""""""""""""""""""""
@@ -21,7 +14,7 @@ XENSIV™ PAS CO2 Sensor Shield2Go
     :width: 300
 
 * `XENSIV™ PAS CO2 Shield2Go product page <https://www.infineon.com/evaluation-board/SHIELD-PASCO2-SENSOR/>`_
-* `Quick Start Guide Shield2Go <https://www.infineon.com/assets/row/public/documents/24/44/infineon-quickstart-guide-pas-co2-shield2go-usermanual-en.pdf>_ (for Arduino)
+* `Quick Start Guide Shield2Go <https://www.infineon.com/assets/row/public/documents/24/44/infineon-quickstart-guide-pas-co2-shield2go-usermanual-en.pdf>`_ (for Arduino)
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
@@ -225,21 +218,17 @@ Pin Description
 Supported MCU Platforms
 -----------------------
 
-In principle, the library is supported by any Arduino compatible MCU platform.
-Its Arduino core needs to implement the `Arduino reference language <https://www.arduino.cc/reference/en/>`_ and the `Wire <https://www.arduino.cc/en/Reference/Wire>`_ built-in Arduino library.
-
-
-Verified MCU Boards
-"""""""""""""""""""
-The library examples have been built and successfully executed on the following hardware platforms for I2C:
+In principle, the library can be used with any Arduino compatible MCU platform, as long as its Arduino core is implemented with the `Arduino Reference Language <https://www.arduino.cc/reference/en/>`_. Below you will find a list of the boards which should be compatible with the library.
 
 .. list-table::
     :header-rows: 1
 
     * - MCU Platforms
-    * - `XMC 2Go <https://www.infineon.com/evaluation-board/KIT-XMC14-2GO>`_
-    * - `XMC1100 Boot Kit <https://www.infineon.com/evaluation-board/KIT-XMC11-BOOT-001>`_
-    * - `Arduino Uno Rev3 <https://store.arduino.cc/arduino-uno-rev3>`_
+    * - `CY8CKIT-062S2-AI <https://www.infineon.com/evaluation-board/CY8CKIT-062S2-AI>`_
+    * - `XMC 2Go <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/>`_
+    * - `XMC1100 Boot Kit <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`_
+    * - `XMC4700 Relax Kit <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc47_relax_v1/>`_
+    * - `XMC4700 Relax Lite Kit <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc47_relax_lite_v1/>`_ 
+    * - `Arduino Uno Rev3 <https://store.arduino.cc/products/arduino-uno-rev3>`_
 
-
-Find out which boards are build checked under continuous integration `here <https://github.com/Infineon/arduino-pas-co2-sensor/blob/master/.github/workflows/compile_examples.yml>`_.
+Find out which boards are build checked under continuous integration `here <https://github.com/Infineon/arduino-xensiv-pas-gas-sensor/blob/master/.github/workflows/compile_examples.yml>`_.
