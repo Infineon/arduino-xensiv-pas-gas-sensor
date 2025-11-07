@@ -368,7 +368,7 @@ Error_t XENSIV_PAS_GASIno::startMeasure(int16_t periodInSec, int16_t alarmTh, vo
     {
         /* Enable sensor interrupt */
         intConf.b.int_typ = XENSIV_PAS_GAS_INTERRUPT_TYPE_HIGH_ACTIVE;
-#if defined(ARDUINO_API_VERSION)
+#if defined(ARDUINO_API_H)
         PinStatus int_event;
 #else
         uint8_t int_event;
