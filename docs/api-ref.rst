@@ -3,12 +3,12 @@
 API Reference
 =============
 
-The Arduino library API is implemented via the PASGASIno class.
+The Arduino library API is implemented via the XENSIV_PAS_GASIno class.
 
 XENSIV™ PAS GAS Arduino API
 ---------------------------
 
-.. doxygenclass::  gasinoapi
+.. doxygenclass:: XENSIV_PAS_GASIno
    :members:
 
 Types
