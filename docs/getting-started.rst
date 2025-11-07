@@ -3,7 +3,7 @@
 Getting Started
 ================
 
-In this quick tutorial we will go through one of the XENSIV™ PAS GAS sensor examples available using the Miniboard and the XMC microcontroller family in Arduino.
+In this quick tutorial we will go through one of the XENSIV™ PAS GAS sensor examples, which is available for all the sensors supported by this Arduino library.
 
 Required Hardware
 -----------------
@@ -41,7 +41,7 @@ Required Software
 * `Segger J-Link <https://www.segger.com/downloads/jlink>`_
 * `Arduino IDE <https://www.arduino.cc/en/main/software>`_
 * `XMC-for-Arduino <https://github.com/Infineon/XMC-for-Arduino>`_
-* `XENSIV™ PAS GAS Arduino library <https://github.com/Infineon/arduino-pas-gas-sensor>`_
+* `XENSIV™ PAS GAS Arduino library <https://github.com/Infineon/arduino-xensiv-pas-gas-sensor>`_
 
 Software Installation
 ---------------------
