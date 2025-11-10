@@ -100,7 +100,7 @@ In order to use the UART interface we need to connect PSEL pin to 3.3v. Connect 
 B. Miniboard
 """"""""""""
 
-.. image:: img/minieval_co2_pinout.png
+.. image:: img/eval_pasco2_miniboard_pinout.png
     :width: 350
 
 1. I2C
