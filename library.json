@@ -1,13 +1,13 @@
 {  
-    "name":"XENSIV PAS CO2",
-    "keywords":"gas, co2, sensor, photoacoustic, sensor2go",
-    "description":"C/C++ library for Infineon XENSIV™ PAS CO2 sensor",
-    "repository":{  
+    "name":"XENSIV PAS Gas Sensors",
+    "keywords":"gas, co2, propane, a2l, r290, refrigerant, sensor, xensiv, photoacoustic, miniboard, shield2go",
+    "description":"Arduino library for Infineon's XENSIV™ PAS gas sensors.",
+    "repository": {
        "type":"git",
-       "url":"https://github.com/Infineon/arduino-pas-co2-sensor.git",
-       "branch":"master"
+       "url":"https://github.com/Infineon/arduino-xensiv-pas-gas-sensor.git",
+       "branch":"main"
     },
-    "version":"3.2.1",
+    "version":"0.1.0",
     "license":"MIT",
     "frameworks":"arduino",
     "platforms":[  
