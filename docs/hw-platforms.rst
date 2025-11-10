@@ -76,7 +76,7 @@ XENSIV™ PAS CO2 Miniboard
 Pinout Diagram
 ^^^^^^^^^^^^^^
 
-.. image:: img/minieval_co2_pinout.png
+.. image:: img/eval_pasco2_miniboard_pinout.png
     :width: 400
 
 Pin Description
