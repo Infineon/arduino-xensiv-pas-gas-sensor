@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For PAS CO2
+# Syntax Coloring Map For PAS Gas Sensors
 #######################################
 
 #######################################
@@ -8,41 +8,61 @@
 Error_t KEYWORD1
 ABOC_t  KEYWORD1
 Diag_t  KEYWORD1
+GasType_t KEYWORD1
+XENSIV_PAS_GASIno KEYWORD1
+XENSIV_PAS_GASA2LIno KEYWORD1
+XENSIV_PAS_GASR290Ino KEYWORD1
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-
-begin   KEYWORD2
+begin KEYWORD2
 end KEYWORD2
-startMeasure    KEYWORD2
+startMeasure KEYWORD2
 stopMeasure KEYWORD2
-getCO2  KEYWORD2
-getDiagnosis    KEYWORD2
+getDiagnosis KEYWORD2
 setABOC KEYWORD2
 setPressRef KEYWORD2
-performForcedCompensation   KEYWORD2
-clearForcedCompensation KEYWORD2
-reset   KEYWORD2
-getDeviceID KEYWORD2
+performForcedCompensation KEYWORD2
+reset KEYWORD2
+getProductID KEYWORD2
 getRegister KEYWORD2
 setRegister KEYWORD2
+clearForcedCompensation KEYWORD2
+getGasConcentration KEYWORD2
+getGasConcentrationUnitStr KEYWORD2
+getPasGasErrorStr KEYWORD2
+getDeviceID KEYWORD2
+getAlarmConfig KEYWORD2
+getABOCCycle KEYWORD2
+setABOCCycle KEYWORD2
+setABOCPrefill KEYWORD2
+getDenoiseConfig KEYWORD2
+setDenoiseConfig KEYWORD2
+selfTestErrorClear KEYWORD2
+getSelfTestStatusString KEYWORD2
+getAlarmHysteresis KEYWORD2
+setAlarmHysteresis KEYWORD2
+getAbsoluteHumidityRef KEYWORD2
+setAbsoluteHumidityRef KEYWORD2
+enableHumidityCompensation KEYWORD2
+isHumidityCompensationEnabled KEYWORD2
+setGasSelection KEYWORD2
+getGasSelection KEYWORD2
+getAvailableGases KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
 #######################################
-
-PASCO2  KEYWORD2
-PASCO2Ino KEYWORD2
+XENSIV_PAS_GASIno KEYWORD2
+XENSIV_PAS_GASA2LIno KEYWORD2
+XENSIV_PAS_GASR290Ino KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
-
-XENSIV_PASCO2_OK    LITERAL1
-XENSIV_PASCO2_ERR_COMM  LITERAL1
-XENSIV_PASCO2_ERR_WRITE_TOO_LARGE   LITERAL1
-XENSIV_PASCO2_ERR_NOT_READY LITERAL1
-XENSIV_PASCO2_ICCERR    LITERAL1
-XENSIV_PASCO2_ORVS  LITERAL1
-XENSIV_PASCO2_ORTMP LITERAL1
-XENSIV_PASCO2_READ_NRDY LITERAL1
+SENSOR_CO2 LITERAL1
+SENSOR_R290 LITERAL1
+SENSOR_A2L LITERAL1
+XENSIV_PAS_GAS_INVALID_SENSOR_TYPE LITERAL1
+XENSIV_PAS_GAS_A2L_ALARM_HYS_MAX LITERAL1
