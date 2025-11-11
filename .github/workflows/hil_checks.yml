@@ -1,0 +1,19 @@
+name: HIL Checks
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '**/docs/**'
+      - 'tools/verifygitlog.py'
+      - 'LICENSE*'
+      - '.gitignore'
+      
+
+jobs:
+  makers-devops:
+    uses: Infineon/makers-devops/.github/workflows/hil_checks.yml@main
+    with:
+      project-yaml: config/project.yml
+      user-yaml: config/user.yml
+    secrets: inherit
