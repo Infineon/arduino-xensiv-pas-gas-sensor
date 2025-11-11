@@ -7,9 +7,9 @@ options:
   SEND_JOB_START_TOKEN: false
   # PARSER_END_TOKEN: loop done.
 
-unity-test:
+unit-test:
     test_dummy_pasgas_i2c_r290:
       - description: Compiling, flashing and monitoring of test_dummy_pasgas_i2c_r290
-        command: make  XENSIV_PAS_GAS compile
-        query: arduino_iic
-        working_dir: .
+        command: make XENSIV_PAS_GAS compile
+        query: board_type.str.startswith('cy8ckit')
+        working_dir: tests/

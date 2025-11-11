@@ -1,3 +1,3 @@
-unity-test:
+unit-test:
     - test_dummy_pasgas_i2c_r290
 
