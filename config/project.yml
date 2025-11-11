@@ -1,0 +1,15 @@
+options:
+  # USE_CORE:
+  #   name: local
+  #   url: https://blabla
+  #   name: Infineon:xmc:3.5.4
+  #   url: https://github.com/Infineon/XMC-for-Arduino/releases/download/3.5.4/package_infineon_index.json
+  SEND_JOB_START_TOKEN: false
+  # PARSER_END_TOKEN: loop done.
+
+unity-test:
+    test_dummy_pasgas_i2c_r290:
+      - description: Compiling, flashing and monitoring of test_dummy_pasgas_i2c_r290
+        command: make  XENSIV_PAS_GAS compile
+        query: arduino_iic
+        working_dir: .
