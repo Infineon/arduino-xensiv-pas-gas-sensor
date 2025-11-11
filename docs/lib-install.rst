@@ -13,7 +13,7 @@ Library Manager
 ---------------
 
 In order to install the library via the Arduino library manager open the Arduino IDE and open the library manager from the menu *Tools > Manage Libraries*. 
-Enter the library name ``XENSIV PAS GAS`` and press the *INSTALL* button as soon as the tool found the library.
+Enter the library name ``XENSIV PAS Gas Sensors`` and press the *INSTALL* button as soon as the tool found the library.
 
 .ZIP Library Installation
 -------------------------
