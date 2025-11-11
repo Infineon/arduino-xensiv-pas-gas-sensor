@@ -4,7 +4,7 @@ Hardware Platforms
 Supported Sensor Boards
 -----------------------
 
-This library supports almost all XENSIV™ PAS gas sensors family. This includes the mini boards, as well as the Shield2Go boards of the sensors. Following you will see a list of boards which are
+This library supports almost all XENSIV™ PAS Gas Sensors family. This includes the mini boards, wing boards as well as the Shield2Go boards of the sensors. Following you will see a list of boards which are
 supported by this library.
 
 XENSIV™ PAS CO2 Sensor Shield2Go
@@ -72,12 +72,17 @@ XENSIV™ PAS CO2 Miniboard
 
 * `XENSIV™ PAS CO2 Miniboard product page <https://www.infineon.com/evaluation-board/EVAL-PASCO2-MINIBOARD>`_
 * `XENSIV™ PAS CO2 Miniboard documentation <https://www.infineon.com/evaluation-board/EVAL-PASCO2-MINIBOARD#documents>`_
+* `XENSIV™ PAS CO2 5V Miniboard product page <https://www.infineon.com/evaluation-board/EVAL-CO2-5V-MINIBOARD>`_
+* `XENSIV™ PAS CO2 5V Miniboard documentation <https://www.infineon.com/evaluation-board/EVAL-CO2-5V-MINIBOARD#documents>`_
 
 Pinout Diagram
 ^^^^^^^^^^^^^^
 
 .. image:: img/eval_pasco2_miniboard_pinout.png
     :width: 400
+
+.. warning:: 
+    Caution! Verify your sensor version before you connect the 5V / 12V input. The 5V version of the sensor does **not** tolerate 12V! 
 
 Pin Description
 ^^^^^^^^^^^^^^^
@@ -105,14 +110,34 @@ Pin Description
       - Communication interface selection.
     * - PWM DIS
       - PWM disable input (set high to disable PWM).
-    * - 5V
-      - 5V sensor supply input (required).
+    * - 5V/12V
+      - 5V/12V sensor supply input (required).
     * - TX/SDA
       - UART transmit or I2C SDA (serial data), depending on selected communication interface.
     * - SWD
       - Serial wire debug data (keep NC).
     * - SWCLK
       - Serial wire debug clock (keep NC).
+
+KIT_CSK_PASCO2
+""""""""""""""
+
+.. image:: img/kit_csk_pasco2.png
+    :width: 200
+
+* `KIT_CSK_PASCO2 product page <https://www.infineon.com/evaluation-board/KIT-CSK-PASCO2>`_
+* `KIT_CSK_PASCO2 documentation <https://www.infineon.com/evaluation-board/KIT-CSK-PASCO2#documents>`_
+* `KIT_CSK_PASCO2_5V product page <https://www.infineon.com/evaluation-board/KIT-CSK-PASCO2-5V>`_
+* `KIT_CSK_PASCO2_5V documentation <https://www.infineon.com/evaluation-board/KIT-CSK-PASCO2-5V#documents>`_
+
+Pinout Diagram
+^^^^^^^^^^^^^^
+
+.. image:: img/kit_csk_pasco2_pinout.png
+    :width: 400
+
+.. warning:: 
+    Caution! Verify your sensor version before you connect the 5V / 12V input. The 5V version of the sensor does **not** tolerate 12V! 
 
 XENSIV™ PAS R290 Miniboard
 """""""""""""""""""""""""
@@ -218,17 +243,4 @@ Pin Description
 Supported MCU Platforms
 -----------------------
 
-In principle, the library can be used with any Arduino compatible MCU platform, as long as its Arduino core is implemented with the `Arduino Reference Language <https://www.arduino.cc/reference/en/>`_. Below you will find a list of the boards which should be compatible with the library.
-
-.. list-table::
-    :header-rows: 1
-
-    * - MCU Platforms
-    * - `CY8CKIT-062S2-AI <https://www.infineon.com/evaluation-board/CY8CKIT-062S2-AI>`_
-    * - `XMC 2Go <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc_2go_xmc1100_v1/>`_
-    * - `XMC1100 Boot Kit <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc11_boot_001/>`_
-    * - `XMC4700 Relax Kit <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc47_relax_v1/>`_
-    * - `XMC4700 Relax Lite Kit <https://www.infineon.com/cms/de/product/evaluation-boards/kit_xmc47_relax_lite_v1/>`_ 
-    * - `Arduino Uno Rev3 <https://store.arduino.cc/products/arduino-uno-rev3>`_
-
-Find out which boards are build checked under continuous integration `here <https://github.com/Infineon/arduino-xensiv-pas-gas-sensor/blob/master/.github/workflows/compile_examples.yml>`_.
+Find out which boards are build checked under continuous integration `here <https://github.com/Infineon/arduino-xensiv-pas-gas-sensor/actions/workflows/compile_examples.yml>`_.

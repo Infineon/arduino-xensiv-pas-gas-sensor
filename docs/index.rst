@@ -2,7 +2,7 @@
 Home
 ****
 
-Welcome to the Infineon Photoacoustic Spectroscopy XENSIV™ PAS GAS Sensor Arduino library docs!
+Welcome to the Infineon's XENSIV™ PAS Gas Sensors Arduino library docs!
 
 .. image:: img/arduino-logo.png
     :height: 150
