@@ -8,7 +8,9 @@ on:
       - 'tools/verifygitlog.py'
       - 'LICENSE*'
       - '.gitignore'
-      
+
+permissions:
+  contents: read
 
 jobs:
   makers-devops:
