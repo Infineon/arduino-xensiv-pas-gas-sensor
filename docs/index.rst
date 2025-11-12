@@ -2,7 +2,7 @@
 Home
 ****
 
-Welcome to the Infineon's XENSIV™ PAS Gas Sensors Arduino library docs!
+Welcome to Infineon's XENSIV PAS Gas Sensor Arduino library docs!
 
 .. image:: img/arduino-logo.png
     :height: 150
