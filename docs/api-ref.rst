@@ -1,8 +1,10 @@
 .. _api-ref:
 
-
 API Reference
 =============
+
+.. warning::
+    This project is under development and not ready for use.
 
 The Arduino library provides a unified API for XENSIV™ PAS Gas sensors, supporting multiple sensor types and protocols. The API is structured around a base class and sensor-specific subclasses:
 
