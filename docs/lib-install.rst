@@ -1,6 +1,9 @@
 Library Installation
 ====================
 
+.. warning::
+    This project is under development and not ready for use.
+
 The library can be installed in several ways:
 
 * Arduino IDE Library Manager 

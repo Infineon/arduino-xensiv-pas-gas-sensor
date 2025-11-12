@@ -1,6 +1,9 @@
 Hardware Platforms
 ==================
 
+.. warning::
+    This project is under development and not ready for use.
+
 Supported Sensor Boards
 -----------------------
 

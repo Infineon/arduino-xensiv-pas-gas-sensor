@@ -3,6 +3,9 @@
 Examples
 ========
 
+.. warning::
+    This project is under development and not ready for use.
+
 The following `examples <https://github.com/Infineon/arduino-xensiv-pas-gas-sensor/tree/master/examples>`_ are provided in the library:
 
 .. list-table::

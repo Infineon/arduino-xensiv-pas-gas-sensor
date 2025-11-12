@@ -3,6 +3,9 @@
 Getting Started
 ================
 
+.. warning::
+    This project is under development and not ready for use.
+
 In this quick tutorial we will go through one of the XENSIV™ PAS Gas sensors examples, using the Rapid IoT connect developer kit (CYSBSYSKIT-DEV-01) and the PAS CO2 Miniboard.
 
 Required Hardware
