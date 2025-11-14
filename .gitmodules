@@ -10,3 +10,6 @@
 [submodule "extras/arduino-devops"]
 	path = extras/arduino-devops
 	url = https://github.com/Infineon/arduino-devops.git
+[submodule "tests/ifx_ardunity"]
+	path = tests/ifx_ardunity
+	url = https://github.com/LinjingZhang/ifx_ardunity.git
