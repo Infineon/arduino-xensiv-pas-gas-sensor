@@ -8,9 +8,14 @@
     */
 void RunAllTests(void)
 {
-// Dummy Test
 #ifdef TEST_XENSIV_PAS_GAS
     RUN_TEST_GROUP(XENSIV_PAS_GAS);
+#endif
+#ifdef TEST_XENSIV_PAS_GAS_R290
+    RUN_TEST_GROUP(XENSIV_PAS_GAS_R290);
+#endif
+#ifdef TEST_XENSIV_PAS_GAS_A2L
+    RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L);
 #endif
 }
 
