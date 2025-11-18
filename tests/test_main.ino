@@ -1,5 +1,5 @@
 // test includes
-#include "test_arduino_includes.hpp"
+#include "test_includes.h"
 
     /***
       * Uses flags / defines to determine which groups of tests should be added to this test such that multiple tests can be executed in a single run.

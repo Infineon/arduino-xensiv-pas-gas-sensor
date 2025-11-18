@@ -1,8 +1,7 @@
-#include "test_arduino_includes.hpp"
+#include "test_includes.h"
 #include "xensiv_pas_gas_ino.hpp"
 
 TEST_GROUP(XENSIV_PAS_GAS);
-
 
 static XENSIV_PAS_GASIno* gasSensor = nullptr;
 static Error_t err;
