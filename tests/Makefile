@@ -13,18 +13,21 @@ $(info TESTS : $(TESTS))
 $(info UNITY_PATH : $(UNITY_PATH))
 $(info SENSOR_TYPE  : $(SENSOR_TYPE))
 $(info BOARD_TYPE  : $(BOARD_TYPE))
-
-
-
 				
 # XENSIV PAS GAS sensor tests
 XENSIV_PAS_GAS: TESTS=-DTEST_XENSIV_PAS_GAS
 
 XENSIV_PAS_GAS: unity flash
 
+XENSIV_PAS_GAS_R290: TESTS=-DTEST_XENSIV_PAS_GAS_R290
+
+XENSIV_PAS_GAS_R290: unity flash
+
+XENSIV_PAS_GAS_A2L: TESTS=-DTEST_XENSIV_PAS_GAS_A2L
+
+XENSIV_PAS_GAS_A2L: unity flash
 
 # $(EXAMPLES): arduino compile
-
 
 ### Arduino targets
 clean:
@@ -37,6 +40,10 @@ arduino: clean
 	find ifx_ardunity -name '*.[hc]*' -not -path '*/Unity/*' -print -exec \cp {} build \;
 # TODO: Copy test file needed 
 	cp ./test_xensiv_pas_gas.cpp build/
+	cp ./test_xensiv_pas_gas_r290.cpp build/
+	cp ./test_xensiv_pas_gas_a2l.cpp build/
+# Copy corelib headers
+	cp -r ../src/corelib/*.h build/
 
 unity: arduino
 	find $(UNITY_PATH) -name '*.[hc]' \( -path '*extras*' -a -path '*src*' -or -path '*src*' -a \! -path '*example*' \) -exec \cp {} build \;
