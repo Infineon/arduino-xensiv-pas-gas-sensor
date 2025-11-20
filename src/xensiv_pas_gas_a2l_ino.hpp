@@ -45,7 +45,7 @@ class XENSIV_PAS_GASA2LIno : public XENSIV_PAS_GASIno
     Error_t getAbsoluteHumidityRef(uint16_t &abs_humidity);
     Error_t setAbsoluteHumidityRef(uint16_t abs_humidity);
     Error_t enableHumidityCompensation(bool enable);
-    Error_t isHumidityCompensationEnabled(bool enable);
+    Error_t isHumidityCompensationEnabled(bool &enable);
     Error_t setGasSelection(xensiv_pas_gas_a2l_gas_selection_t gas);
     Error_t getGasSelection(xensiv_pas_gas_a2l_gas_selection_t &gas);
     Error_t getAvailableGases(uint8_t &gas_avail);
