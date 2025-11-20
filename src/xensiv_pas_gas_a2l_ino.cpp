@@ -333,7 +333,7 @@ Error_t XENSIV_PAS_GASA2LIno::enableHumidityCompensation(bool enable)
  * @retval      XENSIV_PAS_GAS_OK if success
  * @pre         begin()
  */
-Error_t XENSIV_PAS_GASA2LIno::isHumidityCompensationEnabled(bool enable)
+Error_t XENSIV_PAS_GASA2LIno::isHumidityCompensationEnabled(bool &enable)
 {
     xensiv_pas_gas_a2l_humidity_control_t hc_ctrl = {0};
     int32_t ret = xensiv_pas_gas_a2l_get_humidity_control(&dev, &hc_ctrl);
