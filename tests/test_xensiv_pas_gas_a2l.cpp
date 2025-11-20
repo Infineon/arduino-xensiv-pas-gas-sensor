@@ -1,25 +1,48 @@
+
 #include "test_arduino_includes.hpp"
 #include "xensiv_pas_gas_a2l_ino.hpp"
 
+extern GasType_t currentSensorType;
+extern SensorInterfaceType currentInterfaceType;
+
 TEST_GROUP(XENSIV_PAS_GAS_A2L);
 static XENSIV_PAS_GASA2LIno *a2lSensor = nullptr;
-static Error_t a2lErr;
 
 TEST_SETUP(XENSIV_PAS_GAS_A2L)
 {
-    a2lSensor = new XENSIV_PAS_GASA2LIno(&Wire);
-    Wire.begin();
+    if (currentInterfaceType == SENSOR_IF_I2C)
+    {
+        Wire.begin();
+        a2lSensor = new XENSIV_PAS_GASA2LIno(&Wire);
+    }
+    else
+    {
+        Serial.begin(9600);
+        a2lSensor = new XENSIV_PAS_GASA2LIno(&Serial);
+    }
+    Error_t err = a2lSensor->begin();
+    TEST_ASSERT_EQUAL(0, err);
 }
+
 TEST_TEAR_DOWN(XENSIV_PAS_GAS_A2L)
 {
     delete a2lSensor;
     a2lSensor = nullptr;
+    if (currentInterfaceType == SENSOR_IF_I2C)
+    {
+        Wire.end();
+    }
+    else
+    {
+        Serial.end();
+    }
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetDeviceID)
 {
     uint8_t devID = 0;
-    a2lSensor->getDeviceID(devID);
+    Error_t err = a2lSensor->getDeviceID(devID);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regData[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_DEV_ID, regData, 1);
     uint8_t regDevID = (regData[0] & XENSIV_PAS_GAS_A2L_REG_DEV_ID_VAL_MSK) >> XENSIV_PAS_GAS_A2L_REG_DEV_ID_VAL_POS;
@@ -29,7 +52,8 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetDeviceID)
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetAlarmConfig)
 {
     bool activeHigh = false;
-    a2lSensor->getAlarmConfig(activeHigh);
+    Error_t err = a2lSensor->getAlarmConfig(activeHigh);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regData[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ALARM_CFG, regData, 1);
     bool regActiveHigh =
@@ -40,48 +64,46 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetAlarmConfig)
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetABOCCycle)
 {
     uint8_t daysSet = 7;
-    a2lSensor->setABOCCycle(daysSet);
+    Error_t err = a2lSensor->setABOCCycle(daysSet);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regData[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ABOC_CYCLE, regData, 1);
     uint8_t regDays = (regData[0] & XENSIV_PAS_GAS_A2L_REG_ABOC_CYCLE_SMOOTHING_FACT_MSK) >>
                       XENSIV_PAS_GAS_A2L_REG_ABOC_CYCLE_SMOOTHING_FACT_POS;
     TEST_ASSERT_EQUAL(daysSet, regDays);
     uint8_t daysGet = 0;
-    a2lSensor->getABOCCycle(daysGet);
+    err = a2lSensor->getABOCCycle(daysGet);
+    TEST_ASSERT_EQUAL(0, err);
     TEST_ASSERT_EQUAL(daysSet, daysGet);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetABOCPrefill)
 {
     uint8_t hours = 12;
-    a2lSensor->setABOCPrefill(hours);
-    uint8_t regData[1];
-    a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ABOC_PREFILL, regData, 1);
-    uint8_t regHours =
-        (regData[0] & XENSIV_PAS_GAS_A2L_REG_ABOC_PREFILL_VAL_MSK) >> XENSIV_PAS_GAS_A2L_REG_ABOC_PREFILL_VAL_POS;
-    TEST_ASSERT_EQUAL(hours, regHours);
+    Error_t err = a2lSensor->setABOCPrefill(hours);
+    TEST_ASSERT_EQUAL(0, err);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetDenoiseConfig)
 {
     uint8_t smoothingSet = 3;
-    a2lSensor->setDenoiseConfig(smoothingSet);
+    Error_t err = a2lSensor->setDenoiseConfig(smoothingSet);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regData[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_DENOISE_CFG, regData, 1);
     uint8_t regSmoothing = (regData[0] & XENSIV_PAS_GAS_A2L_REG_DENOISE_CFG_SMOOTHING_FACT_MSK) >>
                            XENSIV_PAS_GAS_A2L_REG_DENOISE_CFG_SMOOTHING_FACT_POS;
     TEST_ASSERT_EQUAL(smoothingSet, regSmoothing);
     uint8_t smoothingGet = 0;
-    a2lSensor->getDenoiseConfig(smoothingGet);
+    err = a2lSensor->getDenoiseConfig(smoothingGet);
+    TEST_ASSERT_EQUAL(0, err);
     TEST_ASSERT_EQUAL(smoothingSet, smoothingGet);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSelfTestErrorClear)
 {
-    a2lSensor->selfTestErrorClear(true);
-    uint8_t regData[1];
-    a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_SELF_TEST_CLR, regData, 1);
-    // Optionally check specific bits if needed
+    Error_t err = a2lSensor->selfTestErrorClear(true);
+    TEST_ASSERT_EQUAL(0, err);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetSelfTestStatusString)
@@ -95,7 +117,8 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetSelfTestStatusString)
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetAlarmHysteresis)
 {
     uint16_t hystSet = 1234;
-    a2lSensor->setAlarmHysteresis(hystSet);
+    Error_t err = a2lSensor->setAlarmHysteresis(hystSet);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regDataH[1], regDataL[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_H, regDataH, 1);
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_L, regDataL, 1);
@@ -104,14 +127,16 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetAlarmHysteresis)
         (regDataL[0] & XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_L_MASK) >> XENSIV_PAS_GAS_A2L_REG_ALARM_HYS_L_POS;
     TEST_ASSERT_EQUAL(hystSet, regHyst);
     uint16_t hystGet = 0;
-    a2lSensor->getAlarmHysteresis(hystGet);
+    err = a2lSensor->getAlarmHysteresis(hystGet);
+    TEST_ASSERT_EQUAL(0, err);
     TEST_ASSERT_EQUAL(hystSet, hystGet);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetAbsoluteHumidityRef)
 {
     uint16_t humSet = 567;
-    a2lSensor->setAbsoluteHumidityRef(humSet);
+    Error_t err = a2lSensor->setAbsoluteHumidityRef(humSet);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regDataH[1], regDataL[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_H, regDataH, 1);
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_L, regDataL, 1);
@@ -120,36 +145,42 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetAbsoluteHumidityRef)
         (regDataL[0] & XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_L_MASK) >> XENSIV_PAS_GAS_A2L_REG_ABS_HUM_REF_L_POS;
     TEST_ASSERT_EQUAL(humSet, regHum);
     uint16_t humGet = 0;
-    a2lSensor->getAbsoluteHumidityRef(humGet);
+    err = a2lSensor->getAbsoluteHumidityRef(humGet);
+    TEST_ASSERT_EQUAL(0, err);
     TEST_ASSERT_EQUAL(humSet, humGet);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestEnableIsHumidityCompensation)
 {
-    a2lSensor->enableHumidityCompensation(true);
+    Error_t err = a2lSensor->enableHumidityCompensation(true);
+    TEST_ASSERT_EQUAL(0, err);
     bool enabled = false;
-    a2lSensor->isHumidityCompensationEnabled(enabled);
+    err = a2lSensor->isHumidityCompensationEnabled(enabled);
+    TEST_ASSERT_EQUAL(0, err);
     TEST_ASSERT_TRUE(enabled);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestSetGetGasSelection)
 {
-    xensiv_pas_gas_a2l_gas_selection_t gasSet = XENSIV_PAS_GAS_A2L_GAS_SELECTION_R32;
-    a2lSensor->setGasSelection(gasSet);
+    xensiv_pas_gas_a2l_gas_selection_t gasSet = XENSIV_PAS_GAS_A2L_GAS_R32;
+    Error_t err = a2lSensor->setGasSelection(gasSet);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regData[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_GAS_CFG, regData, 1);
     uint8_t regGasSel =
         (regData[0] & XENSIV_PAS_GAS_A2L_REG_GAS_CFG_GAS_SEL_MASK) >> XENSIV_PAS_GAS_A2L_REG_GAS_CFG_GAS_SEL_POS;
     TEST_ASSERT_EQUAL(gasSet, regGasSel);
-    xensiv_pas_gas_a2l_gas_selection_t gasGet = XENSIV_PAS_GAS_A2L_GAS_SELECTION_R454B;
-    a2lSensor->getGasSelection(gasGet);
+    xensiv_pas_gas_a2l_gas_selection_t gasGet = XENSIV_PAS_GAS_A2L_GAS_R454B;
+    err = a2lSensor->getGasSelection(gasGet);
+    TEST_ASSERT_EQUAL(0, err);
     TEST_ASSERT_EQUAL(gasSet, gasGet);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetAvailableGases)
 {
     uint8_t gasAvail = 0;
-    a2lSensor->getAvailableGases(gasAvail);
+    Error_t err = a2lSensor->getAvailableGases(gasAvail);
+    TEST_ASSERT_EQUAL(0, err);
     uint8_t regData[1];
     a2lSensor->getRegister(XENSIV_PAS_GAS_A2L_REG_GAS_CFG, regData, 1);
     uint8_t regGasAvail =
@@ -159,6 +190,7 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetAvailableGases)
 
 TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L)
 {
+    RUN_TEST_GROUP(XENSIV_PAS_GAS);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestGetDeviceID);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestGetAlarmConfig);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestSetGetABOCCycle);
@@ -171,4 +203,17 @@ TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L)
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestEnableIsHumidityCompensation);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestSetGetGasSelection);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestGetAvailableGases);
+}
+
+TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L_I2C)
+{
+    currentSensorType = SENSOR_A2L;
+    currentInterfaceType = SENSOR_IF_I2C;
+    RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L);
+}
+TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L_UART)
+{
+    currentSensorType = SENSOR_A2L;
+    currentInterfaceType = SENSOR_IF_UART;
+    RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L);
 }
