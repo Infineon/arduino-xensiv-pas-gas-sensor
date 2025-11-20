@@ -39,6 +39,7 @@ arduino: clean
 # Copy all unity file needed for Arduino tests
 	find ifx_ardunity -name '*.[hc]*' -not -path '*/Unity/*' -print -exec \cp {} build \;
 # TODO: Copy test file needed 
+	cp ./test_xensiv_pas_gas_globals.h build/
 	cp ./test_xensiv_pas_gas.cpp build/
 	cp ./test_xensiv_pas_gas_r290.cpp build/
 	cp ./test_xensiv_pas_gas_a2l.cpp build/

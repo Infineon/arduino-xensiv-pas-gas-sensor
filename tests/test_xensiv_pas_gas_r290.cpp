@@ -1,5 +1,5 @@
-
 #include "test_arduino_includes.hpp"
+#include "test_xensiv_pas_gas_globals.h"
 #include "xensiv_pas_gas_r290_ino.hpp"
 
 extern GasType_t currentSensorType;
