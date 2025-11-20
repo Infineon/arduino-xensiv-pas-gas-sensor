@@ -1,14 +1,11 @@
 #include "test_arduino_includes.hpp"
+#include "test_xensiv_pas_gas_globals.h"
 #include "xensiv_pas_gas_ino.hpp"
 #include "xensiv_pas_gas_regs.h"
 
 TEST_GROUP(XENSIV_PAS_GAS);
 static XENSIV_PAS_GASIno *gasSensor = nullptr;
-enum SensorInterfaceType
-{
-    SENSOR_IF_I2C,
-    SENSOR_IF_UART
-};
+
 static uint8_t testRegAddr = XENSIV_PAS_GAS_REG_CALIB_REF_H; // Writable register for tests
 
 // Default settings
