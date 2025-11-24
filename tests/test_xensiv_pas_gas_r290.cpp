@@ -8,23 +8,31 @@ extern SensorInterfaceType currentInterfaceType;
 TEST_GROUP(XENSIV_PAS_GAS_R290);
 static XENSIV_PAS_GASR290Ino *r290Sensor = nullptr;
 
-TEST_SETUP(XENSIV_PAS_GAS_R290)
+TEST_SETUP(XENSIV_PAS_GAS_R290) {}
+TEST_TEAR_DOWN(XENSIV_PAS_GAS_R290) {}
+
+void xensiv_pas_gas_r290_suiteSetup()
 {
     if (currentInterfaceType == SENSOR_IF_I2C)
     {
         Wire.begin();
         r290Sensor = new XENSIV_PAS_GASR290Ino(&Wire);
+        gasSensor = r290Sensor;
     }
     else
     {
         Serial.begin(9600);
         r290Sensor = new XENSIV_PAS_GASR290Ino(&Serial);
+        gasSensor = r290Sensor;
     }
     Error_t err = r290Sensor->begin();
     TEST_ASSERT_EQUAL(0, err);
 }
-TEST_TEAR_DOWN(XENSIV_PAS_GAS_R290)
+
+void xensiv_pas_gas_r290_suiteTearDown()
 {
+    Error_t err = r290Sensor->end();
+    TEST_ASSERT_EQUAL(0, err);
     delete r290Sensor;
     r290Sensor = nullptr;
     if (currentInterfaceType == SENSOR_IF_I2C)
@@ -35,6 +43,7 @@ TEST_TEAR_DOWN(XENSIV_PAS_GAS_R290)
     {
         Serial.end();
     }
+    delay(500);
 }
 
 TEST_IFX(XENSIV_PAS_GAS_R290, TestGetDeviceID)
@@ -130,12 +139,16 @@ TEST_GROUP_RUNNER(XENSIV_PAS_GAS_R290_I2C)
 {
     currentSensorType = SENSOR_R290;
     currentInterfaceType = SENSOR_IF_I2C;
+    xensiv_pas_gas_r290_suiteSetup();
     RUN_TEST_GROUP(XENSIV_PAS_GAS_R290);
+    xensiv_pas_gas_r290_suiteTearDown();
 }
 
 TEST_GROUP_RUNNER(XENSIV_PAS_GAS_R290_UART)
 {
     currentSensorType = SENSOR_R290;
     currentInterfaceType = SENSOR_IF_UART;
+    xensiv_pas_gas_r290_suiteSetup();
     RUN_TEST_GROUP(XENSIV_PAS_GAS_R290);
+    xensiv_pas_gas_r290_suiteTearDown();
 }
