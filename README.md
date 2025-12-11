@@ -14,8 +14,8 @@ Arduino library of Infineon's [**XENSIV™ Photoacoustic Spectroscopy (PAS) GAS*
 <table>
     <tr>
         <td><img src="docs/img/pas-co2-miniboard.png" width="200"></td>
-        <td><img src="docs/img/pas-r290-miniboard.png" width="200"></td>
-        <td><img src="docs/img/pas-a2l-miniboard.png" width="200"></td>
+        <!-- <td><img src="docs/img/pas-r290-miniboard.png" width="200"></td> -->
+        <!-- <td><img src="docs/img/pas-a2l-miniboard.png" width="200"></td> -->
     </tr>
     <tr>
         <td style="test-align : center"><a href="https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/hw-platforms.html#xensiv-pas-co2-miniboard">XENSIV™ PAS CO2 Miniboard</a></td>
