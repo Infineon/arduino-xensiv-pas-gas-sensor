@@ -3,7 +3,7 @@
 	url = https://github.com/Infineon/xensiv-pas-gas-sensor.git
 [submodule "tests/ifx_ardunity/Unity"]
 	path = tests/ifx_ardunity/Unity
-	url = git@github.com:ThrowTheSwitch/Unity.git
+	url = https://github.com/ThrowTheSwitch/Unity.git
 [submodule "extras/makers-devops"]
 	path = extras/makers-devops
 	url = https://github.com/Infineon/makers-devops.git
