@@ -17,16 +17,17 @@ Arduino library of Infineon's [**XENSIV™ Photoacoustic Spectroscopy (PAS) GAS*
         <!-- <td><img src="docs/img/pas-r290-miniboard.png" width="200"></td> -->
         <!-- <td><img src="docs/img/pas-a2l-miniboard.png" width="200"></td> -->
     </tr>
-    <tr>
+    <!-- <tr>
         <td style="test-align : center"><a href="https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/hw-platforms.html#xensiv-pas-co2-miniboard">XENSIV™ PAS CO2 Miniboard</a></td>
         <td style="test-align : center"><a href="https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/hw-platforms.html#xensiv-pas-co2-miniboard">XENSIV™ PAS R290 Miniboard</a></td>
         <td style="test-align : center"><a href="https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/hw-platforms.html#xensiv-pas-co2-miniboard">XENSIV™ PAS A2L Miniboard</a></td>
     </tr>
+    -->
 </table>
 
 ### Getting Started
 
-Check out the [getting started guide](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/getting-started.html) to begin using the library.
+### Check out the [getting started guide](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/getting-started.html) to begin using the library.
 
 ### Library Installation
 
@@ -34,15 +35,15 @@ If you're new to Arduino, have a look at the [Arduino library installation guide
 
 The quickest way to install this library is to search for ```XENSIV PAS GAS``` in the Arduino library manager and install it.
 
-Other installation methods are documented [here](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/lib-install.html).
+### Other installation methods are documented [here](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/lib-install.html).
 
 ### API Reference
 
-Discover all the API features and functions in the [API reference](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/api-ref.html).
+### Discover all the API features and functions in the [API reference](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/api-ref.html).
 
 ### More Information
 
-More information can be found in the library [docs](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/index.html).
+### More information can be found in the library [docs](https://arduino-xensiv-pas-gas-sensor.readthedocs.io/en/latest/index.html).
   
 ### License
 
