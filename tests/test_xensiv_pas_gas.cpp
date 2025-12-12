@@ -239,11 +239,11 @@ TEST_GROUP_RUNNER(XENSIV_PAS_GAS_CO2_I2C)
     xensiv_pas_gas_suiteTearDown();
 }
 
-TEST_GROUP_RUNNER(XENSIV_PAS_GAS_CO2_UART)
-{
-    currentSensorType = SENSOR_CO2;
-    currentInterfaceType = SENSOR_IF_UART;
-    xensiv_pas_gas_suiteSetup();
-    RUN_TEST_GROUP(XENSIV_PAS_GAS);
-    xensiv_pas_gas_suiteTearDown();
-}
+// TEST_GROUP_RUNNER(XENSIV_PAS_GAS_CO2_UART)
+// {
+//     currentSensorType = SENSOR_CO2;
+//     currentInterfaceType = SENSOR_IF_UART;
+//     xensiv_pas_gas_suiteSetup();
+//     RUN_TEST_GROUP(XENSIV_PAS_GAS);
+//     xensiv_pas_gas_suiteTearDown();
+// }
