@@ -1,3 +1,5 @@
 unit-test:
-    - test_dummy_pasgas_i2c_r290
+    - test-a2l-psoc
+    # - test-co2-r290-psoc
+
 

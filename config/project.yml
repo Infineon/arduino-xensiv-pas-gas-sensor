@@ -8,8 +8,14 @@ options:
   # PARSER_END_TOKEN: loop done.
 
 unit-test:
-    test_dummy_pasgas_i2c_r290:
-      - description: Compiling, flashing and monitoring of test_dummy_pasgas_i2c_r290
-        command: make XENSIV_PAS_GAS compile
-        query: board_type.str.startswith('cy8ckit')
+    test-a2l-psoc:
+      - description: Compiling, flashing and monitoring of test-a2l-psoc-board
+        command: make XENSIV_PAS_GAS_A2L
+        query: a2l_iic_psoc_board == '1:1'
+        working_dir: tests/
+    
+    test-co2-r290-psoc:
+      - description: Compiling, flashing and monitoring of test-r290-co2-psoc-board
+        command: make XENSIV_PAS_GAS_R290
+        query: r290_co2_iic_psoc_board == '1:1'
         working_dir: tests/
