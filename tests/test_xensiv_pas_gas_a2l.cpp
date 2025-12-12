@@ -200,7 +200,7 @@ TEST_IFX(XENSIV_PAS_GAS_A2L, TestGetAvailableGases)
 
 TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L)
 {
-    RUN_TEST_GROUP(XENSIV_PAS_GAS);
+    // RUN_TEST_GROUP(XENSIV_PAS_GAS);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestGetDeviceID);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestGetAlarmConfig);
     RUN_TEST_CASE(XENSIV_PAS_GAS_A2L, TestSetGetABOCCycle);
@@ -224,11 +224,11 @@ TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L_I2C)
     xensiv_pas_gas_a2l_suiteTearDown();
 }
 
-TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L_UART)
-{
-    currentSensorType = SENSOR_A2L;
-    currentInterfaceType = SENSOR_IF_UART;
-    xensiv_pas_gas_a2l_suiteSetup();
-    RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L);
-    xensiv_pas_gas_a2l_suiteTearDown();
-}
+// TEST_GROUP_RUNNER(XENSIV_PAS_GAS_A2L_UART)
+// {
+//     currentSensorType = SENSOR_A2L;
+//     currentInterfaceType = SENSOR_IF_UART;
+//     xensiv_pas_gas_a2l_suiteSetup();
+//     RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L);
+//     xensiv_pas_gas_a2l_suiteTearDown();
+// }

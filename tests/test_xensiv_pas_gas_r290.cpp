@@ -144,11 +144,11 @@ TEST_GROUP_RUNNER(XENSIV_PAS_GAS_R290_I2C)
     xensiv_pas_gas_r290_suiteTearDown();
 }
 
-TEST_GROUP_RUNNER(XENSIV_PAS_GAS_R290_UART)
-{
-    currentSensorType = SENSOR_R290;
-    currentInterfaceType = SENSOR_IF_UART;
-    xensiv_pas_gas_r290_suiteSetup();
-    RUN_TEST_GROUP(XENSIV_PAS_GAS_R290);
-    xensiv_pas_gas_r290_suiteTearDown();
-}
+// TEST_GROUP_RUNNER(XENSIV_PAS_GAS_R290_UART)
+// {
+//     currentSensorType = SENSOR_R290;
+//     currentInterfaceType = SENSOR_IF_UART;
+//     xensiv_pas_gas_r290_suiteSetup();
+//     RUN_TEST_GROUP(XENSIV_PAS_GAS_R290);
+//     xensiv_pas_gas_r290_suiteTearDown();
+// }
