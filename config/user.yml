@@ -1,4 +1,5 @@
 unit-test:
+    - test-co2-r290-psoc
     - test-a2l-psoc
     # - test-co2-r290-psoc
 
