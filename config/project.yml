@@ -4,18 +4,18 @@ options:
   #   url: https://blabla
   #   name: Infineon:xmc:3.5.4
   #   url: https://github.com/Infineon/XMC-for-Arduino/releases/download/3.5.4/package_infineon_index.json
-  SEND_JOB_START_TOKEN: true
+  SEND_JOB_START_TOKEN: false
   # PARSER_END_TOKEN: loop done.
 
 unit-test:
-    test-a2l-psoc:
+    unit-test-a2l-psoc:
       - description: Compiling, flashing and monitoring of test-a2l-psoc-board
-        command: make XENSIV_PAS_GAS_A2L
+        command: make test_xensiv_pas_gas_a2l
         query: a2l_iic_psoc_board == '1:1'
         working_dir: tests/
     
-    test-co2-r290-psoc:
+    unit-test-co2-r290-psoc:
       - description: Compiling, flashing and monitoring of test-r290-co2-psoc-board
-        command: make XENSIV_PAS_GAS_R290
+        command: make test_xensiv_pas_gas_r290
         query: r290_co2_iic_psoc_board == '1:1'
         working_dir: tests/
