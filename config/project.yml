@@ -14,8 +14,14 @@ unit-test:
         query: a2l_iic_psoc_board == '1:1'
         working_dir: tests/
     
-    unit-test-co2-r290-psoc:
+    unit-test-r290-psoc:
       - description: Compiling, flashing and monitoring of test-r290-co2-psoc-board
         command: make test_xensiv_pas_gas_r290
-        query: r290_co2_iic_psoc_board == '1:1'
+        query: r290_iic_psoc_board == '1:1'
+        working_dir: tests/
+
+    unit-test-co2-psoc:
+      - description: Compiling, flashing and monitoring of test-co2-psoc-board
+        command: make test_xensiv_pas_gas
+        query: co2_iic_psoc_board == '1:1'
         working_dir: tests/
