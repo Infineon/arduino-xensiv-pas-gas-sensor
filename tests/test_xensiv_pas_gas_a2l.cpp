@@ -17,8 +17,8 @@ void xensiv_pas_gas_a2l_suiteSetup()
 {
     if (currentInterfaceType == SENSOR_IF_I2C)
     {
-        Wire.begin();
-        a2lSensor = new XENSIV_PAS_GASA2LIno(&Wire);
+        Wire1.begin();
+        a2lSensor = new XENSIV_PAS_GASA2LIno(&Wire1);
         gasSensor = a2lSensor;
     }
     else
@@ -39,7 +39,7 @@ void xensiv_pas_gas_a2l_suiteTearDown()
     a2lSensor = nullptr;
     if (currentInterfaceType == SENSOR_IF_I2C)
     {
-        Wire.end();
+        Wire1.end();
     }
     else
     {
