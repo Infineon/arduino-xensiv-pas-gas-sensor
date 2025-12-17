@@ -119,13 +119,15 @@ TEST_IFX(XENSIV_PAS_GAS, TestForcedCompensationWorkflow)
 TEST_IFX(XENSIV_PAS_GAS, TestGetGasConcentration)
 {
     float value = 0.0f;
+    gasSensor->startMeasure(10);
+    delay(9400);
     gasSensor->getGasConcentration(value);
     uint8_t regData[2];
     gasSensor->getRegister(XENSIV_PAS_GAS_REG_GASCONC_H, regData, 1);
     uint16_t regValue = regData[0] << 8;
     gasSensor->getRegister(XENSIV_PAS_GAS_REG_GASCONC_L, regData + 1, 1);
     regValue |= regData[1];
-    float regConc = (float)regValue;
+    float regConc = static_cast<float>(regValue);
     TEST_ASSERT_EQUAL(regConc, value);
 }
 
@@ -222,12 +224,12 @@ TEST_GROUP_RUNNER(XENSIV_PAS_GAS)
     RUN_TEST_CASE(XENSIV_PAS_GAS, TestStartMeasure);
     RUN_TEST_CASE(XENSIV_PAS_GAS, TestStopMeasure);
     RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetDiagnosis);
-    RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetGasConcentration);
-    RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetGasConcentrationUnitStr);
     RUN_TEST_CASE(XENSIV_PAS_GAS, TestSetABOC);
     RUN_TEST_CASE(XENSIV_PAS_GAS, TestSetRegister);
-    RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetPasGasErrorStr);
     RUN_TEST_CASE(XENSIV_PAS_GAS, TestForcedCompensationWorkflow);
+    RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetGasConcentration);
+    RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetGasConcentrationUnitStr);
+    RUN_TEST_CASE(XENSIV_PAS_GAS, TestGetPasGasErrorStr);
 }
 
 TEST_GROUP_RUNNER(XENSIV_PAS_GAS_CO2_I2C)
