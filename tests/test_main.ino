@@ -10,15 +10,15 @@ void RunAllTests(void)
 {
 #ifdef TEST_XENSIV_PAS_GAS
     RUN_TEST_GROUP(XENSIV_PAS_GAS_CO2_I2C);
-    // RUN_TEST_GROUP(XENSIV_PAS_GAS_CO2_UART);
+    // RUN_TEST_GROUP(XENSIV_PAS_GAS_CO2_UART); // Temporarily commented UART test due to communication error
 #endif
 #ifdef TEST_XENSIV_PAS_GAS_R290
     RUN_TEST_GROUP(XENSIV_PAS_GAS_R290_I2C);
-    // RUN_TEST_GROUP(XENSIV_PAS_GAS_R290_UART);
+    // RUN_TEST_GROUP(XENSIV_PAS_GAS_R290_UART); // Temporarily commented UART test due to communication error
 #endif
 #ifdef TEST_XENSIV_PAS_GAS_A2L
     RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L_I2C);
-    // RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L_UART);
+    // RUN_TEST_GROUP(XENSIV_PAS_GAS_A2L_UART); // Temporarily commented UART test due to communication error
 #endif
 }
 
