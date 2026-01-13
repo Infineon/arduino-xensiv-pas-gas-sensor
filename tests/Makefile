@@ -106,16 +106,13 @@ endif
 prepare_test_environment: print_args clean check_unity_path
 	$(Q) find $(UNITY_PATH) -name '*.[hc]' \( -path '*extras*' -a -path '*src*' -or -path '*src*' -a \! -path '*example*' \) -exec \cp {} build \;
 	$(Q) find ifx_ardunity -name '*.[hc]*' -a ! -path '*/Unity/*' -exec \cp {} build \;
-	$(Q) cp ./test_xensiv_pas_gas_globals.h build/
-	$(Q) cp ./test_xensiv_pas_gas.cpp build/
-	$(Q) cp ./test_xensiv_pas_gas_r290.cpp build/
-	$(Q) cp ./test_xensiv_pas_gas_a2l.cpp build/
-# Copy corelib headers
 	$(Q) cp -r ../src/corelib/*.h build/
 	$(Q) cp test_main.ino build/build.ino 
+	$(Q) cp ./test_xensiv_pas_gas_globals.h build/
 
 # Test target example
 test_%: prepare_test_environment
+	$(Q) cp ./test_$*.cpp build/
 	@if [ -z "$(TESTS)" ]; then \
         echo "Must set variable TESTS in order to be able to flash a specific arduino core test !"; \
         exit 1; \
