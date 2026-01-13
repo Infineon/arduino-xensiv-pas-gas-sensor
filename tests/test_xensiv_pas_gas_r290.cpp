@@ -2,8 +2,9 @@
 #include "test_xensiv_pas_gas_globals.h"
 #include "xensiv_pas_gas_r290_ino.hpp"
 
-extern GasType_t currentSensorType;
-extern SensorInterfaceType currentInterfaceType;
+GasType_t currentSensorType;
+SensorInterfaceType currentInterfaceType;
+XENSIV_PAS_GASIno *gasSensor;
 
 TEST_GROUP(XENSIV_PAS_GAS_R290);
 static XENSIV_PAS_GASR290Ino *r290Sensor = nullptr;
