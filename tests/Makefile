@@ -123,7 +123,7 @@ test_%: prepare_test_environment
 test_xensiv_pas_gas: TESTS=-DTEST_XENSIV_PAS_GAS
 test_xensiv_pas_gas_r290: TESTS=-DTEST_XENSIV_PAS_GAS_R290
 test_xensiv_pas_gas_a2l: TESTS=-DTEST_XENSIV_PAS_GAS_A2L
-
+# test_xensiv_pas_gas_uart_co2: TESTS=-DTEST_XENSIV_PAS_GAS_UART_CO2
 
 compile:
 ifneq ($(SENSOR_TYPE),)
