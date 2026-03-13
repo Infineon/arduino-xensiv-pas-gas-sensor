@@ -21,7 +21,7 @@ read_the_docs_build = os.environ.get("READTHEDOCS", None) == "True"
 
 # -- Project information -----------------------------------------------------
 
-project = "XENSIV™ PAS GAS Sensor Arduino Library"
+project = "XENSIV™ PAS Gas Sensors Arduino Library"
 copyright = "2025 Infineon Technologies AG"
 author = "Infineon Technologies AG"
 
@@ -140,6 +140,6 @@ html_static_path = ["_templates"]
 
 # -- Breathe configuration -------------------------------------------------
 
-breathe_projects = {"XENSIV™ PAS GAS Sensor Arduino Library": "build/xml/"}
-breathe_default_project = "XENSIV™ PAS GAS Sensor Arduino Library"
+breathe_projects = {"XENSIV™ PAS Gas Sensors Arduino Library": "build/xml/"}
+breathe_default_project = "XENSIV™ PAS Gas Sensors Arduino Library"
 breathe_default_members = ("members", "undoc-members")
