@@ -2,3 +2,4 @@ unit-test:
     - unit-test-a2l-psoc
     - unit-test-r290-psoc
     - unit-test-co2-psoc
+    - unit-test-r290-psoc-uart

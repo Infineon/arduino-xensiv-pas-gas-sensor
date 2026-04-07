@@ -25,3 +25,9 @@ unit-test:
         command: make test_xensiv_pas_gas
         query: co2_iic_psoc_board == '1:1'
         working_dir: tests/
+    
+    unit-test-r290-psoc-uart:
+      - description: Compiling, flashing and monitoring of test-r290-psoc-uart-board
+        command: make test_xensiv_pas_gas_uart_r290
+        query: r290_uart_psoc_board == '1:1'
+        working_dir: tests/
